@@ -1,6 +1,6 @@
-# my-project
+# sap-web
 
-Standard React 19 + TypeScript + Vite scaffold. Written by hand to match the output of `npm create vite@latest -- --template react-ts`, since Node.js isn't installed on this machine yet.
+SAP (Secure Access Platform) — React 19 + TypeScript + Vite frontend, React Router v7 (data mode), Zustand + Context for state.
 
 ## Getting started
 
