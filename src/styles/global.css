@@ -1,0 +1,8 @@
+/*
+  Global stylesheet entry point — import order matters:
+  tokens (CSS vars) -> reset (box model/base) -> a11y (focus/sr-only).
+  Font faces are loaded via the Google Fonts <link> in index.html.
+*/
+@import './tokens.css';
+@import './reset.css';
+@import './a11y.css';

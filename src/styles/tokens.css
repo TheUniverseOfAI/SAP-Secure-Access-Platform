@@ -1,0 +1,101 @@
+/*
+  Design tokens — ported verbatim from sap-js-package/css/sap.css (:root block)
+  and the font stack from sap-design-system_v2.html's Google Fonts <link>.
+  Source of truth for values: sap-design-system_v2.html (Color Palette / Typography Scale sections).
+*/
+:root {
+  /* Blue (primary) */
+  --blue-900: #0a1628;
+  --blue-800: #0f2240;
+  --blue-700: #153264;
+  --blue-600: #1a4080;
+  --blue-500: #1d5cbf;
+  --blue-400: #3b82f6;
+  --blue-300: #6da6ff;
+  --blue-200: #a3c4ff;
+  --blue-100: #dbeafe;
+  --blue-50: #eff6ff;
+
+  /* Gray (neutral) */
+  --gray-900: #111827;
+  --gray-800: #1f2937;
+  --gray-700: #374151;
+  --gray-600: #4b5563;
+  --gray-500: #6b7280;
+  --gray-400: #9ca3af;
+  --gray-300: #d1d5db;
+  --gray-200: #e5e7eb;
+  --gray-100: #f3f4f6;
+  --gray-50: #f9fafb;
+  --white: #ffffff;
+
+  /* Semantic scales */
+  --green-600: #16a34a;
+  --green-500: #22c55e;
+  --green-100: #dcfce7;
+  --green-50: #f0fdf4;
+
+  --red-600: #dc2626;
+  --red-500: #ef4444;
+  --red-100: #fee2e2;
+  --red-50: #fef2f2;
+
+  --amber-600: #d97706;
+  --amber-500: #f59e0b;
+  --amber-100: #fef3c7;
+  --amber-50: #fffbeb;
+
+  --purple-600: #9333ea;
+  --purple-500: #a855f7;
+  --purple-100: #f3e8ff;
+  --purple-50: #faf5ff;
+
+  --cyan-600: #0891b2;
+  --cyan-500: #06b6d4;
+  --cyan-100: #cffafe;
+  --cyan-50: #ecfeff;
+
+  --teal-600: #0d9488;
+  --teal-500: #14b8a6;
+  --teal-100: #ccfbf1;
+  --teal-50: #f0fdfa;
+
+  --rose-600: #e11d48;
+  --rose-500: #f43f5e;
+  --rose-100: #ffe4e6;
+  --rose-50: #fff1f2;
+
+  --indigo-600: #4f46e5;
+  --indigo-500: #6366f1;
+  --indigo-100: #e0e7ff;
+  --indigo-50: #eef2ff;
+
+  --orange-600: #ea580c;
+  --orange-500: #f97316;
+  --orange-100: #ffedd5;
+  --orange-50: #fff7ed;
+
+  --pink-600: #db2777;
+  --pink-500: #ec4899;
+  --pink-100: #fce7f3;
+  --pink-50: #fdf2f8;
+
+  /* Typography */
+  --font-sans: 'DM Sans', sans-serif;
+  --font-serif: 'Source Serif 4', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Radii & shadows */
+  --radius: 10px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.16);
+
+  /* Layout constants */
+  --header-h: 56px;
+  --sidebar-w: 260px;
+  --sidebar-w-narrow: 250px;
+  --sidebar-collapsed: 68px;
+
+  /* Motion */
+  --transition: 0.2s ease;
+}
