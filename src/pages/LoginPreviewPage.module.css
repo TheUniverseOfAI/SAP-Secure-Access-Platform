@@ -1,21 +1,14 @@
 /*
-  Page-specific layout override for the login screen, ported from the
-  embedded <style> block in sap-package/app-files/login-portal_v2.html
-  (its .main rule centers the auth card and adds the radial-gradient
-  backdrop; the shared .main in legacy-sap.css assumes a sidebar layout
-  instead, so this page uses its own wrapper class rather than reusing it).
+  .header (legacy-sap.css) is position: fixed, so it's out of normal flow.
+  This wrapper pins the footer to the bottom of the viewport with an empty,
+  unstyled gap in between — nothing else renders on this page.
 */
-.authMain {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 1rem;
-  padding-top: calc(2rem + 56px);
+.page {
   min-height: 100vh;
-  position: relative;
-  background:
-    radial-gradient(ellipse at 20% 50%, rgba(29, 92, 191, 0.06) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 30%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-    var(--gray-100);
+  display: flex;
+  flex-direction: column;
+}
+
+.spacer {
+  flex: 1;
 }
