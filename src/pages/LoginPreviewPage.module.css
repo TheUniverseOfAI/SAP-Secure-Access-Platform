@@ -1,0 +1,14 @@
+/*
+  .header (legacy-sap.css) is position: fixed, so it's out of normal flow.
+  This wrapper pins the footer to the bottom of the viewport with an empty,
+  unstyled gap in between — nothing else renders on this page.
+*/
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.spacer {
+  flex: 1;
+}
