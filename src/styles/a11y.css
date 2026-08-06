@@ -1,0 +1,64 @@
+/* Accessibility utilities — ported from sap-js-package/css/sap.css lines 36-43 */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  padding: 12px 24px;
+  background: var(--blue-500);
+  color: white;
+  font-weight: 700;
+  font-size: 0.88rem;
+  border-radius: 0 0 8px 8px;
+  z-index: 999;
+  text-decoration: none;
+  transition: top 0.15s ease;
+  font-family: var(--font-sans);
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--blue-400);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Cards/nav items with their own visible border need the ring pulled inward */
+.nav-item:focus-visible,
+.quick-card:focus-visible,
+.stat-card:focus-visible,
+.portal-card:focus-visible,
+.sb-item:focus-visible,
+.auth-card:focus-visible,
+.wz-item:focus-visible {
+  outline-offset: -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
