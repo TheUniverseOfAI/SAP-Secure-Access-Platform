@@ -21,6 +21,7 @@
   align-items: center;
   justify-content: center;
   padding: 2rem 1rem;
+  padding-top: calc(2rem + 60px);
   position: relative;
   background:
     radial-gradient(ellipse at 20% 50%, rgba(29, 92, 191, 0.06) 0%, transparent 60%),
