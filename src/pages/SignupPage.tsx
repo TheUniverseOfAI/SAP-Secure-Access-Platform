@@ -1,6 +1,7 @@
 import AuthCard from '../components/AuthCard'
 import Button from '../components/Button'
 import Checkbox from '../components/Checkbox'
+import ConsentBanner from '../components/ConsentBanner'
 import Divider from '../components/Divider'
 import InfoTip from '../components/InfoTip'
 import Input from '../components/Input'
@@ -20,7 +21,7 @@ import styles from './SignupPage.module.css'
  */
 export default function SignupPage() {
   return (
-    <AuthCard>
+    <AuthCard topBanner={<ConsentBanner />}>
       <h1 className="sr-only">Create Account</h1>
 
       <Tabs
