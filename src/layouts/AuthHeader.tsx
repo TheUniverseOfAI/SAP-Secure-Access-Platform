@@ -1,3 +1,5 @@
+import styles from './AuthHeader.module.css'
+
 /**
  * Header shell for pre-login pages (login, signup, forgot-password).
  * Ported from sap-package/app-files/login-portal_v2.html's <header class="header">.
@@ -10,9 +12,9 @@
  */
 export default function AuthHeader() {
   return (
-    <header className="header" role="banner">
-      <div className="header-brand">
-        <div className="header-logo">
+    <header className={styles.header} role="banner">
+      <div className={styles.brand}>
+        <div className={styles.logo}>
           <svg width="40" height="40" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M40 4L72 18V40C72 58 58 72 40 76C22 72 8 58 8 40V18Z" fill="url(#sg)" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" />
             <path d="M40 10L66 22V40C66 55 54 67 40 70C26 67 14 55 14 40V22Z" fill="url(#si)" opacity="0.3" />
@@ -43,11 +45,11 @@ export default function AuthHeader() {
             </defs>
           </svg>
         </div>
-        <div className="header-title">
+        <div className={styles.title}>
           <span>SAP</span> — Secure Access Platform
         </div>
       </div>
-      <nav className="header-nav" aria-label="Utility navigation">
+      <nav className={styles.nav} aria-label="Utility navigation">
         <a href="#">Help Center</a>
         <a href="#">Contact</a>
         <a href="#">Status</a>
