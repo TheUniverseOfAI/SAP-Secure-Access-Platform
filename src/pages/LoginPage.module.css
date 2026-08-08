@@ -1,0 +1,27 @@
+/*
+  Scoped replacement for the global .auth-container/.auth-card/.auth-card-inner
+  classes in legacy-sap.css. Those turned out to collide with an unrelated
+  .auth-card definition elsewhere in that merged stylesheet (a "disabled
+  verification method" card pattern with display:flex + padding:18px 20px),
+  which was leaking into and breaking this card's layout since CSS cascades
+  per-property, not per-rule. Scoping this locally avoids the collision
+  entirely rather than trying to patch the shared legacy file.
+*/
+.container {
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  z-index: 1;
+}
+
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+}
+
+.cardInner {
+  padding: 32px 32px 28px;
+}

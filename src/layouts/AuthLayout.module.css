@@ -9,6 +9,21 @@
   flex-direction: column;
 }
 
+/*
+  Centered flex layout + radial-gradient backdrop, ported from the embedded
+  <style> block in sap-package/app-files/login-portal_v2.html's .main rule.
+  Lost when the earlier LoginPreviewPage was reduced to header+footer only
+  and never restored here — this is that fix.
+*/
 .content {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  position: relative;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(29, 92, 191, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 30%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+    var(--gray-100);
 }
