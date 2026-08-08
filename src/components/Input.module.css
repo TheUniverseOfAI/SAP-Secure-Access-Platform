@@ -48,6 +48,14 @@
   background: var(--red-50);
 }
 
+/* Wrapper for the `suffix` slot (e.g. password-visibility toggle). Source: .password-wrapper. */
+.suffixWrapper {
+  position: relative;
+}
+.inputWithSuffix {
+  padding-right: 44px;
+}
+
 .errorMessage {
   display: flex;
   align-items: center;

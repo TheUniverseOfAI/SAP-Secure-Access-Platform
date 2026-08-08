@@ -1,0 +1,27 @@
+/* Two-column First/Last Name row. Source: .form-row-half. */
+.nameRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Source: .terms-check's margin-bottom (18px), applied here since Checkbox itself doesn't set outer spacing. */
+.terms {
+  margin-bottom: 18px;
+}
+
+/* Source: .social-grid. */
+.socialGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.socialGrid button {
+  font-size: 0.82rem;
+  padding: 11px 8px;
+  margin-bottom: 0;
+}
+.socialGrid:last-child {
+  margin-bottom: 0;
+}

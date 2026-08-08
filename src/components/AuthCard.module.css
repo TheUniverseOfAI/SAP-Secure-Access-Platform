@@ -1,0 +1,31 @@
+/*
+  Extracted from LoginPage.module.css so SignupPage (and later
+  ForgotPasswordPage) can reuse it instead of duplicating the same rules.
+  Scoped rather than using the global .auth-container/.auth-card/
+  .auth-card-inner from legacy-sap.css, since those collide with an
+  unrelated .auth-card definition elsewhere in that merged stylesheet (a
+  "disabled verification method" card pattern with display:flex +
+  padding:18px 20px) — see git history on LoginPage.module.css for the
+  original bug writeup.
+*/
+.container {
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  z-index: 1;
+}
+
+/* border-radius/border-top:none so this visually connects seamlessly under
+   ConsentBanner (which has its own top-rounded corners) as one unit. */
+.card {
+  background: var(--white);
+  border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+  border-top: none;
+}
+
+.cardInner {
+  padding: 32px 32px 28px;
+}
