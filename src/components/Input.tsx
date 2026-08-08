@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes } from 'react'
+import type { InputHTMLAttributes, ReactNode } from 'react'
 import styles from './Input.module.css'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -6,6 +6,10 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
   required?: boolean
   errorMessage?: string
+  /** Rendered right after the label/required marker — e.g. an InfoTip. */
+  labelExtra?: ReactNode
+  /** Rendered inside the input's own relative wrapper, positioned via CSS — e.g. a password-visibility toggle button. */
+  suffix?: ReactNode
 }
 
 /**
@@ -20,9 +24,24 @@ export default function Input({
   label,
   required,
   errorMessage,
+  labelExtra,
+  suffix,
   className,
   ...rest
 }: InputProps) {
+  const input = (
+    <input
+      id={id}
+      className={[styles.input, errorMessage ? styles.inputError : '', suffix ? styles.inputWithSuffix : '', className]
+        .filter(Boolean)
+        .join(' ')}
+      aria-required={required}
+      aria-invalid={errorMessage ? true : undefined}
+      aria-describedby={errorMessage ? `${id}-error` : undefined}
+      {...rest}
+    />
+  )
+
   return (
     <div className={styles.group}>
       <label className={styles.label} htmlFor={id}>
@@ -32,17 +51,16 @@ export default function Input({
             *
           </span>
         )}
+        {labelExtra}
       </label>
-      <input
-        id={id}
-        className={[styles.input, errorMessage ? styles.inputError : '', className]
-          .filter(Boolean)
-          .join(' ')}
-        aria-required={required}
-        aria-invalid={errorMessage ? true : undefined}
-        aria-describedby={errorMessage ? `${id}-error` : undefined}
-        {...rest}
-      />
+      {suffix ? (
+        <div className={styles.suffixWrapper}>
+          {input}
+          {suffix}
+        </div>
+      ) : (
+        input
+      )}
       {errorMessage && (
         <div className={styles.errorMessage} id={`${id}-error`} role="alert">
           <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">

@@ -8,6 +8,25 @@
   color: var(--gray-600);
 }
 
+/* Terms-check variant: top-aligned checkbox against multi-line wrapped text. */
+.alignStart {
+  align-items: flex-start;
+  line-height: 1.5;
+  font-size: 0.78rem;
+}
+.alignStart .input {
+  margin-top: 3px;
+}
+
+.label a {
+  color: var(--blue-500);
+  text-decoration: none;
+  font-weight: 500;
+}
+.label a:hover {
+  text-decoration: underline;
+}
+
 .input {
   width: 16px;
   height: 16px;
