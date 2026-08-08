@@ -1,0 +1,74 @@
+/*
+  Fully self-contained — ported directly from login-portal_v2.html's own
+  embedded <style> block (lines 72-95), NOT from the shared/merged
+  legacy-sap.css. Several values diverge between the two: this page's own
+  header is 60px tall with 0 2rem padding and a 12px brand gap, while the
+  merged sap.css (which sap-portal_v2.html, the post-login page, actually
+  matches) uses 56px / 0 20px / 10px instead. legacy-sap.css also doesn't
+  define .header-logo at all. Rather than depend on cascade-order tricks
+  against the shared global classes, AuthHeader now owns its full header
+  styling independently and correctly.
+*/
+.header {
+  background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-800) 100%);
+  padding: 0 2rem;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(10, 22, 40, 0.3);
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue-400), var(--blue-300), var(--blue-400));
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  color: var(--white);
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.title span {
+  color: var(--blue-300);
+  font-weight: 700;
+}
+
+.nav {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+.nav a {
+  color: var(--blue-200);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transition: color var(--transition);
+}
+.nav a:hover {
+  color: var(--white);
+}
