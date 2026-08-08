@@ -110,3 +110,46 @@
   transform: none !important;
   box-shadow: none !important;
 }
+
+/* Full-width row button with a centered icon+label, used for alternate
+   sign-in methods (PIV, SSO, OTP, Magic Link). Source: .alt-btn. */
+.alt {
+  width: 100%;
+  padding: 12px;
+  border: 1.5px solid var(--gray-300);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--white);
+  color: var(--gray-700);
+  font-family: var(--font-sans);
+}
+.alt svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.alt:hover {
+  border-color: var(--gray-400);
+  background: var(--gray-50);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Dark-gradient variant of .alt, used for PIV/CAC sign-in. Source: .alt-btn.piv-btn. */
+.altDark {
+  composes: alt;
+  background: linear-gradient(135deg, var(--gray-700), var(--gray-800));
+  color: var(--white);
+  border-color: var(--gray-700);
+}
+.altDark:hover {
+  background: linear-gradient(135deg, var(--gray-800), var(--gray-900));
+  border-color: var(--gray-900);
+}

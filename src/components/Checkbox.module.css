@@ -1,0 +1,17 @@
+/* Source: .remember-me / .terms-check in legacy-sap.css. */
+.label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: var(--gray-600);
+}
+
+.input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--blue-500);
+  cursor: pointer;
+  flex-shrink: 0;
+}
