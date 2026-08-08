@@ -129,6 +129,7 @@
   background: var(--white);
   color: var(--gray-700);
   font-family: var(--font-sans);
+  margin-bottom: 10px;
 }
 .alt svg {
   width: 20px;

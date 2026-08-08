@@ -77,9 +77,13 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 10px;
+  margin-bottom: 10px;
 }
 .altGrid button {
   font-size: 0.78rem;
   padding: 11px 6px;
   gap: 6px;
+  /* Grid's own gap handles spacing between these three; the .alt variant's
+     margin-bottom (for stacking below the PIV button) would double up here. */
+  margin-bottom: 0;
 }
