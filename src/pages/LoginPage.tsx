@@ -1,6 +1,7 @@
 import AuthCard from '../components/AuthCard'
 import Button from '../components/Button'
 import Checkbox from '../components/Checkbox'
+import ConsentBanner from '../components/ConsentBanner'
 import Divider from '../components/Divider'
 import Input from '../components/Input'
 import PasswordField from '../components/PasswordField'
@@ -17,7 +18,7 @@ import styles from './LoginPage.module.css'
  */
 export default function LoginPage() {
   return (
-    <AuthCard>
+    <AuthCard topBanner={<ConsentBanner />}>
       <h1 className="sr-only">Sign In</h1>
 
       <Tabs
