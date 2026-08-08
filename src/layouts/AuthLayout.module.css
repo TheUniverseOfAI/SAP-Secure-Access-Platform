@@ -1,0 +1,14 @@
+/*
+  .header (legacy-sap.css) is position: fixed, so this wrapper pins the
+  footer to the bottom of the viewport with the routed page content
+  filling the space between header and footer.
+*/
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+}
