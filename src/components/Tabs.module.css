@@ -1,0 +1,33 @@
+/* Source: .auth-tabs / .auth-tab in legacy-sap.css. */
+.tabs {
+  display: flex;
+  background: var(--gray-100);
+  border-radius: 8px;
+  padding: 4px;
+  margin-bottom: 28px;
+}
+
+.tab {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-500);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition);
+  border: none;
+  background: none;
+  font-family: var(--font-sans);
+}
+
+.tabActive {
+  background: var(--white);
+  color: var(--blue-600);
+  box-shadow: var(--shadow-sm);
+}
+
+.tab:not(.tabActive):hover {
+  color: var(--gray-700);
+}
