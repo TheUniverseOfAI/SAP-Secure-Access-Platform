@@ -1,0 +1,60 @@
+/*
+  Source: .sidebar / .nav-section / .nav-section-title / .sidebar-footer /
+  .sidebar-footer-dot / .sidebar-footer-text. The .collapsed state (tied
+  to AppHeader's menu-toggle) is intentionally not implemented yet —
+  collapsing needs state shared between AppHeader and Sidebar, which
+  belongs in a SidebarContext per the original plan, not local component
+  state. That's follow-up work once the state/wiring phase begins.
+*/
+.sidebar {
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-w);
+  background: var(--white);
+  border-right: 1px solid var(--gray-200);
+  z-index: 150;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.section {
+  padding: 16px 12px 4px;
+}
+
+.sectionTitle {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--gray-400);
+  padding: 0 10px;
+  margin-bottom: 6px;
+}
+
+.footer {
+  margin-top: auto;
+  padding: 14px 16px;
+  border-top: 1px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.footerDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green-500);
+  flex-shrink: 0;
+}
+.footerText {
+  font-size: 0.72rem;
+  color: var(--gray-500);
+}
+.footerText b {
+  color: var(--green-500);
+  font-weight: 600;
+}
