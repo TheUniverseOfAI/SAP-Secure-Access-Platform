@@ -1,0 +1,176 @@
+/*
+  Post-login header — richer than AuthHeader (menu toggle, search,
+  notification/settings icons, avatar), since there's an authenticated
+  user and app chrome to control. Source: sap-portal_v2.html's own
+  embedded <style> (lines 29-84), confirmed matching legacy-sap.css's
+  merged .header/.header-left/.header-brand/.header-title/.header-right
+  rules exactly — unlike AuthHeader, no divergence found here (portal
+  appears to be the actual source the merge used for these classes).
+  Still scoped locally for consistency with AuthHeader/WizardHeader and
+  to avoid depending on legacy-sap.css going forward.
+*/
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  height: var(--header-h);
+  background: linear-gradient(135deg, var(--blue-900), var(--blue-800));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0 2px 16px rgba(10, 22, 40, 0.35);
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--blue-400), var(--blue-300), var(--blue-400));
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menuToggle {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+  color: var(--blue-200);
+}
+.menuToggle:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--white);
+}
+.menuToggle svg {
+  width: 20px;
+  height: 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand svg {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+}
+
+.title {
+  color: var(--white);
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.title b {
+  color: var(--blue-300);
+  font-weight: 700;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 7px 14px;
+  width: 220px;
+  transition: all var(--transition);
+}
+.search:focus-within {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.search svg {
+  width: 15px;
+  height: 15px;
+  color: var(--blue-300);
+  flex-shrink: 0;
+}
+.search input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.8rem;
+  font-family: var(--font-sans);
+  color: var(--blue-100);
+  flex: 1;
+}
+.search input::placeholder {
+  color: rgba(163, 196, 255, 0.5);
+}
+
+.iconBtn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--blue-200);
+  transition: all var(--transition);
+  position: relative;
+}
+.iconBtn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--white);
+}
+.iconBtn svg {
+  width: 18px;
+  height: 18px;
+}
+.iconBtn .dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 7px;
+  height: 7px;
+  background: var(--red-500);
+  border-radius: 50%;
+  border: 1.5px solid var(--blue-900);
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--blue-500), var(--blue-400));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  transition: border-color var(--transition);
+}
+.avatar:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+}
