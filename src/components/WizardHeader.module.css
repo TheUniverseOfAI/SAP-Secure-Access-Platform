@@ -1,0 +1,63 @@
+/*
+  Source: .modal-header / .modal-header-row / .modal-header-icon /
+  .modal-header-text h3 / .modal-header-subtitle in login-portal_v2.html's
+  own embedded <style> (confirmed matching legacy-sap.css's merged version
+  exactly — unlike AuthHeader, no divergence here, so this can safely be
+  adapted rather than needing a from-scratch port).
+
+  Adapted from a modal's top section into AuthCard's topBanner slot: added
+  top-only border-radius (var(--radius), matching ConsentBanner's approach)
+  since this now sits at the top of a page card, not inside a
+  overflow:hidden modal shell.
+*/
+.header {
+  background: linear-gradient(135deg, var(--blue-700), var(--blue-600));
+  padding: 24px 28px 20px;
+  position: relative;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue-400), var(--blue-300));
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.icon {
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+.icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--blue-200);
+}
+
+.title {
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: var(--blue-200);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  margin-top: 10px;
+}
