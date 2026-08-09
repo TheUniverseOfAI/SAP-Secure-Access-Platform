@@ -1,0 +1,85 @@
+/* Source: .stat-grid / .stat-card / .stat-icon / .stat-value / .stat-label. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  padding: 20px 22px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transition: all 0.15s ease;
+  cursor: pointer;
+  text-decoration: none;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-sans);
+  border-width: 1px;
+  border-style: solid;
+}
+.card:hover {
+  border-color: var(--blue-300);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.08);
+  transform: translateY(-1px);
+}
+
+.icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.icon svg {
+  width: 20px;
+  height: 20px;
+}
+.iconBlue {
+  background: var(--blue-50);
+  color: var(--blue-500);
+}
+.iconBlue svg {
+  stroke: var(--blue-500);
+}
+.iconGreen {
+  background: var(--green-50);
+  color: var(--green-500);
+}
+.iconGreen svg {
+  stroke: var(--green-500);
+}
+.iconAmber {
+  background: #fffbeb;
+  color: var(--amber-500);
+}
+.iconAmber svg {
+  stroke: var(--amber-500);
+}
+.iconPurple {
+  background: #faf5ff;
+  color: var(--purple-500);
+}
+.iconPurple svg {
+  stroke: var(--purple-500);
+}
+
+.value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--gray-900);
+  line-height: 1;
+}
+.label {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  margin-top: 3px;
+  font-weight: 500;
+}

@@ -1,0 +1,52 @@
+/* Source: .activity-list / .activity-item / .activity-dot / .activity-text / .activity-time. */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--gray-100);
+}
+.item:last-child {
+  border-bottom: none;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+.dotGreen {
+  background: var(--green-500);
+}
+.dotBlue {
+  background: var(--blue-400);
+}
+.dotAmber {
+  background: var(--amber-500);
+}
+.dotGray {
+  background: var(--gray-400);
+}
+
+.text {
+  font-size: 0.82rem;
+  color: var(--gray-600);
+  line-height: 1.5;
+}
+.text b {
+  color: var(--gray-800);
+  font-weight: 600;
+}
+.time {
+  font-size: 0.7rem;
+  color: var(--gray-400);
+  margin-top: 2px;
+}
