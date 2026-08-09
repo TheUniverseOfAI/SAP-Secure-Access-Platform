@@ -1,0 +1,33 @@
+/* Source: .breadcrumb. */
+.breadcrumb {
+  padding: 14px 32px;
+  border-bottom: 1px solid var(--gray-200);
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--gray-400);
+  position: sticky;
+  top: var(--header-h);
+  z-index: 10;
+}
+.breadcrumb a {
+  color: var(--gray-500);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition);
+}
+.breadcrumb a:hover {
+  color: var(--blue-500);
+}
+.breadcrumb svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+.current {
+  color: var(--gray-700);
+  font-weight: 600;
+}
