@@ -1,27 +1,20 @@
-import type { ReactNode } from 'react'
+import { Outlet } from 'react-router-dom'
 import '../styles/legacy-sap.css'
 import AuthHeader from './AuthHeader'
 import AuthFooter from './AuthFooter'
 import styles from './AuthLayout.module.css'
 
-interface AuthLayoutProps {
-  children: ReactNode
-}
-
 /**
  * Shared shell for pre-login pages (login, signup, forgot-password).
- *
- * Takes `children` instead of rendering React Router's <Outlet /> because
- * routing doesn't exist yet (that's Phase 5) — this prop will be swapped for
- * <Outlet /> once createBrowserRouter is wired up, with no other changes
- * needed here.
+ * Renders the active auth route via React Router's <Outlet /> (data mode,
+ * createBrowserRouter — see src/router.tsx).
  *
  * Still using legacy-sap.css (full unsplit sap.css) rather than component-
  * level CSS Modules, per the "split CSS only once real components are being
  * built" decision — AuthHeader/AuthFooter are real components now, but their
  * styling hasn't been migrated to CSS Modules yet.
  */
-export default function AuthLayout({ children }: AuthLayoutProps) {
+export default function AuthLayout() {
   return (
     <div className={styles.page}>
       <a href="#main-content" className="skip-link">
@@ -29,7 +22,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
       </a>
       <AuthHeader />
       <main id="main-content" className={styles.content}>
-        {children}
+        <Outlet />
       </main>
       <AuthFooter />
     </div>

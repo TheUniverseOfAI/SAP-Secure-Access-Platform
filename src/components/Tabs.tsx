@@ -9,14 +9,16 @@ interface TabsProps {
   tabs: Tab[]
   activeId: string
   'aria-label': string
+  /** Called with the clicked tab's id. Kept router-agnostic — the page decides what "selecting" a tab means (e.g. navigate). Omit for a purely decorative/inert tab bar. */
+  onSelect?: (id: string) => void
 }
 
 /**
- * Primitive — presentational only. `activeId` is a static prop, not
- * internal state; tab-switching behavior gets wired up in the later
- * wiring phase. Source: .auth-tabs / .auth-tab.
+ * Primitive — presentational, with an optional onSelect callback. `activeId`
+ * is a controlled prop, not internal state — this component never decides
+ * which tab is active on its own. Source: .auth-tabs / .auth-tab.
  */
-export default function Tabs({ tabs, activeId, 'aria-label': ariaLabel }: TabsProps) {
+export default function Tabs({ tabs, activeId, 'aria-label': ariaLabel, onSelect }: TabsProps) {
   return (
     <div className={styles.tabs} role="tablist" aria-label={ariaLabel}>
       {tabs.map((tab) => {
@@ -28,6 +30,7 @@ export default function Tabs({ tabs, activeId, 'aria-label': ariaLabel }: TabsPr
             role="tab"
             aria-selected={isActive}
             className={[styles.tab, isActive ? styles.tabActive : ''].filter(Boolean).join(' ')}
+            onClick={onSelect ? () => onSelect(tab.id) : undefined}
           >
             {tab.label}
           </button>

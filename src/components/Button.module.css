@@ -111,6 +111,21 @@
   box-shadow: none !important;
 }
 
+/* Outlined counterpart to .submit, used for "Back"/secondary actions
+   alongside a primary .submit button (e.g. wizard btn-rows). Source:
+   .submit-btn.secondary. */
+.submitSecondary {
+  composes: submit;
+  background: var(--white);
+  color: var(--blue-600);
+  border: 1.5px solid var(--gray-300);
+}
+.submitSecondary:hover {
+  border-color: var(--blue-400);
+  background: var(--blue-50);
+  box-shadow: none;
+}
+
 /* Full-width row button with a centered icon+label, used for alternate
    sign-in methods (PIV, SSO, OTP, Magic Link). Source: .alt-btn. */
 .alt {

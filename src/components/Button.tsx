@@ -1,7 +1,7 @@
 import type { ButtonHTMLAttributes } from 'react'
 import styles from './Button.module.css'
 
-type ButtonVariant = 'primary' | 'outline' | 'ghost' | 'danger' | 'submit' | 'alt' | 'altDark'
+type ButtonVariant = 'primary' | 'outline' | 'ghost' | 'danger' | 'submit' | 'submitSecondary' | 'alt' | 'altDark'
 type ButtonSize = 'sm' | 'md' | 'lg'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -10,7 +10,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 /** Variants with their own base shape (full-width row buttons), distinct from the standard inline .btn shape. */
-const STANDALONE_VARIANTS = new Set<ButtonVariant>(['submit', 'alt', 'altDark'])
+const STANDALONE_VARIANTS = new Set<ButtonVariant>(['submit', 'submitSecondary', 'alt', 'altDark'])
 
 /**
  * Primitive — no business logic, just markup/styling/a11y. Source: the
