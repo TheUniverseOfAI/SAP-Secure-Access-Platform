@@ -1,0 +1,28 @@
+/*
+  Source: .main-footer. Not the same component as AuthFooter (".footer" -
+  full-width, viewport-pinned) - this one sits inline at the end of the
+  scrollable page content, confirmed as a distinct pattern back when
+  AuthLayout/AuthFooter were first built.
+*/
+.footer {
+  margin-top: auto;
+  padding: 20px 32px;
+  border-top: 1px solid var(--gray-200);
+  background: var(--white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.74rem;
+  color: var(--gray-400);
+}
+.footer a {
+  color: var(--gray-500);
+  text-decoration: none;
+  margin-left: 16px;
+}
+.footer a:hover {
+  color: var(--blue-500);
+}
+.footer span b {
+  color: var(--blue-500);
+}

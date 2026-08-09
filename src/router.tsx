@@ -3,13 +3,21 @@ import AuthLayout from './layouts/AuthLayout'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import PortalLayout from './layouts/PortalLayout'
+import PortalHomePage from './pages/PortalHomePage'
 import NotFoundPage from './pages/NotFoundPage'
 
 /**
  * Data mode (createBrowserRouter), per the approved plan — SAP is an
- * internal SPA behind login, no SSR needed. Only the AuthLayout route
- * group exists so far; PortalLayout/ExternalLayout routes get added once
- * those layouts are built.
+ * internal SPA behind login, no SSR needed.
+ *
+ * The index route ("/") still redirects to /login rather than to the
+ * portal — there's no real auth state yet to decide which one a visitor
+ * should land on, so this defaults to the pre-login experience. Portal
+ * routes are temporarily nested under /home instead of / to avoid
+ * colliding with that redirect; once real auth-gated routing exists
+ * (wiring phase), "/" should become "portal home if logged in, else
+ * /login" and /home can likely just become / at that point.
  */
 export const router = createBrowserRouter([
   {
@@ -20,6 +28,10 @@ export const router = createBrowserRouter([
       { path: '/signup', element: <SignupPage /> },
       { path: '/forgot-password', element: <ForgotPasswordPage /> },
     ],
+  },
+  {
+    element: <PortalLayout />,
+    children: [{ path: '/home', element: <PortalHomePage /> }],
   },
   { path: '*', element: <NotFoundPage /> },
 ])
