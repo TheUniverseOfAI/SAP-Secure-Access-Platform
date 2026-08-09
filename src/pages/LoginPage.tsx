@@ -1,3 +1,4 @@
+import { Link, useNavigate } from 'react-router-dom'
 import AuthCard from '../components/AuthCard'
 import Button from '../components/Button'
 import Checkbox from '../components/Checkbox'
@@ -9,14 +10,19 @@ import Tabs from '../components/Tabs'
 import styles from './LoginPage.module.css'
 
 /**
- * Real login page UI — static/placeholder per the UI-first build order: no
- * form state, no submit handler, no tab-switching, no validation wiring.
- * Full visual parity with login-portal_v2.html's Sign In tab, built from
- * primitives (Button, Input, PasswordField, Checkbox, Tabs) plus the shared
- * AuthCard shell. Everything here is clickable but inert - behavior is
- * explicitly deferred to the later wiring phase.
+ * Real login page UI — static/placeholder per the UI-first build order:
+ * no form state, no submit handler, no validation wiring. Full visual
+ * parity with login-portal_v2.html's Sign In tab, built from primitives
+ * (Button, Input, PasswordField, Checkbox, Tabs) plus the shared AuthCard
+ * shell.
+ *
+ * Tab switching and the forgot-password link ARE wired to real navigation
+ * (via react-router-dom) — that's just routing, not business logic, so it
+ * doesn't fall under the "no wiring yet" rule the way form submission does.
  */
 export default function LoginPage() {
+  const navigate = useNavigate()
+
   return (
     <AuthCard topBanner={<ConsentBanner />}>
       <h1 className="sr-only">Sign In</h1>
@@ -24,6 +30,7 @@ export default function LoginPage() {
       <Tabs
         aria-label="Authentication method"
         activeId="signin"
+        onSelect={(id) => navigate(id === 'signup' ? '/signup' : '/login')}
         tabs={[
           { id: 'signin', label: 'Sign In' },
           { id: 'signup', label: 'Create Account' },
@@ -35,7 +42,9 @@ export default function LoginPage() {
 
       <div className={styles.formRow}>
         <Checkbox label="Remember me" />
-        <span className={styles.forgotLink}>Forgot password?</span>
+        <Link to="/forgot-password" className={styles.forgotLink}>
+          Forgot password?
+        </Link>
       </div>
 
       <Button variant="submit">Sign In</Button>

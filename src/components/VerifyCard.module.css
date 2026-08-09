@@ -1,0 +1,98 @@
+/* Source: .verify-methods / .verify-card / .verify-card-icon / .verify-card-text / .verify-card-badge / .badge-recommended. */
+.methods {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all var(--transition);
+  background: var(--white);
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-sans);
+}
+.card:hover {
+  border-color: var(--blue-400);
+  background: var(--blue-50);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+.cardSelected {
+  border-color: var(--blue-500);
+  background: var(--blue-50);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.icon svg {
+  width: 20px;
+  height: 20px;
+}
+.iconEmail {
+  background: var(--blue-50);
+  color: var(--blue-500);
+}
+.iconEmail svg {
+  stroke: var(--blue-500);
+}
+.iconSms {
+  background: var(--green-50);
+  color: var(--green-500);
+}
+.iconSms svg {
+  stroke: var(--green-500);
+}
+.iconTotp {
+  background: var(--purple-50);
+  color: var(--purple-500);
+}
+.iconTotp svg {
+  stroke: var(--purple-500);
+}
+.iconQuestions {
+  background: #fff7ed;
+}
+.iconQuestions svg {
+  stroke: var(--amber-500);
+}
+
+.text h4 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 1px;
+}
+.text p {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+}
+
+.badge {
+  margin-left: auto;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  background: var(--green-50);
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}

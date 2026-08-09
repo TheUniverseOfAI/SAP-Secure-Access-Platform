@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import AuthCard from '../components/AuthCard'
 import Button from '../components/Button'
 import Checkbox from '../components/Checkbox'
@@ -12,14 +13,18 @@ import styles from './SignupPage.module.css'
 
 /**
  * Real signup page UI — static/placeholder per the UI-first build order: no
- * form state, no submit handler, no tab-switching, no validation/strength
- * wiring. Full visual parity with login-portal_v2.html's Create Account
- * tab, built from primitives (Button, Input, PasswordField, Checkbox,
- * Tabs, InfoTip, PasswordStrengthMeter, Divider) plus the shared AuthCard
- * shell. Everything here is clickable but inert - behavior is explicitly
- * deferred to the later wiring phase.
+ * form state, no submit handler, no validation/strength wiring. Full
+ * visual parity with login-portal_v2.html's Create Account tab, built
+ * from primitives (Button, Input, PasswordField, Checkbox, Tabs, InfoTip,
+ * PasswordStrengthMeter, Divider) plus the shared AuthCard shell.
+ *
+ * Tab switching IS wired to real navigation (via react-router-dom) — see
+ * LoginPage.tsx's comment for why that's not considered "wiring-phase"
+ * work.
  */
 export default function SignupPage() {
+  const navigate = useNavigate()
+
   return (
     <AuthCard topBanner={<ConsentBanner />}>
       <h1 className="sr-only">Create Account</h1>
@@ -27,6 +32,7 @@ export default function SignupPage() {
       <Tabs
         aria-label="Authentication method"
         activeId="signup"
+        onSelect={(id) => navigate(id === 'signup' ? '/signup' : '/login')}
         tabs={[
           { id: 'signin', label: 'Sign In' },
           { id: 'signup', label: 'Create Account' },

@@ -1,0 +1,30 @@
+/* Source: .otp-inputs / .otp-input. */
+.group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.input {
+  width: 48px;
+  height: 56px;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  border: 1.5px solid var(--gray-300);
+  border-radius: 10px;
+  outline: none;
+  transition: all var(--transition);
+  color: var(--gray-800);
+  background: var(--white);
+}
+.input:focus {
+  border-color: var(--blue-400);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+.inputFilled {
+  border-color: var(--blue-500);
+  background: var(--blue-50);
+}
