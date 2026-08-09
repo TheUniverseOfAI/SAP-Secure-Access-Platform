@@ -1,0 +1,4 @@
+/* Source: .page. Outer padding wrapper for portal page content, distinct from PortalLayout's .main/.content (which handle the sidebar offset). */
+.page {
+  padding: 32px;
+}
