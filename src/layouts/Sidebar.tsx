@@ -12,11 +12,11 @@ const ExternalArrow = (
 /**
  * Post-login sidebar nav tree. Ported from sap-package/app-files/sap-portal_v2.html
  * (lines 407-555). Every item now has a real destination and uses real
- * react-router navigation with route-derived `active` state, EXCEPT "User
- * Profile" and "Auth & Authorization" (both belong to ExternalLayout,
- * not built yet). Groups auto-expand (defaultOpen) when the current route
- * is inside them. Group expand/collapse itself still uses local state
- * (see NavGroup.tsx) since that's structural UI, not business logic.
+ * react-router navigation with route-derived `active` state, including
+ * "User Profile" and "Auth & Authorization" (both belong to ExternalLayout).
+ * Groups auto-expand (defaultOpen) when the current route is inside them.
+ * Group expand/collapse itself still uses local state (see NavGroup.tsx)
+ * since that's structural UI, not business logic.
  */
 export default function Sidebar() {
   const location = useLocation()
@@ -192,7 +192,13 @@ export default function Sidebar() {
           }
         >
           <NavItem nested label="Overview" active={isActive('/security/overview')} onClick={() => navigate('/security/overview')} />
-          <NavItem nested label="Auth & Authorization" trailingIcon={ExternalArrow} />
+          <NavItem
+            nested
+            label="Auth & Authorization"
+            trailingIcon={ExternalArrow}
+            active={inGroup('/auth-settings')}
+            onClick={() => navigate('/auth-settings/intro')}
+          />
           <NavItem nested label="Compliance" active={isActive('/security/compliance')} onClick={() => navigate('/security/compliance')} />
           <NavItem
             nested

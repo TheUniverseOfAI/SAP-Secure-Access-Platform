@@ -1,24 +1,34 @@
+import type { ReactNode } from 'react'
 import { Outlet } from 'react-router-dom'
-import ExternalHeader from './ExternalHeader'
-import ExternalSidebar from './ExternalSidebar'
 import '../styles/legacy-sap.css'
 import styles from './ExternalLayout.module.css'
 
+interface ExternalLayoutProps {
+  header: ReactNode
+  sidebar: ReactNode
+}
+
 /**
- * Shared shell for profile/auth-settings pages. Renders the active tab
- * via <Outlet /> — tabs are real routes (/profile/personal, etc.), same
- * pattern as PortalLayout's pages, not local tab-switch state, since
- * navigating between profile sections is exactly the kind of "which
- * screen is showing" structural navigation already wired everywhere else.
+ * Shared shell for profile/auth-settings pages — the two ExternalLayout
+ * sections from the plan. Takes `header`/`sidebar` as props rather than
+ * hardcoding ExternalHeader/ExternalSidebar, since auth-settings needs a
+ * different header title and a completely different sidebar
+ * (AuthSettingsSidebar) while the wrapper structure (narrow-sidebar
+ * positioning, main content offset) is identical between the two —
+ * parameterizing avoids duplicating that structural CSS/markup twice.
+ *
+ * Renders the active tab via <Outlet /> — tabs are real routes
+ * (/profile/personal, /auth-settings/passwords, etc.), same pattern as
+ * PortalLayout's pages.
  */
-export default function ExternalLayout() {
+export default function ExternalLayout({ header, sidebar }: ExternalLayoutProps) {
   return (
     <div className={styles.page}>
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
-      <ExternalHeader />
-      <ExternalSidebar />
+      {header}
+      {sidebar}
       <main id="main-content" className={styles.main}>
         <Outlet />
       </main>

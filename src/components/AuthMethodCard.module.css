@@ -1,0 +1,81 @@
+/*
+  Source: .auth-list / .auth-card / .auth-icon / .auth-body / .auth-name /
+  .auth-desc / .auth-right / .mandatory / .recommended / .optional-tag,
+  from sap-auth-settings_v3.html. This is the confirmed real source of the
+  .auth-card collision found earlier in legacy-sap.css (a "disabled
+  verification method" pattern that broke LoginPage's card — see PR #5) —
+  fully scoped here rather than depending on that ambiguous global class.
+*/
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 20px;
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  background: var(--white);
+  transition: all 0.15s;
+}
+.cardDisabled {
+  opacity: 0.55;
+}
+
+.icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+}
+.name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--gray-800);
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.desc {
+  font-size: 0.78rem;
+  color: var(--gray-500);
+  line-height: 1.55;
+}
+
+.tag {
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+.tagMandatory {
+  background: var(--red-50);
+  color: var(--red-600);
+  border: 1px solid var(--red-100);
+}
+.tagRecommended {
+  background: var(--green-50);
+  color: var(--green-600);
+  border: 1px solid var(--green-100);
+}
+.tagOptional {
+  background: var(--gray-100);
+  color: var(--gray-500);
+}
