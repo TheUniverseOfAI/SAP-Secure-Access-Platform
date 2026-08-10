@@ -48,3 +48,11 @@
   background: var(--green-50);
   color: var(--green-600);
 }
+.badgeAmber {
+  background: var(--amber-50);
+  color: #92400e;
+}
+.badgeRed {
+  background: #fef2f2;
+  color: #b91c1c;
+}

@@ -4,11 +4,10 @@ import styles from './ExternalSidebar.module.css'
 
 /**
  * Narrow sidebar for ExternalLayout (profile section navigation). Ported
- * from sap-user-profile_v2.html's <nav class="sidebar">. Personal/Contact/
- * Employment (Round A) navigate for real with route-derived active state.
- * Identity/Financial/Health/Education/Documents/Danger Zone (Round B, not
- * built yet) remain inert. Avatar upload button renders but doesn't
- * actually accept/preview a file yet (no state) — visual only.
+ * from sap-user-profile_v2.html's <nav class="sidebar">. Every item now
+ * navigates for real with route-derived active state. Avatar upload
+ * button renders but doesn't actually accept/preview a file yet (no
+ * state) — visual only.
  */
 export default function ExternalSidebar() {
   const location = useLocation()
@@ -82,6 +81,8 @@ export default function ExternalSidebar() {
         <SbNavItem
           label="Identity & IDs"
           count="16"
+          active={isActive('/profile/identity')}
+          onClick={() => navigate('/profile/identity')}
           icon={
             <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0z" />
@@ -91,6 +92,8 @@ export default function ExternalSidebar() {
         <SbNavItem
           label="Financial"
           count="30+"
+          active={isActive('/profile/financial')}
+          onClick={() => navigate('/profile/financial')}
           icon={
             <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
@@ -100,6 +103,8 @@ export default function ExternalSidebar() {
         <SbNavItem
           label="Health & Safety"
           count="10"
+          active={isActive('/profile/health')}
+          onClick={() => navigate('/profile/health')}
           icon={
             <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
@@ -112,6 +117,8 @@ export default function ExternalSidebar() {
         <SbNavItem
           label="Education & Certs"
           count="14"
+          active={isActive('/profile/education')}
+          onClick={() => navigate('/profile/education')}
           icon={
             <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342" />
@@ -121,6 +128,8 @@ export default function ExternalSidebar() {
         <SbNavItem
           label="Documents"
           count="4"
+          active={isActive('/profile/documents')}
+          onClick={() => navigate('/profile/documents')}
           icon={
             <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m6.75 12H9.75m0 0l3-3m-3 3l3 3m-8.25 0h13.5a.75.75 0 00.75-.75V5.25a.75.75 0 00-.75-.75H5.25a.75.75 0 00-.75.75v14.25c0 .414.336.75.75.75z" />
@@ -132,6 +141,8 @@ export default function ExternalSidebar() {
         <SbNavItem
           danger
           label="Danger Zone"
+          active={isActive('/profile/danger')}
+          onClick={() => navigate('/profile/danger')}
           icon={
             <svg fill="none" stroke="var(--red-500)" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126z" />

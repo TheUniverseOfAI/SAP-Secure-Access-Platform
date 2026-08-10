@@ -1,18 +1,21 @@
 import type { ReactNode } from 'react'
 import styles from './Card.module.css'
 
-type BadgeColor = 'blue' | 'green'
+type BadgeColor = 'blue' | 'green' | 'amber' | 'red'
 
 interface CardProps {
   title?: string
   icon?: ReactNode
   badge?: { label: string; color: BadgeColor }
+  className?: string
   children: ReactNode
 }
 
 const BADGE_CLASS: Record<BadgeColor, string | undefined> = {
   blue: styles.badgeBlue,
   green: styles.badgeGreen,
+  amber: styles.badgeAmber,
+  red: styles.badgeRed,
 }
 
 /**
@@ -21,7 +24,7 @@ const BADGE_CLASS: Record<BadgeColor, string | undefined> = {
  * .card-header / .card-badge, used e.g. for "Required"/"Active" labels on
  * profile form sections). Source: .card.
  */
-export default function Card({ title, icon, badge, children }: CardProps) {
+export default function Card({ title, icon, badge, className, children }: CardProps) {
   const heading = title && (
     <h2>
       {icon}
@@ -30,7 +33,7 @@ export default function Card({ title, icon, badge, children }: CardProps) {
   )
 
   return (
-    <div className={styles.card}>
+    <div className={[styles.card, className].filter(Boolean).join(' ')}>
       {badge ? (
         <div className={styles.header}>
           {heading}
