@@ -9,12 +9,12 @@ import styles from './PortalHomePage.module.css'
 
 /**
  * Real portal home page UI — static/placeholder per the UI-first build
- * order: stat cards and activity items are clickable but inert, since
- * their target pages (privacy, security, status, etc.) don't exist yet.
- * The "About SAP" quick-nav card is the one exception — it navigates for
- * real now that AboutPage exists, same "structural navigation" reasoning
- * used for Sidebar/tabs elsewhere. Full visual parity
- * with sap-portal_v2.html's #page-home block.
+ * order: the "Active Users" stat card and the Recent Activity items stay
+ * inert (no real target in the source either, or no page for it). Every
+ * other stat card and quick-nav card now navigates for real, since their
+ * target pages all exist as of the detail-pages round — same "structural
+ * navigation" reasoning used for Sidebar/tabs elsewhere. Full visual
+ * parity with sap-portal_v2.html's #page-home block.
  */
 export default function PortalHomePage() {
   const navigate = useNavigate()
@@ -33,6 +33,7 @@ export default function PortalHomePage() {
             color="green"
             value="99.98%"
             label="Uptime (30 days)"
+            onClick={() => navigate('/status/current')}
             icon={
               <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -43,6 +44,7 @@ export default function PortalHomePage() {
             color="blue"
             value="A+"
             label="Security Score"
+            onClick={() => navigate('/security/overview')}
             icon={
               <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751" />
@@ -53,6 +55,7 @@ export default function PortalHomePage() {
             color="purple"
             value="SOC 2"
             label="Compliance Level"
+            onClick={() => navigate('/security/compliance')}
             icon={
               <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9zm3.75 11.625a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
@@ -75,6 +78,7 @@ export default function PortalHomePage() {
           <QuickGrid>
             <QuickCard
               label="Privacy Policy"
+              onClick={() => navigate('/privacy/overview')}
               icon={
                 <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751" />
@@ -83,6 +87,7 @@ export default function PortalHomePage() {
             />
             <QuickCard
               label="Accessibility"
+              onClick={() => navigate('/accessibility/statement')}
               icon={
                 <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952" />
@@ -91,6 +96,7 @@ export default function PortalHomePage() {
             />
             <QuickCard
               label="Terms of Use"
+              onClick={() => navigate('/terms/agreement')}
               icon={
                 <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12" />
@@ -99,6 +105,7 @@ export default function PortalHomePage() {
             />
             <QuickCard
               label="System Status"
+              onClick={() => navigate('/status/current')}
               icon={
                 <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75z" />
@@ -107,6 +114,7 @@ export default function PortalHomePage() {
             />
             <QuickCard
               label="Security"
+              onClick={() => navigate('/security/overview')}
               icon={
                 <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />

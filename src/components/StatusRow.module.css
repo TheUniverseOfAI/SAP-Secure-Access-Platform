@@ -1,0 +1,58 @@
+/* Source: .status-row / .status-left / .status-dot / .status-name / .status-badge. */
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--gray-100);
+}
+.row:last-child {
+  border-bottom: none;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.dotOperational {
+  background: var(--green-500);
+}
+.dotDegraded {
+  background: var(--amber-500);
+}
+.dotDown {
+  background: var(--red-500);
+}
+
+.name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-700);
+}
+
+.badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+.badgeOperational {
+  background: var(--green-50);
+  color: #15803d;
+}
+.badgeDegraded {
+  background: #fffbeb;
+  color: #92400e;
+}
+.badgeDown {
+  background: #fef2f2;
+  color: #b91c1c;
+}

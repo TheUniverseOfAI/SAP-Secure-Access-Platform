@@ -8,6 +8,18 @@ import PortalHomePage from './pages/PortalHomePage'
 import PortalsPage from './pages/PortalsPage'
 import LeadershipPage from './pages/LeadershipPage'
 import AboutPage from './pages/AboutPage'
+import { PrivacyOverviewPage, PrivacyCollectionPage, PrivacySharingPage, PrivacyRightsPage } from './pages/detail/PrivacyPages'
+import {
+  AccessibilityStatementPage,
+  AccessibilityStandardsPage,
+  AccessibilityFeaturesPage,
+  AccessibilityReportPage,
+} from './pages/detail/AccessibilityPages'
+import { TermsAgreementPage, TermsUsagePage, TermsLimitsPage } from './pages/detail/TermsPages'
+import { StatusCurrentPage, StatusIncidentsPage, StatusMaintenancePage, StatusUptimePage } from './pages/detail/StatusPages'
+import { SecurityOverviewPage, SecurityCompliancePage, SecurityVulnPage, SecurityIncidentPage } from './pages/detail/SecurityPages'
+import { HelpFaqPage, HelpKbPage, HelpGuidesPage, HelpTicketPage } from './pages/detail/HelpPages'
+import { ContactGeneralPage, ContactSupportPage, ContactSalesPage } from './pages/detail/ContactPages'
 import NotFoundPage from './pages/NotFoundPage'
 
 /**
@@ -39,6 +51,39 @@ export const router = createBrowserRouter([
       { path: '/portals', element: <PortalsPage /> },
       { path: '/leadership', element: <LeadershipPage /> },
       { path: '/about', element: <AboutPage /> },
+
+      { path: '/privacy/overview', element: <PrivacyOverviewPage /> },
+      { path: '/privacy/data-collection', element: <PrivacyCollectionPage /> },
+      { path: '/privacy/data-sharing', element: <PrivacySharingPage /> },
+      { path: '/privacy/your-rights', element: <PrivacyRightsPage /> },
+
+      { path: '/accessibility/statement', element: <AccessibilityStatementPage /> },
+      { path: '/accessibility/standards', element: <AccessibilityStandardsPage /> },
+      { path: '/accessibility/features', element: <AccessibilityFeaturesPage /> },
+      { path: '/accessibility/report', element: <AccessibilityReportPage /> },
+
+      { path: '/terms/agreement', element: <TermsAgreementPage /> },
+      { path: '/terms/acceptable-use', element: <TermsUsagePage /> },
+      { path: '/terms/limitations', element: <TermsLimitsPage /> },
+
+      { path: '/status/current', element: <StatusCurrentPage /> },
+      { path: '/status/incidents', element: <StatusIncidentsPage /> },
+      { path: '/status/maintenance', element: <StatusMaintenancePage /> },
+      { path: '/status/uptime', element: <StatusUptimePage /> },
+
+      { path: '/security/overview', element: <SecurityOverviewPage /> },
+      { path: '/security/compliance', element: <SecurityCompliancePage /> },
+      { path: '/security/vulnerability', element: <SecurityVulnPage /> },
+      { path: '/security/incident-response', element: <SecurityIncidentPage /> },
+
+      { path: '/help/faq', element: <HelpFaqPage /> },
+      { path: '/help/knowledge-base', element: <HelpKbPage /> },
+      { path: '/help/guides', element: <HelpGuidesPage /> },
+      { path: '/help/ticket', element: <HelpTicketPage /> },
+
+      { path: '/contact/general', element: <ContactGeneralPage /> },
+      { path: '/contact/support', element: <ContactSupportPage /> },
+      { path: '/contact/sales', element: <ContactSalesPage /> },
     ],
   },
   { path: '*', element: <NotFoundPage /> },
