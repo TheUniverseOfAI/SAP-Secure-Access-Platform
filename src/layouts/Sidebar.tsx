@@ -1,3 +1,4 @@
+import { useLocation, useNavigate } from 'react-router-dom'
 import NavGroup from '../components/NavGroup'
 import NavItem from '../components/NavItem'
 import styles from './Sidebar.module.css'
@@ -10,24 +11,28 @@ const ExternalArrow = (
 
 /**
  * Post-login sidebar nav tree. Ported from sap-package/app-files/sap-portal_v2.html
- * (lines 407-555). Static/inert per the UI-first rule: `active` is
- * hardcoded to "Home" (matching the source's default state) since no
- * portal routes exist yet to derive it from — that becomes real once
- * PortalLayout's routes are wired up. Group expand/collapse works for
- * real (local state, see NavGroup.tsx) since that's structural UI, not
- * business logic. Nav items don't navigate anywhere yet (no onClick
- * beyond groups toggling) — same reasoning, deferred until their target
- * pages/routes exist, unlike LoginPage/SignupPage's tabs which had real
- * destinations to wire up already.
+ * (lines 407-555). Static/inert per the UI-first rule, EXCEPT Home and
+ * Portals, which now have real routes (/home, /portals) — those two use
+ * real react-router navigation with route-derived `active` state, same
+ * "structural navigation, not business logic" reasoning already applied
+ * to LoginPage/SignupPage's tabs. Every other item (About, Leadership,
+ * User Profile, and everything inside the Support/Legal/Operations
+ * groups) still has no target page/route to go to, so those remain
+ * inert. Group expand/collapse works for real regardless (local state,
+ * see NavGroup.tsx) since that's structural UI, not business logic.
  */
 export default function Sidebar() {
+  const location = useLocation()
+  const navigate = useNavigate()
+
   return (
     <nav className={styles.sidebar} aria-label="Main navigation">
       <div className={styles.section}>
         <div className={styles.sectionTitle}>Main</div>
         <NavItem
-          active
+          active={location.pathname === '/home'}
           label="Home"
+          onClick={() => navigate('/home')}
           icon={
             <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
@@ -36,8 +41,10 @@ export default function Sidebar() {
         />
         <NavItem
           featured
+          active={location.pathname === '/portals'}
           label="Portals"
           badge="20"
+          onClick={() => navigate('/portals')}
           icon={
             <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true" style={{ opacity: 0.9 }}>
               <path d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />

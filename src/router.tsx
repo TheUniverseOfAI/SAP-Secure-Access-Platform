@@ -5,6 +5,7 @@ import SignupPage from './pages/SignupPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import PortalLayout from './layouts/PortalLayout'
 import PortalHomePage from './pages/PortalHomePage'
+import PortalsPage from './pages/PortalsPage'
 import NotFoundPage from './pages/NotFoundPage'
 
 /**
@@ -31,7 +32,10 @@ export const router = createBrowserRouter([
   },
   {
     element: <PortalLayout />,
-    children: [{ path: '/home', element: <PortalHomePage /> }],
+    children: [
+      { path: '/home', element: <PortalHomePage /> },
+      { path: '/portals', element: <PortalsPage /> },
+    ],
   },
   { path: '*', element: <NotFoundPage /> },
 ])
