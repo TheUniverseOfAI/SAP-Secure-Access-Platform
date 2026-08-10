@@ -169,7 +169,7 @@ export default function ForgotPasswordPage() {
         <>
           <div>
             <PasswordField id="fpNewPass" label="New Password" required placeholder="Min 12 characters" />
-            <PasswordStrengthMeter />
+            <PasswordStrengthMeter variant="forgot" />
           </div>
           <PasswordField id="fpConfirmPass" label="Confirm Password" required placeholder="Re-enter new password" />
           <Button variant="submit" onClick={() => setStep(5)}>

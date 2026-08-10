@@ -40,3 +40,262 @@
   color: var(--gray-500);
   margin-bottom: 14px;
 }
+
+/* Source: .acct-grid / .acct-card / .card-chip and nested rules. */
+.acctGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.acctCard {
+  border: 1px solid var(--gray-200);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--white);
+  transition: all 0.15s;
+}
+.acctCard:hover {
+  border-color: var(--blue-300);
+  box-shadow: 0 2px 12px rgba(59, 130, 246, 0.06);
+}
+.acctCardHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--gray-50);
+  border-bottom: 1px solid var(--gray-100);
+}
+.acctLogo {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: white;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--blue-600), var(--blue-500));
+}
+.acctInfo {
+  flex: 1;
+  min-width: 0;
+}
+.acctName {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--gray-800);
+}
+.acctMeta {
+  font-size: 0.74rem;
+  color: var(--gray-500);
+  margin-top: 1px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.acctBadge {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-right: 4px;
+}
+.acctBadge.primary {
+  background: var(--green-50);
+  color: var(--green-600);
+  border: 1px solid var(--green-100);
+}
+.acctBadge.checking {
+  background: var(--blue-50);
+  color: var(--blue-600);
+}
+.acctBadge.savings {
+  background: #fffbeb;
+  color: #92400e;
+}
+.acctActions {
+  display: flex;
+  gap: 5px;
+}
+.acctActions button {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--gray-400);
+  transition: all 0.15s;
+}
+.acctActions button:hover {
+  border-color: var(--blue-400);
+  color: var(--blue-500);
+  background: var(--blue-50);
+}
+.acctActions button.del:hover {
+  border-color: var(--red-500);
+  color: var(--red-500);
+  background: var(--red-50);
+}
+.acctActions button svg {
+  width: 14px;
+  height: 14px;
+}
+.acctCardBody {
+  padding: 14px 16px;
+}
+.acctCardBodyLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 8px;
+}
+.cardsRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.cardChip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  font-size: 0.78rem;
+  background: var(--white);
+}
+.chipType {
+  font-size: 0.6rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+}
+.chipType.visa {
+  background: #1a1f71;
+}
+.chipType.mc {
+  background: #eb001b;
+}
+.chipType.amex {
+  background: #006fcf;
+}
+.chipType.disc {
+  background: #ff6000;
+}
+.chipType.debit {
+  background: var(--gray-700);
+}
+.chipNum {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--gray-600);
+  letter-spacing: 1px;
+}
+.chipExp {
+  font-size: 0.7rem;
+  color: var(--gray-400);
+}
+
+/* Source: .emp-table / .tax-table (reused table pattern, scoped locally). */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+.table thead {
+  background: var(--gray-50);
+}
+.table th {
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--gray-600);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--gray-200);
+  white-space: nowrap;
+}
+.table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--gray-100);
+  color: var(--gray-700);
+  vertical-align: top;
+}
+.table tr:last-child td {
+  border-bottom: none;
+}
+.table tr:hover {
+  background: var(--gray-50);
+}
+.statusPill {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.statusPill.current {
+  background: var(--green-50);
+  color: var(--green-600);
+}
+.statusPill.past {
+  background: var(--gray-100);
+  color: var(--gray-500);
+}
+.notesText {
+  font-size: 0.78rem;
+  color: var(--gray-500);
+  max-width: 200px;
+}
+.actionBtns {
+  display: flex;
+  gap: 5px;
+}
+.actionBtns button {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--gray-400);
+  transition: all 0.15s;
+}
+.actionBtns button.del:hover {
+  border-color: var(--red-500);
+  color: var(--red-500);
+  background: var(--red-50);
+}
+.actionBtns button svg {
+  width: 14px;
+  height: 14px;
+}
+.amount {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+.amount.refund {
+  color: var(--green-600);
+}
+.amount.owed {
+  color: var(--red-500);
+}

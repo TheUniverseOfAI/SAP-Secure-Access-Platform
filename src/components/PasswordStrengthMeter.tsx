@@ -1,6 +1,7 @@
 import styles from './PasswordStrengthMeter.module.css'
 
-const REQUIREMENTS = [
+/** Source: #pwHintsSignup — longer "At least one X" phrasing. */
+const SIGNUP_REQUIREMENTS = [
   'At least 12 characters',
   'At least one uppercase letter (A–Z)',
   'At least one lowercase letter (a–z)',
@@ -9,13 +10,28 @@ const REQUIREMENTS = [
   'No spaces allowed',
 ]
 
+/** Source: #pwHintsForgot — shorter phrasing, distinct from the signup hints. */
+const FORGOT_REQUIREMENTS = [
+  'At least 12 characters',
+  'Uppercase letter (A–Z)',
+  'Lowercase letter (a–z)',
+  'Number (0–9)',
+  'Special character (!@#$%^&*)',
+  'No spaces',
+]
+
+interface PasswordStrengthMeterProps {
+  variant?: 'signup' | 'forgot'
+}
+
 /**
  * Static — all 4 bars neutral, no strength label, all requirement hints
  * unmet. Live strength calculation and met/unmet hint coloring is explicit
  * wiring-phase work, not built here. Source: .password-strength /
  * .strength-bar / .pw-hints / .pw-hint.
  */
-export default function PasswordStrengthMeter() {
+export default function PasswordStrengthMeter({ variant = 'signup' }: PasswordStrengthMeterProps) {
+  const REQUIREMENTS = variant === 'forgot' ? FORGOT_REQUIREMENTS : SIGNUP_REQUIREMENTS
   return (
     <>
       <div className={styles.bars} aria-hidden="true">

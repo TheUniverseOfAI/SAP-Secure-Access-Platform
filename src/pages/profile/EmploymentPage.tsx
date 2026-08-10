@@ -1,20 +1,29 @@
+import { useState } from 'react'
 import Button from '../../components/Button'
 import Card from '../../components/Card'
+import EditEmploymentModal from '../../components/EditEmploymentModal'
 import Input from '../../components/Input'
 import PageHeader from '../../components/PageHeader'
 import Select from '../../components/Select'
 import Textarea from '../../components/Textarea'
+import { employmentHistory } from '../../data/employmentHistory'
 import formStyles from './ProfileForm.module.css'
 import styles from './EmploymentPage.module.css'
 
 /**
  * Real Employment tab — full visual parity with sap-user-profile_v2.html's
- * #tab-employment panel. The employment history table starts empty in the
- * source (0 records, no seed data) and stays that way here too - only the
- * empty state is rendered, not a populated table, since there's nothing to
- * populate it with and no add/edit logic being wired here.
+ * #tab-employment panel. The employment history table is seeded from
+ * src/data/employmentHistory.ts (transcribed from the source's own
+ * unconditionally-rendered `empHistory` array) — an earlier pass of this
+ * page incorrectly rendered only the empty state, which an audit against
+ * the source caught. "Edit in modal" opens EditEmploymentModal (structural
+ * — just showing the record); "Edit in form" and "Delete" have no
+ * corresponding wiring here since they'd require real data mutation.
  */
 export default function EmploymentPage() {
+  const [editingId, setEditingId] = useState<number | null>(null)
+  const editingRecord = employmentHistory.find((h) => h.id === editingId) ?? null
+
   return (
     <>
       <PageHeader title="Employment Details" description="Current position and employment history. Add past roles below and they'll appear in the history table." />
@@ -129,23 +138,83 @@ export default function EmploymentPage() {
             </svg>
             Employment History
           </h2>
-          <span className={styles.historyCount}>0 records</span>
+          <span className={styles.historyCount}>
+            {employmentHistory.length} record{employmentHistory.length !== 1 ? 's' : ''}
+          </span>
         </div>
         <div className={styles.tableWrap}>
-          <div className={styles.tableEmpty}>
-            <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25"
-              />
-            </svg>
-            No employment history added yet.
-            <br />
-            Use the form above to add your past positions.
-          </div>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Company</th>
+                <th>Department</th>
+                <th>Period</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Notes</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {employmentHistory.map((h, i) => {
+                const isCurrent = !h.endDisplay
+                const notes = h.notes.length > 80 ? `${h.notes.slice(0, 80)}…` : h.notes
+                return (
+                  <tr key={h.id}>
+                    <td style={{ color: 'var(--gray-400)', fontWeight: 600 }}>{i + 1}</td>
+                    <td>
+                      <span className={styles.jobTitle}>{h.title}</span>
+                    </td>
+                    <td>
+                      <span className={styles.companyName}>{h.company}</span>
+                    </td>
+                    <td>{h.dept || '—'}</td>
+                    <td>
+                      <span className={styles.dateRange}>
+                        {h.startDisplay} → {isCurrent ? 'Present' : h.endDisplay}
+                      </span>
+                    </td>
+                    <td>{h.type}</td>
+                    <td>
+                      <span className={[styles.statusPill, isCurrent ? styles.current : styles.past].join(' ')}>
+                        {isCurrent ? 'Current' : 'Past'}
+                      </span>
+                    </td>
+                    <td>
+                      <span className={styles.notesText} title={h.notes}>
+                        {notes}
+                      </span>
+                    </td>
+                    <td>
+                      <div className={styles.actionBtns}>
+                        <button title="Edit in form">
+                          <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" />
+                          </svg>
+                        </button>
+                        <button title="Edit in modal" onClick={() => setEditingId(h.id)}>
+                          <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                          </svg>
+                        </button>
+                        <button className={styles.del} title="Delete">
+                          <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79" />
+                          </svg>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
         </div>
       </Card>
+
+      {editingRecord && <EditEmploymentModal record={editingRecord} onClose={() => setEditingId(null)} />}
     </>
   )
 }
