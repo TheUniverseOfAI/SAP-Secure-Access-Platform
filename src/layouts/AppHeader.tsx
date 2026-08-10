@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import styles from './AppHeader.module.css'
 
 /**
@@ -12,11 +13,15 @@ import styles from './AppHeader.module.css'
  *
  * Everything here is static/inert per the UI-first build order: the menu
  * toggle doesn't actually collapse a sidebar (no state), the search input
- * isn't controlled, notification/settings icons don't open anything, and
- * the avatar shows placeholder initials with no real user data or menu.
- * All of that is wiring-phase work.
+ * isn't controlled, and notification/settings icons don't open anything.
+ * The avatar shows placeholder initials with no real user data or account
+ * menu, but IS wired to navigate to Leadership — source markup has no
+ * dropdown menu on it, just onclick="navigateTo('leadership',...)", so
+ * this is structural navigation like every other now-wired nav link, not
+ * deferred business logic.
  */
 export default function AppHeader() {
+  const navigate = useNavigate()
   return (
     <header className={styles.header} role="banner">
       <div className={styles.left}>
@@ -79,7 +84,7 @@ export default function AppHeader() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
         </button>
-        <button className={styles.avatar} aria-label="Account menu for Muhanned Alogaidi">
+        <button className={styles.avatar} aria-label="Muhanned Alogaidi" onClick={() => navigate('/leadership')}>
           MA
         </button>
       </div>

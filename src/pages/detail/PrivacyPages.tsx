@@ -3,7 +3,13 @@ import DetailLayout from '../../components/DetailLayout'
 /** Source: sap-portal_v2.html's pageData['privacy-overview']. */
 export function PrivacyOverviewPage() {
   return (
-    <DetailLayout parent="Privacy Policy" current="Overview" title="Privacy Policy — Overview" description="Summary of our privacy practices.">
+    <DetailLayout
+      parent="Privacy Policy"
+      current="Overview"
+      title="Privacy Policy — Overview"
+      description="Summary of our privacy practices."
+      updated="Last updated: April 10, 2026"
+    >
       <h2>Overview</h2>
       <p>
         SAP is committed to protecting the privacy and security of your personal information. This Privacy Policy
@@ -33,6 +39,7 @@ export function PrivacyCollectionPage() {
       current="Data Collection"
       title="Privacy Policy — Data Collection"
       description="What information we collect and why."
+      updated="Last updated: April 10, 2026"
     >
       <h2>Data Collection</h2>
       <h3>Information You Provide</h3>
@@ -76,6 +83,7 @@ export function PrivacySharingPage() {
       current="Data Sharing"
       title="Privacy Policy — Data Sharing"
       description="When and with whom we share your data."
+      updated="Last updated: April 10, 2026"
     >
       <h2>Data Sharing &amp; Third Parties</h2>
       <p>SAP does not sell, rent, or trade your personal information. We share data only in the following circumstances:</p>
@@ -106,6 +114,7 @@ export function PrivacyRightsPage() {
       current="Your Rights"
       title="Privacy Policy — Your Rights"
       description="Your data rights and how to exercise them."
+      updated="Last updated: April 10, 2026"
     >
       <h2>Your Rights</h2>
       <p>Depending on your jurisdiction, you may have the following rights:</p>

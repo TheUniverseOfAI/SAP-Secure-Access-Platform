@@ -8,6 +8,7 @@ export function TermsAgreementPage() {
       current="Agreement"
       title="Terms of Use — Agreement"
       description="The governing agreement for platform usage."
+      updated="Effective: January 1, 2026"
     >
       <h2>Terms of Service Agreement</h2>
       <p>
@@ -36,6 +37,7 @@ export function TermsUsagePage() {
       current="Acceptable Use"
       title="Terms of Use — Acceptable Use"
       description="Rules for acceptable platform usage."
+      updated="Effective: January 1, 2026"
     >
       <h2>Acceptable Use Policy</h2>
       <p>You agree to use SAP only for lawful purposes and in accordance with your organization&apos;s policies.</p>
@@ -60,6 +62,7 @@ export function TermsLimitsPage() {
       current="Limitations"
       title="Terms of Use — Limitations"
       description="Liability limitations and disclaimers."
+      updated="Effective: January 1, 2026"
     >
       <h2>Limitations &amp; Disclaimers</h2>
       <h3>Limitation of Liability</h3>

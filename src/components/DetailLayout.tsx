@@ -10,6 +10,7 @@ interface DetailLayoutProps {
   current: string
   title: string
   description: string
+  updated?: string
   children: ReactNode
 }
 
@@ -20,12 +21,12 @@ interface DetailLayoutProps {
  * Reduces what would otherwise be 26x repeated boilerplate down to one
  * shell + per-page content.
  */
-export default function DetailLayout({ parent, current, title, description, children }: DetailLayoutProps) {
+export default function DetailLayout({ parent, current, title, description, updated, children }: DetailLayoutProps) {
   return (
     <>
       <Breadcrumb parent={parent} current={current} />
       <div className={pageStyles.page}>
-        <PageHeader title={title} description={description} />
+        <PageHeader title={title} description={description} updated={updated} />
         <Card>
           <div className={proseStyles.prose}>{children}</div>
         </Card>

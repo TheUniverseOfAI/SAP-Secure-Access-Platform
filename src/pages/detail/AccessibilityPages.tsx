@@ -3,7 +3,13 @@ import DetailLayout from '../../components/DetailLayout'
 /** Source: pageData['a11y-statement']. */
 export function AccessibilityStatementPage() {
   return (
-    <DetailLayout parent="Accessibility" current="Statement" title="Accessibility — Statement" description="Our accessibility commitment.">
+    <DetailLayout
+      parent="Accessibility"
+      current="Statement"
+      title="Accessibility — Statement"
+      description="Our accessibility commitment."
+      updated="Last updated: March 28, 2026"
+    >
       <h2>Accessibility Statement</h2>
       <p>
         SAP is committed to ensuring digital accessibility for people of all abilities. We continually improve the user
@@ -31,6 +37,7 @@ export function AccessibilityStandardsPage() {
       current="Standards"
       title="Accessibility — Standards"
       description="WCAG compliance and standards."
+      updated="Last updated: March 28, 2026"
     >
       <h2>Standards &amp; Compliance</h2>
       <h3>WCAG 2.2 Level AA</h3>
@@ -52,7 +59,13 @@ export function AccessibilityStandardsPage() {
 /** Source: pageData['a11y-features']. */
 export function AccessibilityFeaturesPage() {
   return (
-    <DetailLayout parent="Accessibility" current="Features" title="Accessibility — Features" description="Built-in accessibility features.">
+    <DetailLayout
+      parent="Accessibility"
+      current="Features"
+      title="Accessibility — Features"
+      description="Built-in accessibility features."
+      updated="Last updated: March 28, 2026"
+    >
       <h2>Accessibility Features</h2>
       <ul>
         <li>
@@ -91,6 +104,7 @@ export function AccessibilityReportPage() {
       current="Report Issues"
       title="Accessibility — Report Issues"
       description="How to report accessibility barriers."
+      updated="Last updated: March 28, 2026"
     >
       <h2>Report an Accessibility Issue</h2>
       <p>If you encounter a barrier while using SAP, we want to know about it. Your reports help us improve the platform for everyone.</p>

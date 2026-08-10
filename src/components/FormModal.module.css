@@ -1,0 +1,105 @@
+/*
+ * Source: .modal-overlay / .modal / .modal-head / .modal-close /
+ * .modal-body / .modal-footer from sap-user-profile_v2.html's own
+ * embedded <style> block (MODAL section, lines 192-206).
+ *
+ * This is a visually distinct modal pattern from the login page's
+ * Modal.tsx (plain white sticky header + footer here, vs. login's blue
+ * gradient header) — built as its own scoped component rather than
+ * reusing Modal.tsx, since the two source pages define genuinely
+ * different-looking modals under the same generic class names
+ * (max-width 580px + max-height:90vh/overflow-y:auto here vs. 440px +
+ * overflow:hidden there). Reusing one for both would silently mismatch
+ * one of them, the same category of bug already found for AuthHeader/
+ * .modal/.auth-card elsewhere in this port.
+ */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 22, 40, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal {
+  background: var(--white);
+  border-radius: 14px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 580px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.head {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background: var(--white);
+  z-index: 1;
+  border-radius: 14px 14px 0 0;
+}
+
+.head h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gray-800);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.head h3 svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--blue-500);
+}
+
+.closeBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--gray-400);
+  transition: all 0.15s;
+}
+
+.closeBtn:hover {
+  background: var(--gray-100);
+  color: var(--gray-700);
+}
+
+.closeBtn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.body {
+  padding: 24px;
+}
+
+.footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--gray-100);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  position: sticky;
+  bottom: 0;
+  background: var(--white);
+  border-radius: 0 0 14px 14px;
+}

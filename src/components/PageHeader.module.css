@@ -14,3 +14,15 @@
   line-height: 1.6;
   max-width: 650px;
 }
+.updated {
+  font-size: 0.72rem;
+  color: var(--gray-400);
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.updated svg {
+  width: 13px;
+  height: 13px;
+}
