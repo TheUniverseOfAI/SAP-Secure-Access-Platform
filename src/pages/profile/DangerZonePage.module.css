@@ -1,0 +1,19 @@
+/* Source: page-header h1 with inline red color, .card with inline red border-color, card-header h2 with inline red color. */
+.title {
+  color: var(--red-500);
+}
+.dangerCard {
+  border-color: #fecaca;
+}
+.dangerCard h2 {
+  color: var(--red-500);
+}
+.dangerCard h2 svg {
+  stroke: var(--red-500);
+}
+.text {
+  font-size: 0.85rem;
+  color: var(--gray-600);
+  margin-bottom: 14px;
+  line-height: 1.6;
+}

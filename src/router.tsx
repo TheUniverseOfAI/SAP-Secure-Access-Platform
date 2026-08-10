@@ -24,6 +24,12 @@ import ExternalLayout from './layouts/ExternalLayout'
 import PersonalInfoPage from './pages/profile/PersonalInfoPage'
 import ContactPage from './pages/profile/ContactPage'
 import EmploymentPage from './pages/profile/EmploymentPage'
+import IdentityPage from './pages/profile/IdentityPage'
+import FinancialPage from './pages/profile/FinancialPage'
+import HealthPage from './pages/profile/HealthPage'
+import EducationPage from './pages/profile/EducationPage'
+import DocumentsPage from './pages/profile/DocumentsPage'
+import DangerZonePage from './pages/profile/DangerZonePage'
 import NotFoundPage from './pages/NotFoundPage'
 
 /**
@@ -97,6 +103,12 @@ export const router = createBrowserRouter([
       { path: '/profile/personal', element: <PersonalInfoPage /> },
       { path: '/profile/contact', element: <ContactPage /> },
       { path: '/profile/employment', element: <EmploymentPage /> },
+      { path: '/profile/identity', element: <IdentityPage /> },
+      { path: '/profile/financial', element: <FinancialPage /> },
+      { path: '/profile/health', element: <HealthPage /> },
+      { path: '/profile/education', element: <EducationPage /> },
+      { path: '/profile/documents', element: <DocumentsPage /> },
+      { path: '/profile/danger', element: <DangerZonePage /> },
     ],
   },
   { path: '*', element: <NotFoundPage /> },

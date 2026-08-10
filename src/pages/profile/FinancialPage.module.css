@@ -1,0 +1,42 @@
+/* Source: .history-header / .history-count / .emp-table-wrap / .table-empty (reused pattern from EmploymentPage, moved to its own file since Financial has 3 separate list sections). */
+.listHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.listHeader h2 {
+  margin-bottom: 0;
+}
+.count {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 5px;
+  background: var(--blue-50);
+  color: var(--blue-600);
+}
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid var(--gray-200);
+  border-radius: 10px;
+}
+.tableEmpty {
+  text-align: center;
+  padding: 32px;
+  color: var(--gray-400);
+  font-size: 0.85rem;
+}
+.tableEmpty svg {
+  width: 40px;
+  height: 40px;
+  stroke: var(--gray-300);
+  margin-bottom: 8px;
+  display: block;
+  margin-inline: auto;
+}
+.note {
+  font-size: 0.78rem;
+  color: var(--gray-500);
+  margin-bottom: 14px;
+}
