@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { ActivityItem, ActivityList } from '../components/ActivityItem'
 import Card from '../components/Card'
 import PageHeader from '../components/PageHeader'
@@ -8,12 +9,16 @@ import styles from './PortalHomePage.module.css'
 
 /**
  * Real portal home page UI — static/placeholder per the UI-first build
- * order: stat cards, quick-nav cards, and activity items are clickable
- * but inert (no onClick beyond what's shown), since their target pages
- * (privacy, security, status, etc.) don't exist yet. Full visual parity
+ * order: stat cards and activity items are clickable but inert, since
+ * their target pages (privacy, security, status, etc.) don't exist yet.
+ * The "About SAP" quick-nav card is the one exception — it navigates for
+ * real now that AboutPage exists, same "structural navigation" reasoning
+ * used for Sidebar/tabs elsewhere. Full visual parity
  * with sap-portal_v2.html's #page-home block.
  */
 export default function PortalHomePage() {
+  const navigate = useNavigate()
+
   return (
     <>
       <Breadcrumb current="Dashboard" />
@@ -110,6 +115,7 @@ export default function PortalHomePage() {
             />
             <QuickCard
               label="About SAP"
+              onClick={() => navigate('/about')}
               icon={
                 <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />

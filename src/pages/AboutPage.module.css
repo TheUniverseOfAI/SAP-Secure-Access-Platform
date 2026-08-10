@@ -1,0 +1,24 @@
+/* Source: .page, plus a couple of ad-hoc text rules from the about-company content block (h3/ul spacing not covered by Card's base h2 styling). */
+.page {
+  padding: 32px;
+}
+
+.content h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin: 16px 0 8px;
+}
+.content p,
+.content li {
+  font-size: 0.85rem;
+  color: var(--gray-600);
+  line-height: 1.7;
+}
+.content ul {
+  padding-left: 20px;
+  margin: 8px 0;
+}
+.content li {
+  margin-bottom: 4px;
+}
