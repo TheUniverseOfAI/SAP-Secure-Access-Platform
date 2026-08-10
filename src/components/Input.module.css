@@ -21,6 +21,11 @@
   color: var(--red-500);
   margin-left: 2px;
 }
+.optional {
+  font-weight: 400;
+  color: var(--gray-400);
+  font-size: 0.72rem;
+}
 
 .input {
   width: 100%;

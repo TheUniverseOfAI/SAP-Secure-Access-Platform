@@ -1,0 +1,24 @@
+/* Shared layout pieces reused across all profile tab pages. Source: .form-grid / .form-group.span-2 / .form-divider / .btn-row. */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.span2 {
+  grid-column: span 2;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--gray-100);
+  margin: 20px 0;
+}
+
+.btnRow {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--gray-100);
+}

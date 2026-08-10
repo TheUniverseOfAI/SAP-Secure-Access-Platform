@@ -5,6 +5,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string
   label: string
   required?: boolean
+  optional?: boolean
   errorMessage?: string
   /** Rendered right after the label/required marker — e.g. an InfoTip. */
   labelExtra?: ReactNode
@@ -23,6 +24,7 @@ export default function Input({
   id,
   label,
   required,
+  optional,
   errorMessage,
   labelExtra,
   suffix,
@@ -51,6 +53,7 @@ export default function Input({
             *
           </span>
         )}
+        {optional && <span className={styles.optional}>(optional)</span>}
         {labelExtra}
       </label>
       {suffix ? (
