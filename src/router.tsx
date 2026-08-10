@@ -7,6 +7,7 @@ import PortalLayout from './layouts/PortalLayout'
 import PortalHomePage from './pages/PortalHomePage'
 import PortalsPage from './pages/PortalsPage'
 import LeadershipPage from './pages/LeadershipPage'
+import AboutPage from './pages/AboutPage'
 import NotFoundPage from './pages/NotFoundPage'
 
 /**
@@ -37,6 +38,7 @@ export const router = createBrowserRouter([
       { path: '/home', element: <PortalHomePage /> },
       { path: '/portals', element: <PortalsPage /> },
       { path: '/leadership', element: <LeadershipPage /> },
+      { path: '/about', element: <AboutPage /> },
     ],
   },
   { path: '*', element: <NotFoundPage /> },
