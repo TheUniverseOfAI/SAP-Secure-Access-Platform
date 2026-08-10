@@ -53,7 +53,7 @@ import NotFoundPage from './pages/NotFoundPage'
  * (wiring phase), "/" should become "portal home if logged in, else
  * /login" and /home can likely just become / at that point.
  */
-export const router = createBrowserRouter([
+const routes = [
   {
     element: <AuthLayout />,
     children: [
@@ -138,4 +138,11 @@ export const router = createBrowserRouter([
     ],
   },
   { path: '*', element: <NotFoundPage /> },
-])
+]
+
+// import.meta.env.BASE_URL reflects vite.config.ts's `base` — "/" locally,
+// "/SAP-Secure-Access-Platform/" in the GitHub Pages build. Strip the
+// trailing slash since React Router expects a bare basename (or "").
+export const router = createBrowserRouter(routes, {
+  basename: import.meta.env.BASE_URL.replace(/\/$/, ''),
+})
