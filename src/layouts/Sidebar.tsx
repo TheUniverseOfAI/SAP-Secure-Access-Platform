@@ -11,19 +11,18 @@ const ExternalArrow = (
 
 /**
  * Post-login sidebar nav tree. Ported from sap-package/app-files/sap-portal_v2.html
- * (lines 407-555). Static/inert per the UI-first rule, EXCEPT Home and
- * Portals, which now have real routes (/home, /portals) — those two use
- * real react-router navigation with route-derived `active` state, same
- * "structural navigation, not business logic" reasoning already applied
- * to LoginPage/SignupPage's tabs. Every other item (About, Leadership,
- * User Profile, and everything inside the Support/Legal/Operations
- * groups) still has no target page/route to go to, so those remain
- * inert. Group expand/collapse works for real regardless (local state,
- * see NavGroup.tsx) since that's structural UI, not business logic.
+ * (lines 407-555). Every item now has a real destination and uses real
+ * react-router navigation with route-derived `active` state, EXCEPT "User
+ * Profile" and "Auth & Authorization" (both belong to ExternalLayout,
+ * not built yet). Groups auto-expand (defaultOpen) when the current route
+ * is inside them. Group expand/collapse itself still uses local state
+ * (see NavGroup.tsx) since that's structural UI, not business logic.
  */
 export default function Sidebar() {
   const location = useLocation()
   const navigate = useNavigate()
+  const isActive = (path: string) => location.pathname === path
+  const inGroup = (prefix: string) => location.pathname.startsWith(prefix)
 
   return (
     <nav className={styles.sidebar} aria-label="Main navigation">
@@ -87,6 +86,7 @@ export default function Sidebar() {
         <NavGroup
           label="Help Center"
           badge="4"
+          defaultOpen={inGroup('/help')}
           icon={
             <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M12 18.75h.008v.008H12v-.008z" />
@@ -94,23 +94,24 @@ export default function Sidebar() {
             </svg>
           }
         >
-          <NavItem nested label="FAQ" />
-          <NavItem nested label="Knowledge Base" />
-          <NavItem nested label="User Guides" />
-          <NavItem nested label="Submit Ticket" />
+          <NavItem nested label="FAQ" active={isActive('/help/faq')} onClick={() => navigate('/help/faq')} />
+          <NavItem nested label="Knowledge Base" active={isActive('/help/knowledge-base')} onClick={() => navigate('/help/knowledge-base')} />
+          <NavItem nested label="User Guides" active={isActive('/help/guides')} onClick={() => navigate('/help/guides')} />
+          <NavItem nested label="Submit Ticket" active={isActive('/help/ticket')} onClick={() => navigate('/help/ticket')} />
         </NavGroup>
         <NavGroup
           label="Contact"
           badge="3"
+          defaultOpen={inGroup('/contact')}
           icon={
             <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
             </svg>
           }
         >
-          <NavItem nested label="General Inquiry" />
-          <NavItem nested label="Technical Support" />
-          <NavItem nested label="Enterprise Sales" />
+          <NavItem nested label="General Inquiry" active={isActive('/contact/general')} onClick={() => navigate('/contact/general')} />
+          <NavItem nested label="Technical Support" active={isActive('/contact/support')} onClick={() => navigate('/contact/support')} />
+          <NavItem nested label="Enterprise Sales" active={isActive('/contact/sales')} onClick={() => navigate('/contact/sales')} />
         </NavGroup>
       </div>
 
@@ -119,43 +120,46 @@ export default function Sidebar() {
         <NavGroup
           label="Privacy Policy"
           badge="4"
+          defaultOpen={inGroup('/privacy')}
           icon={
             <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751" />
             </svg>
           }
         >
-          <NavItem nested label="Overview" />
-          <NavItem nested label="Data Collection" />
-          <NavItem nested label="Data Sharing" />
-          <NavItem nested label="Your Rights" />
+          <NavItem nested label="Overview" active={isActive('/privacy/overview')} onClick={() => navigate('/privacy/overview')} />
+          <NavItem nested label="Data Collection" active={isActive('/privacy/data-collection')} onClick={() => navigate('/privacy/data-collection')} />
+          <NavItem nested label="Data Sharing" active={isActive('/privacy/data-sharing')} onClick={() => navigate('/privacy/data-sharing')} />
+          <NavItem nested label="Your Rights" active={isActive('/privacy/your-rights')} onClick={() => navigate('/privacy/your-rights')} />
         </NavGroup>
         <NavGroup
           label="Accessibility"
           badge="4"
+          defaultOpen={inGroup('/accessibility')}
           icon={
             <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
             </svg>
           }
         >
-          <NavItem nested label="Statement" />
-          <NavItem nested label="Standards (WCAG)" />
-          <NavItem nested label="Features" />
-          <NavItem nested label="Report Issues" />
+          <NavItem nested label="Statement" active={isActive('/accessibility/statement')} onClick={() => navigate('/accessibility/statement')} />
+          <NavItem nested label="Standards (WCAG)" active={isActive('/accessibility/standards')} onClick={() => navigate('/accessibility/standards')} />
+          <NavItem nested label="Features" active={isActive('/accessibility/features')} onClick={() => navigate('/accessibility/features')} />
+          <NavItem nested label="Report Issues" active={isActive('/accessibility/report')} onClick={() => navigate('/accessibility/report')} />
         </NavGroup>
         <NavGroup
           label="Terms of Use"
           badge="3"
+          defaultOpen={inGroup('/terms')}
           icon={
             <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
             </svg>
           }
         >
-          <NavItem nested label="Agreement" />
-          <NavItem nested label="Acceptable Use" />
-          <NavItem nested label="Limitations" />
+          <NavItem nested label="Agreement" active={isActive('/terms/agreement')} onClick={() => navigate('/terms/agreement')} />
+          <NavItem nested label="Acceptable Use" active={isActive('/terms/acceptable-use')} onClick={() => navigate('/terms/acceptable-use')} />
+          <NavItem nested label="Limitations" active={isActive('/terms/limitations')} onClick={() => navigate('/terms/limitations')} />
         </NavGroup>
       </div>
 
@@ -164,31 +168,43 @@ export default function Sidebar() {
         <NavGroup
           label="System Status"
           badge="4"
+          defaultOpen={inGroup('/status')}
           icon={
             <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
             </svg>
           }
         >
-          <NavItem nested label="Current Status" />
-          <NavItem nested label="Incident History" />
-          <NavItem nested label="Maintenance" />
-          <NavItem nested label="Uptime Report" />
+          <NavItem nested label="Current Status" active={isActive('/status/current')} onClick={() => navigate('/status/current')} />
+          <NavItem nested label="Incident History" active={isActive('/status/incidents')} onClick={() => navigate('/status/incidents')} />
+          <NavItem nested label="Maintenance" active={isActive('/status/maintenance')} onClick={() => navigate('/status/maintenance')} />
+          <NavItem nested label="Uptime Report" active={isActive('/status/uptime')} onClick={() => navigate('/status/uptime')} />
         </NavGroup>
         <NavGroup
           label="Security"
           badge="5"
+          defaultOpen={inGroup('/security')}
           icon={
             <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
             </svg>
           }
         >
-          <NavItem nested label="Overview" />
+          <NavItem nested label="Overview" active={isActive('/security/overview')} onClick={() => navigate('/security/overview')} />
           <NavItem nested label="Auth & Authorization" trailingIcon={ExternalArrow} />
-          <NavItem nested label="Compliance" />
-          <NavItem nested label="Vulnerability Program" />
-          <NavItem nested label="Incident Response" />
+          <NavItem nested label="Compliance" active={isActive('/security/compliance')} onClick={() => navigate('/security/compliance')} />
+          <NavItem
+            nested
+            label="Vulnerability Program"
+            active={isActive('/security/vulnerability')}
+            onClick={() => navigate('/security/vulnerability')}
+          />
+          <NavItem
+            nested
+            label="Incident Response"
+            active={isActive('/security/incident-response')}
+            onClick={() => navigate('/security/incident-response')}
+          />
         </NavGroup>
       </div>
 

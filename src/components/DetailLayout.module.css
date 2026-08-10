@@ -1,0 +1,4 @@
+/* Source: .page. Shared page-padding wrapper for all detail sub-pages. */
+.page {
+  padding: 32px;
+}

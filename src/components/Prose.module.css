@@ -1,0 +1,47 @@
+/* Shared typography for rich text content blocks (h2/h3/p/ul/li/a/code), reused across all detail pages. Source: .card h2/h3, plus generic p/li/ul/a rules from the same content-card context. */
+.prose h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--gray-800);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.prose h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin: 16px 0 8px;
+}
+.prose p,
+.prose li {
+  font-size: 0.85rem;
+  color: var(--gray-600);
+  line-height: 1.7;
+}
+.prose ul {
+  padding-left: 20px;
+  margin: 8px 0;
+}
+.prose li {
+  margin-bottom: 4px;
+}
+.prose a {
+  color: var(--blue-500);
+  text-decoration: none;
+  font-weight: 500;
+}
+.prose a:hover {
+  text-decoration: underline;
+}
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  background: var(--gray-100);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+.prose b {
+  font-weight: 700;
+}
