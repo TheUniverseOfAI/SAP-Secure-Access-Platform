@@ -1,4 +1,4 @@
-/* Source: .card / .card h2. Generic white card wrapper, reusable across portal pages. */
+/* Source: .card / .card h2 / .card-header / .card-badge. Generic white card wrapper, reusable across portal pages. */
 .card {
   background: var(--white);
   border: 1px solid var(--gray-200);
@@ -11,4 +11,40 @@
   font-weight: 700;
   color: var(--gray-800);
   margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card h2 svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--blue-500);
+}
+
+/* When a badge is present, header switches to a row layout (title left, badge right) and h2 loses its own bottom margin. */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.header h2 {
+  margin-bottom: 0;
+}
+
+.badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.badgeBlue {
+  background: var(--blue-50);
+  color: var(--blue-600);
+}
+.badgeGreen {
+  background: var(--green-50);
+  color: var(--green-600);
 }

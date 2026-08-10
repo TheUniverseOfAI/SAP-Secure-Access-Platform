@@ -20,6 +20,10 @@ import { StatusCurrentPage, StatusIncidentsPage, StatusMaintenancePage, StatusUp
 import { SecurityOverviewPage, SecurityCompliancePage, SecurityVulnPage, SecurityIncidentPage } from './pages/detail/SecurityPages'
 import { HelpFaqPage, HelpKbPage, HelpGuidesPage, HelpTicketPage } from './pages/detail/HelpPages'
 import { ContactGeneralPage, ContactSupportPage, ContactSalesPage } from './pages/detail/ContactPages'
+import ExternalLayout from './layouts/ExternalLayout'
+import PersonalInfoPage from './pages/profile/PersonalInfoPage'
+import ContactPage from './pages/profile/ContactPage'
+import EmploymentPage from './pages/profile/EmploymentPage'
 import NotFoundPage from './pages/NotFoundPage'
 
 /**
@@ -84,6 +88,15 @@ export const router = createBrowserRouter([
       { path: '/contact/general', element: <ContactGeneralPage /> },
       { path: '/contact/support', element: <ContactSupportPage /> },
       { path: '/contact/sales', element: <ContactSalesPage /> },
+    ],
+  },
+  {
+    element: <ExternalLayout />,
+    children: [
+      { path: '/profile', element: <Navigate to="/profile/personal" replace /> },
+      { path: '/profile/personal', element: <PersonalInfoPage /> },
+      { path: '/profile/contact', element: <ContactPage /> },
+      { path: '/profile/employment', element: <EmploymentPage /> },
     ],
   },
   { path: '*', element: <NotFoundPage /> },

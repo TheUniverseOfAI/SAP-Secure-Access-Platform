@@ -1,0 +1,10 @@
+/* Source: .main.narrow. */
+.page {
+  min-height: 100vh;
+}
+
+.main {
+  margin-left: var(--sidebar-w-narrow);
+  margin-top: var(--header-h);
+  padding: 28px 32px 60px;
+}
