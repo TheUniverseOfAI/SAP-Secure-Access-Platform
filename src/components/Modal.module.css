@@ -1,0 +1,121 @@
+/*
+ * Source: .modal-overlay / .modal / .modal-header / .modal-header-row /
+ * .modal-header-icon / .modal-header-text / .modal-header-subtitle /
+ * .modal-close-btn / .modal-body from login-portal_v2.html's own
+ * embedded <style> block (MODAL SYSTEM section).
+ *
+ * Deliberately NOT reusing the equivalently-named global classes in
+ * legacy-sap.css: those were merged from a different source page and
+ * diverge here (.modal max-width 520px + max-height:90vh/overflow-y:auto
+ * in the merged file vs. this page's own 440px + overflow:hidden, no
+ * max-height) — the same category of merge bug already found for
+ * AuthHeader, WizardHeader, and .auth-card. Built fully scoped instead.
+ */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 22, 40, 0.55);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal {
+  background: var(--white);
+  border-radius: 14px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.22);
+  width: 100%;
+  max-width: 440px;
+  overflow: hidden;
+}
+
+.header {
+  background: linear-gradient(135deg, var(--blue-700), var(--blue-600));
+  padding: 24px 28px 20px;
+  position: relative;
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue-400), var(--blue-300));
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.headerIcon {
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
+.headerIcon svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--blue-200);
+}
+
+.headerText h3 {
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.headerSubtitle {
+  color: var(--blue-200);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  margin-top: 10px;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 34px;
+  height: 34px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  color: var(--blue-300);
+}
+
+.closeBtn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--white);
+  transform: scale(1.05);
+}
+
+.closeBtn svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2.5;
+}
+
+.body {
+  padding: 28px;
+}
