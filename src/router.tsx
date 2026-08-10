@@ -21,6 +21,9 @@ import { SecurityOverviewPage, SecurityCompliancePage, SecurityVulnPage, Securit
 import { HelpFaqPage, HelpKbPage, HelpGuidesPage, HelpTicketPage } from './pages/detail/HelpPages'
 import { ContactGeneralPage, ContactSupportPage, ContactSalesPage } from './pages/detail/ContactPages'
 import ExternalLayout from './layouts/ExternalLayout'
+import ExternalHeader from './layouts/ExternalHeader'
+import ExternalSidebar from './layouts/ExternalSidebar'
+import AuthSettingsSidebar from './layouts/AuthSettingsSidebar'
 import PersonalInfoPage from './pages/profile/PersonalInfoPage'
 import ContactPage from './pages/profile/ContactPage'
 import EmploymentPage from './pages/profile/EmploymentPage'
@@ -30,6 +33,12 @@ import HealthPage from './pages/profile/HealthPage'
 import EducationPage from './pages/profile/EducationPage'
 import DocumentsPage from './pages/profile/DocumentsPage'
 import DangerZonePage from './pages/profile/DangerZonePage'
+import IntroPage from './pages/authSettings/IntroPage'
+import PasswordsPage from './pages/authSettings/PasswordsPage'
+import MfaPage from './pages/authSettings/MfaPage'
+import PasswordlessPage from './pages/authSettings/PasswordlessPage'
+import AdvancedPage from './pages/authSettings/AdvancedPage'
+import SessionPage from './pages/authSettings/SessionPage'
 import NotFoundPage from './pages/NotFoundPage'
 
 /**
@@ -97,7 +106,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    element: <ExternalLayout />,
+    element: <ExternalLayout header={<ExternalHeader />} sidebar={<ExternalSidebar />} />,
     children: [
       { path: '/profile', element: <Navigate to="/profile/personal" replace /> },
       { path: '/profile/personal', element: <PersonalInfoPage /> },
@@ -109,6 +118,23 @@ export const router = createBrowserRouter([
       { path: '/profile/education', element: <EducationPage /> },
       { path: '/profile/documents', element: <DocumentsPage /> },
       { path: '/profile/danger', element: <DangerZonePage /> },
+    ],
+  },
+  {
+    element: (
+      <ExternalLayout
+        header={<ExternalHeader subtitle="Authentication & Authorization" showAvatar={false} />}
+        sidebar={<AuthSettingsSidebar />}
+      />
+    ),
+    children: [
+      { path: '/auth-settings', element: <Navigate to="/auth-settings/intro" replace /> },
+      { path: '/auth-settings/intro', element: <IntroPage /> },
+      { path: '/auth-settings/passwords', element: <PasswordsPage /> },
+      { path: '/auth-settings/mfa', element: <MfaPage /> },
+      { path: '/auth-settings/passwordless', element: <PasswordlessPage /> },
+      { path: '/auth-settings/advanced', element: <AdvancedPage /> },
+      { path: '/auth-settings/session', element: <SessionPage /> },
     ],
   },
   { path: '*', element: <NotFoundPage /> },

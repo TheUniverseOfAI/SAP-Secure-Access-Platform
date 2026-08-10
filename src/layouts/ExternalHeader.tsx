@@ -1,13 +1,21 @@
 import { Link } from 'react-router-dom'
 import styles from './ExternalHeader.module.css'
 
+interface ExternalHeaderProps {
+  subtitle?: string
+  showAvatar?: boolean
+}
+
 /**
  * Header for ExternalLayout (profile, auth-settings). Ported from
- * sap-user-profile_v2.html's <header class="header">. Simpler than
- * AppHeader — a "Back to Portal" link instead of menu-toggle/search/
- * notifications, since there's no main portal sidebar here to control.
+ * sap-user-profile_v2.html's <header class="header"> — confirmed the
+ * auth-settings source page uses the identical header markup/CSS, just a
+ * different subtitle ("Authentication & Authorization" vs "User Profile")
+ * and no avatar on the right. Simpler than AppHeader — a "Back to Portal"
+ * link instead of menu-toggle/search/notifications, since there's no main
+ * portal sidebar here to control.
  */
-export default function ExternalHeader() {
+export default function ExternalHeader({ subtitle = 'User Profile', showAvatar = true }: ExternalHeaderProps) {
   return (
     <header className={styles.header} role="banner">
       <div className={styles.left}>
@@ -35,11 +43,11 @@ export default function ExternalHeader() {
             </text>
           </svg>
           <div className={styles.title}>
-            <b>SAP</b> — User Profile
+            <b>SAP</b> — {subtitle}
           </div>
         </div>
       </div>
-      <div className={styles.avatar}>MA</div>
+      {showAvatar && <div className={styles.avatar}>MA</div>}
     </header>
   )
 }
