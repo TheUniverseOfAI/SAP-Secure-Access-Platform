@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import AuthCard from '../components/AuthCard'
 import Button from '../components/Button'
@@ -5,6 +6,8 @@ import Checkbox from '../components/Checkbox'
 import ConsentBanner from '../components/ConsentBanner'
 import Divider from '../components/Divider'
 import Input from '../components/Input'
+import MagicLinkModal from '../components/MagicLinkModal'
+import OtpCodeModal from '../components/OtpCodeModal'
 import PasswordField from '../components/PasswordField'
 import Tabs from '../components/Tabs'
 import styles from './LoginPage.module.css'
@@ -19,9 +22,13 @@ import styles from './LoginPage.module.css'
  * Tab switching and the forgot-password link ARE wired to real navigation
  * (via react-router-dom) — that's just routing, not business logic, so it
  * doesn't fall under the "no wiring yet" rule the way form submission does.
+ * Same reasoning for the OTP Code / Magic Link buttons: opening their
+ * modal is structural (which UI is showing), the modals themselves do no
+ * real sending/verification.
  */
 export default function LoginPage() {
   const navigate = useNavigate()
+  const [activeModal, setActiveModal] = useState<'magicLink' | 'otp' | null>(null)
 
   return (
     <AuthCard topBanner={<ConsentBanner />}>
@@ -70,7 +77,7 @@ export default function LoginPage() {
           </svg>
           SSO
         </Button>
-        <Button variant="alt">
+        <Button variant="alt" onClick={() => setActiveModal('otp')}>
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--amber-500)" strokeWidth="2" aria-hidden="true">
             <rect x="5" y="3" width="14" height="18" rx="2" />
             <circle cx="12" cy="15" r="1.5" />
@@ -78,7 +85,7 @@ export default function LoginPage() {
           </svg>
           OTP Code
         </Button>
-        <Button variant="alt">
+        <Button variant="alt" onClick={() => setActiveModal('magicLink')}>
           <svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" strokeWidth="2" aria-hidden="true">
             <path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101" />
             <path d="M10.172 13.828a4 4 0 005.656 0l4-4a4 4 0 10-5.656-5.656l-1.1 1.1" />
@@ -86,6 +93,9 @@ export default function LoginPage() {
           Magic Link
         </Button>
       </div>
+
+      {activeModal === 'magicLink' && <MagicLinkModal onClose={() => setActiveModal(null)} />}
+      {activeModal === 'otp' && <OtpCodeModal onClose={() => setActiveModal(null)} />}
     </AuthCard>
   )
 }
