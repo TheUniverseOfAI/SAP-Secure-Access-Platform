@@ -1,0 +1,10 @@
+/* Source: .page (outer padding wrapper) and .portal-grid. */
+.page {
+  padding: 32px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}

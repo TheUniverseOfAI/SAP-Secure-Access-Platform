@@ -1,0 +1,29 @@
+/* Source: .portal-filter / .portal-filter-btn. */
+.filter {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--gray-500);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: var(--font-sans);
+}
+.btn:hover {
+  border-color: var(--gray-400);
+  color: var(--gray-700);
+}
+.btnActive {
+  background: var(--blue-500);
+  color: white;
+  border-color: var(--blue-500);
+}
