@@ -1,6 +1,12 @@
 import { useNavigate } from 'react-router-dom'
 import styles from './AppHeader.module.css'
 
+interface AppHeaderProps {
+  /** Whether the sidebar's nav content is currently fully visible (desktop: not collapsed; mobile: overlay open) — reflected via aria-expanded. */
+  navExpanded: boolean
+  onToggleSidebar: () => void
+}
+
 /**
  * Header shell for post-login pages (portal home, profile, auth-settings).
  * Ported from sap-package/app-files/sap-portal_v2.html's <header class="header">.
@@ -11,21 +17,21 @@ import styles from './AppHeader.module.css'
  * than one Header-with-a-variant-prop — see AuthHeader.tsx's comment and
  * the layout-structure discussion that led to this split.
  *
- * Everything here is static/inert per the UI-first build order: the menu
- * toggle doesn't actually collapse a sidebar (no state), the search input
- * isn't controlled, and notification/settings icons don't open anything.
- * The avatar shows placeholder initials with no real user data or account
- * menu, but IS wired to navigate to Leadership — source markup has no
- * dropdown menu on it, just onclick="navigateTo('leadership',...)", so
- * this is structural navigation like every other now-wired nav link, not
- * deferred business logic.
+ * The menu toggle now drives real sidebar state (owned by PortalLayout —
+ * see its header comment), reflected here via aria-expanded. The search
+ * input isn't controlled, and notification/settings icons don't open
+ * anything — still deferred, unlike the toggle which is structural nav
+ * state, not business logic. The avatar shows placeholder initials with
+ * no real user data or account menu, but IS wired to navigate to
+ * Leadership — source markup has no dropdown menu on it, just
+ * onclick="navigateTo('leadership',...)".
  */
-export default function AppHeader() {
+export default function AppHeader({ navExpanded, onToggleSidebar }: AppHeaderProps) {
   const navigate = useNavigate()
   return (
     <header className={styles.header} role="banner">
       <div className={styles.left}>
-        <button className={styles.menuToggle} aria-label="Toggle sidebar navigation" aria-expanded="true">
+        <button className={styles.menuToggle} aria-label="Toggle sidebar navigation" aria-expanded={navExpanded} onClick={onToggleSidebar}>
           <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>

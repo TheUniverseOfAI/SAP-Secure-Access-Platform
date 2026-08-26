@@ -3,6 +3,12 @@
   padding: 32px;
 }
 
+@media (max-width: 768px) {
+  .page {
+    padding: 20px;
+  }
+}
+
 .content h3 {
   font-size: 0.9rem;
   font-weight: 600;

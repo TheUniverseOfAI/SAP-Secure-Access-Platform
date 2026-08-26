@@ -174,3 +174,10 @@
 .avatar:hover {
   border-color: rgba(255, 255, 255, 0.4);
 }
+
+/* Source: .header-search { display: none } inside @media(max-width:768px). */
+@media (max-width: 768px) {
+  .search {
+    display: none;
+  }
+}

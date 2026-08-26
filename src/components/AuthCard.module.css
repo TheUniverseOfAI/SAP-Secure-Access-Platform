@@ -29,3 +29,9 @@
 .cardInner {
   padding: 32px 32px 28px;
 }
+
+@media (max-width: 520px) {
+  .cardInner {
+    padding: 24px 20px 22px;
+  }
+}

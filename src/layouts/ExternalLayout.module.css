@@ -1,4 +1,4 @@
-/* Source: .main.narrow. */
+/* Source: .main.narrow, plus its @media(max-width:768px) responsive rule (.sidebar{display:none};.main{margin-left:0}). */
 .page {
   min-height: 100vh;
 }
@@ -7,4 +7,10 @@
   margin-left: var(--sidebar-w-narrow);
   margin-top: var(--header-h);
   padding: 28px 32px 60px;
+}
+
+@media (max-width: 768px) {
+  .main {
+    margin-left: 0;
+  }
 }

@@ -6,6 +6,12 @@
   margin-bottom: 24px;
 }
 
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .card {
   background: var(--white);
   border: 1px solid var(--gray-200);

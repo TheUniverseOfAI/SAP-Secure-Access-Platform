@@ -1,9 +1,7 @@
 /*
-  Source: .main (the app-shell variant, not AuthLayout's centered version).
-  The .collapsed sidebar-width state (margin-left shrinking to
-  var(--sidebar-collapsed)) is intentionally not implemented - see
-  Sidebar.module.css's header comment; that needs state shared between
-  AppHeader and Sidebar (SidebarContext, wiring-phase work).
+  Source: .main (the app-shell variant, not AuthLayout's centered version),
+  plus its @media(max-width:768px) responsive rule. See PortalLayout.tsx
+  for why the collapsed/mobile sidebar state lives there now.
 */
 .page {
   min-height: 100vh;
@@ -15,8 +13,20 @@
   min-height: calc(100vh - var(--header-h));
   display: flex;
   flex-direction: column;
+  transition: margin-left 0.25s ease;
+}
+
+.mainCollapsed {
+  margin-left: var(--sidebar-collapsed);
 }
 
 .content {
   flex: 1;
+}
+
+@media (max-width: 768px) {
+  .main,
+  .mainCollapsed {
+    margin-left: 0;
+  }
 }

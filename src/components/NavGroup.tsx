@@ -8,6 +8,8 @@ interface NavGroupProps {
   badge?: string
   children: ReactNode
   defaultOpen?: boolean
+  /** Desktop icon-only sidebar mode — collapses the group header and always hides its nested items. Source: .sidebar.collapsed .nav-sub. */
+  collapsed?: boolean
 }
 
 /**
@@ -17,7 +19,7 @@ interface NavGroupProps {
  * category as a details/summary disclosure widget, not the deferred
  * business logic. Source: .nav-group / .nav-sub.
  */
-export default function NavGroup({ icon, label, badge, children, defaultOpen = false }: NavGroupProps) {
+export default function NavGroup({ icon, label, badge, children, defaultOpen = false, collapsed }: NavGroupProps) {
   const [open, setOpen] = useState(defaultOpen)
 
   return (
@@ -26,6 +28,7 @@ export default function NavGroup({ icon, label, badge, children, defaultOpen = f
         icon={icon}
         label={label}
         badge={badge}
+        collapsed={collapsed}
         onClick={() => setOpen((prev) => !prev)}
         trailingIcon={
           <svg
@@ -40,7 +43,7 @@ export default function NavGroup({ icon, label, badge, children, defaultOpen = f
           </svg>
         }
       />
-      {open && <div className={styles.sub}>{children}</div>}
+      {open && !collapsed && <div className={styles.sub}>{children}</div>}
     </div>
   )
 }
