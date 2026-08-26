@@ -9,6 +9,13 @@ const ExternalArrow = (
   </svg>
 )
 
+interface SidebarProps {
+  /** Desktop icon-only mode, toggled from AppHeader's hamburger button. */
+  collapsed?: boolean
+  /** Mobile off-canvas overlay open/closed, toggled from the same button. */
+  mobileOpen?: boolean
+}
+
 /**
  * Post-login sidebar nav tree. Ported from sap-package/app-files/sap-portal_v2.html
  * (lines 407-555). Every item now has a real destination and uses real
@@ -17,18 +24,25 @@ const ExternalArrow = (
  * Groups auto-expand (defaultOpen) when the current route is inside them.
  * Group expand/collapse itself still uses local state (see NavGroup.tsx)
  * since that's structural UI, not business logic.
+ *
+ * `collapsed`/`mobileOpen` are owned by PortalLayout and toggled from
+ * AppHeader's hamburger button (same button, different meaning depending
+ * on viewport width, matching the source's toggleSidebar()) — this is
+ * also structural UI state, not business logic.
  */
-export default function Sidebar() {
+export default function Sidebar({ collapsed, mobileOpen }: SidebarProps) {
   const location = useLocation()
   const navigate = useNavigate()
   const isActive = (path: string) => location.pathname === path
   const inGroup = (prefix: string) => location.pathname.startsWith(prefix)
+  const navClasses = [styles.sidebar, collapsed ? styles.collapsed : '', mobileOpen ? styles.mobileOpen : ''].filter(Boolean).join(' ')
 
   return (
-    <nav className={styles.sidebar} aria-label="Main navigation">
+    <nav className={navClasses} aria-label="Main navigation">
       <div className={styles.section}>
         <div className={styles.sectionTitle}>Main</div>
         <NavItem
+          collapsed={collapsed}
           active={location.pathname === '/home'}
           label="Home"
           onClick={() => navigate('/home')}
@@ -39,6 +53,7 @@ export default function Sidebar() {
           }
         />
         <NavItem
+          collapsed={collapsed}
           featured
           active={location.pathname === '/portals'}
           label="Portals"
@@ -51,6 +66,7 @@ export default function Sidebar() {
           }
         />
         <NavItem
+          collapsed={collapsed}
           active={location.pathname === '/about'}
           label="About"
           onClick={() => navigate('/about')}
@@ -61,6 +77,7 @@ export default function Sidebar() {
           }
         />
         <NavItem
+          collapsed={collapsed}
           active={location.pathname === '/leadership'}
           label="Leadership"
           onClick={() => navigate('/leadership')}
@@ -71,6 +88,7 @@ export default function Sidebar() {
           }
         />
         <NavItem
+          collapsed={collapsed}
           label="User Profile"
           trailingIcon={ExternalArrow}
           onClick={() => navigate('/profile/personal')}
@@ -85,6 +103,7 @@ export default function Sidebar() {
       <div className={styles.section}>
         <div className={styles.sectionTitle}>Support</div>
         <NavGroup
+          collapsed={collapsed}
           label="Help Center"
           badge="4"
           defaultOpen={inGroup('/help')}
@@ -101,6 +120,7 @@ export default function Sidebar() {
           <NavItem nested label="Submit Ticket" active={isActive('/help/ticket')} onClick={() => navigate('/help/ticket')} />
         </NavGroup>
         <NavGroup
+          collapsed={collapsed}
           label="Contact"
           badge="3"
           defaultOpen={inGroup('/contact')}
@@ -119,6 +139,7 @@ export default function Sidebar() {
       <div className={styles.section}>
         <div className={styles.sectionTitle}>Legal &amp; Compliance</div>
         <NavGroup
+          collapsed={collapsed}
           label="Privacy Policy"
           badge="4"
           defaultOpen={inGroup('/privacy')}
@@ -134,6 +155,7 @@ export default function Sidebar() {
           <NavItem nested label="Your Rights" active={isActive('/privacy/your-rights')} onClick={() => navigate('/privacy/your-rights')} />
         </NavGroup>
         <NavGroup
+          collapsed={collapsed}
           label="Accessibility"
           badge="4"
           defaultOpen={inGroup('/accessibility')}
@@ -149,6 +171,7 @@ export default function Sidebar() {
           <NavItem nested label="Report Issues" active={isActive('/accessibility/report')} onClick={() => navigate('/accessibility/report')} />
         </NavGroup>
         <NavGroup
+          collapsed={collapsed}
           label="Terms of Use"
           badge="3"
           defaultOpen={inGroup('/terms')}
@@ -167,6 +190,7 @@ export default function Sidebar() {
       <div className={styles.section}>
         <div className={styles.sectionTitle}>Operations</div>
         <NavGroup
+          collapsed={collapsed}
           label="System Status"
           badge="4"
           defaultOpen={inGroup('/status')}
@@ -182,6 +206,7 @@ export default function Sidebar() {
           <NavItem nested label="Uptime Report" active={isActive('/status/uptime')} onClick={() => navigate('/status/uptime')} />
         </NavGroup>
         <NavGroup
+          collapsed={collapsed}
           label="Security"
           badge="5"
           defaultOpen={inGroup('/security')}

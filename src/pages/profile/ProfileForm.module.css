@@ -8,6 +8,15 @@
   grid-column: span 2;
 }
 
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .span2 {
+    grid-column: span 1;
+  }
+}
+
 .divider {
   border: none;
   border-top: 1px solid var(--gray-100);

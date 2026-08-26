@@ -34,3 +34,9 @@
      margin-bottom (for stacking below the PIV button) would double up here. */
   margin-bottom: 0;
 }
+
+@media (max-width: 520px) {
+  .altGrid {
+    grid-template-columns: 1fr;
+  }
+}

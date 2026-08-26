@@ -5,6 +5,12 @@
   gap: 12px;
 }
 
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .card {
   display: flex;
   align-items: center;

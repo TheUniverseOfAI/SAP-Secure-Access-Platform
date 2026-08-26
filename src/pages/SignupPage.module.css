@@ -25,3 +25,10 @@
 .socialGrid:last-child {
   margin-bottom: 0;
 }
+
+@media (max-width: 520px) {
+  .nameRow,
+  .socialGrid {
+    grid-template-columns: 1fr;
+  }
+}

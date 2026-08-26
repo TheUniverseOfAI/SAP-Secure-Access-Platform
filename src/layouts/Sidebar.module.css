@@ -1,10 +1,11 @@
 /*
   Source: .sidebar / .nav-section / .nav-section-title / .sidebar-footer /
-  .sidebar-footer-dot / .sidebar-footer-text. The .collapsed state (tied
-  to AppHeader's menu-toggle) is intentionally not implemented yet —
-  collapsing needs state shared between AppHeader and Sidebar, which
-  belongs in a SidebarContext per the original plan, not local component
-  state. That's follow-up work once the state/wiring phase begins.
+  .sidebar-footer-dot / .sidebar-footer-text, plus the responsive rules
+  from the source's @media(max-width:768px) block. `collapsed` (desktop
+  icon-only mode) and `mobileOpen` (mobile off-canvas overlay) are both
+  passed down from PortalLayout, toggled by AppHeader's hamburger button —
+  see Sidebar.tsx's header comment for why this is structural state, not
+  deferred business logic.
 */
 .sidebar {
   position: fixed;
@@ -19,6 +20,27 @@
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
+  transition: width 0.25s ease, transform 0.25s ease;
+}
+
+.collapsed {
+  width: var(--sidebar-collapsed);
+}
+.collapsed .sectionTitle,
+.collapsed .footerText {
+  display: none;
+}
+.collapsed .footer {
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .sidebar.mobileOpen {
+    transform: translateX(0);
+  }
 }
 
 .section {

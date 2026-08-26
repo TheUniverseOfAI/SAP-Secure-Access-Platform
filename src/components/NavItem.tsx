@@ -9,6 +9,8 @@ interface NavItemProps {
   active?: boolean
   featured?: boolean
   nested?: boolean
+  /** Desktop icon-only sidebar mode — hides label/badge/trailingIcon, centers the icon. Source: .sidebar.collapsed .nav-item. */
+  collapsed?: boolean
   onClick?: () => void
 }
 
@@ -23,22 +25,27 @@ interface NavItemProps {
  * `active` is a controlled prop; no route-matching logic lives here.
  * Source: .nav-item / .nav-icon / .nav-text / .nav-badge / .nav-arrow.
  */
-export default function NavItem({ icon, label, badge, trailingIcon, active, featured, nested, onClick }: NavItemProps) {
+export default function NavItem({ icon, label, badge, trailingIcon, active, featured, nested, collapsed, onClick }: NavItemProps) {
   const classes = [
     styles.item,
     nested ? styles.nested : '',
     active ? (nested ? styles.nestedActive : styles.itemActive) : '',
     featured ? styles.featured : '',
+    collapsed ? styles.collapsed : '',
   ]
     .filter(Boolean)
     .join(' ')
 
   return (
-    <button type="button" className={classes} onClick={onClick}>
+    <button type="button" className={classes} onClick={onClick} title={collapsed ? label : undefined}>
       {icon && <span className={styles.icon}>{icon}</span>}
-      <span className={[styles.text, featured ? styles.featuredText : ''].filter(Boolean).join(' ')}>{label}</span>
-      {badge && <span className={[styles.badge, featured ? styles.featuredBadge : ''].filter(Boolean).join(' ')}>{badge}</span>}
-      {trailingIcon}
+      {!collapsed && (
+        <>
+          <span className={[styles.text, featured ? styles.featuredText : ''].filter(Boolean).join(' ')}>{label}</span>
+          {badge && <span className={[styles.badge, featured ? styles.featuredBadge : ''].filter(Boolean).join(' ')}>{badge}</span>}
+          {trailingIcon}
+        </>
+      )}
     </button>
   )
 }

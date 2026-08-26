@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
+import useMediaQuery from '../hooks/useMediaQuery'
 import AppHeader from './AppHeader'
 import Sidebar from './Sidebar'
 import MainFooter from './MainFooter'
@@ -15,16 +17,30 @@ import styles from './PortalLayout.module.css'
  * page (Dashboard, Portals, About, ...), so each page renders its own
  * <Breadcrumb current="..."/> at the top of its content instead of
  * PortalLayout hardcoding one label for every route.
+ *
+ * Owns the sidebar toggle state shared between AppHeader (the hamburger
+ * button) and Sidebar (what actually responds to it). One boolean plus
+ * the current viewport width does double duty exactly like the source's
+ * toggleSidebar(), which checks window.innerWidth to decide whether
+ * toggling means "icon-only collapsed" (desktop) or "off-canvas overlay
+ * open" (narrow viewport) — never both, matching the source's
+ * `classList.remove('collapsed')` when going mobile. Structural UI state,
+ * not business logic — same category as nav-group expand/collapse.
  */
 export default function PortalLayout() {
+  const [sidebarToggled, setSidebarToggled] = useState(false)
+  const isMobile = useMediaQuery('(max-width: 768px)')
+  const collapsed = sidebarToggled && !isMobile
+  const mobileOpen = sidebarToggled && isMobile
+
   return (
     <div className={styles.page}>
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
-      <AppHeader />
-      <Sidebar />
-      <div className={styles.main}>
+      <AppHeader navExpanded={isMobile ? mobileOpen : !collapsed} onToggleSidebar={() => setSidebarToggled((prev) => !prev)} />
+      <Sidebar collapsed={collapsed} mobileOpen={mobileOpen} />
+      <div className={[styles.main, collapsed ? styles.mainCollapsed : ''].filter(Boolean).join(' ')}>
         <main id="main-content" className={styles.content}>
           <Outlet />
         </main>

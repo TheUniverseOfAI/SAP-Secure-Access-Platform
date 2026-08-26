@@ -95,6 +95,15 @@
   color: white;
 }
 
+/* Desktop icon-only collapse. Source: .sidebar.collapsed .nav-item / .nav-icon. */
+.collapsed {
+  justify-content: center;
+  padding: 10px;
+}
+.collapsed .icon {
+  margin: 0;
+}
+
 /* Nested sub-item (inside an expanded nav-group). Source: .nav-sub .nav-item. */
 .nested {
   font-size: 0.8rem;
