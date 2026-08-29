@@ -1,0 +1,16 @@
+/*
+ * Source: login-portal_v2.html's own .btn-row / .btn-row .submit-btn.
+ * NOT the same as the merged legacy-sap.css .btn-row (which is actually
+ * the profile page's right-aligned, top-bordered version) — confirmed by
+ * comparing this page's own embedded <style> against the merged file.
+ * That divergence is exactly the kind of merge-collision bug already
+ * found for AuthHeader/.auth-card/.modal elsewhere in this port.
+ */
+.row {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+.row > button {
+  flex: 1;
+}

@@ -1,0 +1,54 @@
+/*
+ * Fully scoped, ported from login-portal_v2.html's own embedded <style>
+ * (confirmed matching the merged legacy-sap.css exactly — no divergence
+ * found here, unlike AuthHeader/.btn-row). Moved off the raw global
+ * classes anyway so AuthFooter no longer depends on legacy-sap.css at all.
+ * Source: .footer / .footer::before / .footer-top / .footer-copy.
+ */
+.footer {
+  background: var(--blue-900);
+  padding: 16px 2rem;
+  text-align: center;
+  position: relative;
+}
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--blue-700), var(--blue-500), var(--blue-700));
+}
+
+.top {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 10px;
+}
+.top a {
+  color: var(--blue-300);
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 500;
+  transition: color var(--transition);
+}
+.top a:hover {
+  color: var(--white);
+}
+
+.copy {
+  font-size: 0.74rem;
+  color: var(--gray-500);
+}
+.copy span {
+  color: var(--blue-400);
+}
+
+@media (max-width: 520px) {
+  .top {
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+}

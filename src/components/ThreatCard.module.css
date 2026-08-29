@@ -1,0 +1,49 @@
+/* Source: .threat-grid / .threat-card and its color variants, plus the @media(max-width:768px) collapse. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  padding: 16px;
+  border-radius: 10px;
+  border-left: 4px solid;
+}
+.card h4 {
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.card p {
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.red {
+  background: var(--red-50);
+  border-color: var(--red-500);
+  color: #991b1b;
+}
+.amber {
+  background: var(--amber-50);
+  border-color: var(--amber-500);
+  color: #92400e;
+}
+.orange {
+  background: var(--orange-50);
+  border-color: var(--orange-500);
+  color: #9a3412;
+}
+.purple {
+  background: var(--purple-50);
+  border-color: var(--purple-500);
+  color: #6b21a8;
+}
