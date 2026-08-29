@@ -1,0 +1,53 @@
+/* Source: .alert-banner / .alert-banner svg / h4 / p / .warning / .danger / .info. */
+.banner {
+  padding: 16px 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+  border-left: 4px solid;
+}
+.icon {
+  display: flex;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.icon svg {
+  width: 22px;
+  height: 22px;
+}
+.banner h4 {
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.banner p {
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.warning {
+  background: var(--amber-50);
+  border-color: var(--amber-500);
+  color: #92400e;
+}
+.warning .icon svg {
+  stroke: var(--amber-500);
+}
+.danger {
+  background: var(--red-50);
+  border-color: var(--red-500);
+  color: #991b1b;
+}
+.danger .icon svg {
+  stroke: var(--red-500);
+}
+.info {
+  background: var(--blue-50);
+  border-color: var(--blue-400);
+  color: #1e40af;
+}
+.info .icon svg {
+  stroke: var(--blue-400);
+}

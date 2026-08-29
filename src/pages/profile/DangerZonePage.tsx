@@ -11,7 +11,7 @@ import styles from './DangerZonePage.module.css'
 export default function DangerZonePage() {
   return (
     <>
-      <div className="page-header">
+      <div className={styles.header}>
         <h1 className={styles.title}>Danger Zone</h1>
         <p>Irreversible account actions. Proceed with extreme caution.</p>
       </div>

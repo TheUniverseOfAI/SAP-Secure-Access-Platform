@@ -1,0 +1,50 @@
+/* Source: .success-visual / .icon-ring / .icon-ring.green/.blue / .email-highlight. */
+.visual {
+  text-align: center;
+  padding: 16px 0 8px;
+}
+.visual h4 {
+  font-size: 1.05rem;
+  color: var(--gray-800);
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+.visual p {
+  font-size: 0.82rem;
+  color: var(--gray-500);
+  line-height: 1.5;
+}
+
+.ring {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  border: 3px solid;
+}
+.ring svg {
+  width: 30px;
+  height: 30px;
+}
+.green {
+  background: var(--green-50);
+  border-color: #86efac;
+}
+.green svg {
+  stroke: var(--green-500);
+}
+.blue {
+  background: var(--blue-50);
+  border-color: var(--blue-100);
+}
+.blue svg {
+  stroke: var(--blue-500);
+}
+
+.emailHighlight {
+  font-weight: 700;
+  color: var(--blue-600);
+}
