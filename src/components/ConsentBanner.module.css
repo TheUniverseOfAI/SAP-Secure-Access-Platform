@@ -59,3 +59,8 @@
   border-color: rgba(255, 255, 255, 0.4);
   transform: translateY(-1px);
 }
+.button.accepted {
+  background: rgba(34, 197, 94, 0.25);
+  border-color: rgba(34, 197, 94, 0.4);
+  pointer-events: none;
+}

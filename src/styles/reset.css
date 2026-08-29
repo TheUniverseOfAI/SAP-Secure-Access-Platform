@@ -19,3 +19,18 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
 }
+
+/*
+ * Hide scrollbars app-wide — the document, the sidebars, modal bodies,
+ * table overflow wrappers, everywhere. Content stays fully scrollable via
+ * wheel/trackpad/keyboard/touch; only the visible track+thumb are
+ * removed. Applied universally (rather than per-component) so it also
+ * covers any future scrollable container without needing this repeated.
+ */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* legacy Edge/IE */
+}
+*::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/WebKit-based Edge */
+}

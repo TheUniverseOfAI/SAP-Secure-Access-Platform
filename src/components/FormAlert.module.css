@@ -1,0 +1,26 @@
+/* Source: .alert / .alert.error / .alert.success / .alert svg. */
+.alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.alert svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.error {
+  background: var(--red-50);
+  color: #b91c1c;
+  border: 1px solid var(--red-100);
+}
+.success {
+  background: var(--green-50);
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}

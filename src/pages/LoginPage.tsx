@@ -5,34 +5,74 @@ import Button from '../components/Button'
 import Checkbox from '../components/Checkbox'
 import ConsentBanner from '../components/ConsentBanner'
 import Divider from '../components/Divider'
+import FormAlert from '../components/FormAlert'
 import Input from '../components/Input'
 import MagicLinkModal from '../components/MagicLinkModal'
 import OtpCodeModal from '../components/OtpCodeModal'
 import PasswordField from '../components/PasswordField'
 import Tabs from '../components/Tabs'
+import { useAuth } from '../context/AuthContext'
 import styles from './LoginPage.module.css'
 
 /**
- * Real login page UI — static/placeholder per the UI-first build order:
- * no form state, no submit handler, no validation wiring. Full visual
- * parity with login-portal_v2.html's Sign In tab, built from primitives
- * (Button, Input, PasswordField, Checkbox, Tabs) plus the shared AuthCard
- * shell.
+ * Real login page — real client-side validation and submission, matching
+ * the source's handleLogin() exactly (required-field checks, the same
+ * consent gate, the same error copy). There's still no real backend: any
+ * non-empty username/password combination "succeeds" and logs you in via
+ * AuthContext, same as the source's fake success path just actually
+ * navigating now instead of only showing an alert.
  *
  * Tab switching and the forgot-password link ARE wired to real navigation
  * (via react-router-dom) — that's just routing, not business logic, so it
- * doesn't fall under the "no wiring yet" rule the way form submission does.
+ * doesn't fall under the "no wiring yet" rule the way form submission did.
  * Same reasoning for the OTP Code / Magic Link buttons: opening their
  * modal is structural (which UI is showing), the modals themselves do no
  * real sending/verification.
  */
 export default function LoginPage() {
   const navigate = useNavigate()
+  const { login } = useAuth()
   const [activeModal, setActiveModal] = useState<'magicLink' | 'otp' | null>(null)
+  const [consentAccepted, setConsentAccepted] = useState(false)
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [usernameError, setUsernameError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
+  const [alert, setAlert] = useState<string | null>(null)
+
+  const handleSignIn = () => {
+    setAlert(null)
+    setUsernameError('')
+    setPasswordError('')
+
+    if (!consentAccepted) {
+      setAlert('Please acknowledge the consent notice first.')
+      return
+    }
+
+    let ok = true
+    if (!username.trim()) {
+      setUsernameError('Username or email is required')
+      ok = false
+    }
+    if (!password) {
+      setPasswordError('Password is required')
+      ok = false
+    }
+    if (!ok) {
+      setAlert('Please fill in all required fields.')
+      return
+    }
+
+    login()
+    navigate('/home')
+  }
 
   return (
-    <AuthCard topBanner={<ConsentBanner />}>
+    <AuthCard topBanner={<ConsentBanner accepted={consentAccepted} onAccept={() => setConsentAccepted(true)} />}>
       <h1 className="sr-only">Sign In</h1>
+
+      {alert && <FormAlert type="error">{alert}</FormAlert>}
 
       <Tabs
         aria-label="Authentication method"
@@ -44,8 +84,26 @@ export default function LoginPage() {
         ]}
       />
 
-      <Input id="loginUser" label="Username or Email" required placeholder="Enter username or email" autoComplete="username" />
-      <PasswordField id="loginPass" label="Password" required placeholder="Enter password" autoComplete="current-password" />
+      <Input
+        id="loginUser"
+        label="Username or Email"
+        required
+        placeholder="Enter username or email"
+        autoComplete="username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        errorMessage={usernameError}
+      />
+      <PasswordField
+        id="loginPass"
+        label="Password"
+        required
+        placeholder="Enter password"
+        autoComplete="current-password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        errorMessage={passwordError}
+      />
 
       <div className={styles.formRow}>
         <Checkbox label="Remember me" />
@@ -54,7 +112,9 @@ export default function LoginPage() {
         </Link>
       </div>
 
-      <Button variant="submit">Sign In</Button>
+      <Button variant="submit" onClick={handleSignIn}>
+        Sign In
+      </Button>
 
       <Divider>or</Divider>
 

@@ -1,11 +1,18 @@
 import styles from './ConsentBanner.module.css'
 
+interface ConsentBannerProps {
+  accepted: boolean
+  onAccept: () => void
+}
+
 /**
- * Static — no accepted/dismissed state wired up yet (that's wiring-phase
- * work). The button renders and is clickable but does nothing right now.
- * Source: .consent-banner and its children.
+ * Source: .consent-banner and its children. `accepted` is lifted to the
+ * parent page (LoginPage/SignupPage) rather than owned locally, because
+ * the source's gate() check reads consentAccepted before allowing
+ * Sign In/Create Account to proceed — the page needs to know this
+ * banner's state, not just the banner itself.
  */
-export default function ConsentBanner() {
+export default function ConsentBanner({ accepted, onAccept }: ConsentBannerProps) {
   return (
     <div className={styles.banner}>
       <div className={styles.icon}>
@@ -22,8 +29,13 @@ export default function ConsentBanner() {
         By continuing, you agree to our company&apos;s acceptable use policy. All activity is monitored and logged in
         accordance with corporate security standards. Unauthorized access is strictly prohibited.
       </div>
-      <button className={styles.button} type="button">
-        I Understand &amp; Agree
+      <button
+        className={[styles.button, accepted ? styles.accepted : ''].filter(Boolean).join(' ')}
+        type="button"
+        onClick={onAccept}
+        disabled={accepted}
+      >
+        {accepted ? '✓ Acknowledged' : 'I Understand & Agree'}
       </button>
     </div>
   )

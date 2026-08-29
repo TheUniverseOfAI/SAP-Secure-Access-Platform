@@ -1,5 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom'
+import RequireAuth from './components/RequireAuth'
 import AuthLayout from './layouts/AuthLayout'
+import IndexRedirect from './pages/IndexRedirect'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
@@ -45,96 +47,101 @@ import NotFoundPage from './pages/NotFoundPage'
  * Data mode (createBrowserRouter), per the approved plan — SAP is an
  * internal SPA behind login, no SSR needed.
  *
- * The index route ("/") still redirects to /login rather than to the
- * portal — there's no real auth state yet to decide which one a visitor
- * should land on, so this defaults to the pre-login experience. Portal
- * routes are temporarily nested under /home instead of / to avoid
- * colliding with that redirect; once real auth-gated routing exists
- * (wiring phase), "/" should become "portal home if logged in, else
- * /login" and /home can likely just become / at that point.
+ * "/" now resolves via IndexRedirect: /home if logged in, /login
+ * otherwise (real auth-gated routing, per the wiring phase). The
+ * PortalLayout and both ExternalLayout route groups are wrapped in
+ * RequireAuth, which bounces an unauthenticated visitor to /login before
+ * any of those pages render. Portal routes stay nested under /home
+ * rather than / — moving them to / would collide with the index
+ * redirect's own path.
  */
 const routes = [
+  { index: true, element: <IndexRedirect /> },
   {
     element: <AuthLayout />,
     children: [
-      { index: true, element: <Navigate to="/login" replace /> },
       { path: '/login', element: <LoginPage /> },
       { path: '/signup', element: <SignupPage /> },
       { path: '/forgot-password', element: <ForgotPasswordPage /> },
     ],
   },
   {
-    element: <PortalLayout />,
+    element: <RequireAuth />,
     children: [
-      { path: '/home', element: <PortalHomePage /> },
-      { path: '/portals', element: <PortalsPage /> },
-      { path: '/leadership', element: <LeadershipPage /> },
-      { path: '/about', element: <AboutPage /> },
+      {
+        element: <PortalLayout />,
+        children: [
+          { path: '/home', element: <PortalHomePage /> },
+          { path: '/portals', element: <PortalsPage /> },
+          { path: '/leadership', element: <LeadershipPage /> },
+          { path: '/about', element: <AboutPage /> },
 
-      { path: '/privacy/overview', element: <PrivacyOverviewPage /> },
-      { path: '/privacy/data-collection', element: <PrivacyCollectionPage /> },
-      { path: '/privacy/data-sharing', element: <PrivacySharingPage /> },
-      { path: '/privacy/your-rights', element: <PrivacyRightsPage /> },
+          { path: '/privacy/overview', element: <PrivacyOverviewPage /> },
+          { path: '/privacy/data-collection', element: <PrivacyCollectionPage /> },
+          { path: '/privacy/data-sharing', element: <PrivacySharingPage /> },
+          { path: '/privacy/your-rights', element: <PrivacyRightsPage /> },
 
-      { path: '/accessibility/statement', element: <AccessibilityStatementPage /> },
-      { path: '/accessibility/standards', element: <AccessibilityStandardsPage /> },
-      { path: '/accessibility/features', element: <AccessibilityFeaturesPage /> },
-      { path: '/accessibility/report', element: <AccessibilityReportPage /> },
+          { path: '/accessibility/statement', element: <AccessibilityStatementPage /> },
+          { path: '/accessibility/standards', element: <AccessibilityStandardsPage /> },
+          { path: '/accessibility/features', element: <AccessibilityFeaturesPage /> },
+          { path: '/accessibility/report', element: <AccessibilityReportPage /> },
 
-      { path: '/terms/agreement', element: <TermsAgreementPage /> },
-      { path: '/terms/acceptable-use', element: <TermsUsagePage /> },
-      { path: '/terms/limitations', element: <TermsLimitsPage /> },
+          { path: '/terms/agreement', element: <TermsAgreementPage /> },
+          { path: '/terms/acceptable-use', element: <TermsUsagePage /> },
+          { path: '/terms/limitations', element: <TermsLimitsPage /> },
 
-      { path: '/status/current', element: <StatusCurrentPage /> },
-      { path: '/status/incidents', element: <StatusIncidentsPage /> },
-      { path: '/status/maintenance', element: <StatusMaintenancePage /> },
-      { path: '/status/uptime', element: <StatusUptimePage /> },
+          { path: '/status/current', element: <StatusCurrentPage /> },
+          { path: '/status/incidents', element: <StatusIncidentsPage /> },
+          { path: '/status/maintenance', element: <StatusMaintenancePage /> },
+          { path: '/status/uptime', element: <StatusUptimePage /> },
 
-      { path: '/security/overview', element: <SecurityOverviewPage /> },
-      { path: '/security/compliance', element: <SecurityCompliancePage /> },
-      { path: '/security/vulnerability', element: <SecurityVulnPage /> },
-      { path: '/security/incident-response', element: <SecurityIncidentPage /> },
+          { path: '/security/overview', element: <SecurityOverviewPage /> },
+          { path: '/security/compliance', element: <SecurityCompliancePage /> },
+          { path: '/security/vulnerability', element: <SecurityVulnPage /> },
+          { path: '/security/incident-response', element: <SecurityIncidentPage /> },
 
-      { path: '/help/faq', element: <HelpFaqPage /> },
-      { path: '/help/knowledge-base', element: <HelpKbPage /> },
-      { path: '/help/guides', element: <HelpGuidesPage /> },
-      { path: '/help/ticket', element: <HelpTicketPage /> },
+          { path: '/help/faq', element: <HelpFaqPage /> },
+          { path: '/help/knowledge-base', element: <HelpKbPage /> },
+          { path: '/help/guides', element: <HelpGuidesPage /> },
+          { path: '/help/ticket', element: <HelpTicketPage /> },
 
-      { path: '/contact/general', element: <ContactGeneralPage /> },
-      { path: '/contact/support', element: <ContactSupportPage /> },
-      { path: '/contact/sales', element: <ContactSalesPage /> },
-    ],
-  },
-  {
-    element: <ExternalLayout header={<ExternalHeader />} sidebar={<ExternalSidebar />} />,
-    children: [
-      { path: '/profile', element: <Navigate to="/profile/personal" replace /> },
-      { path: '/profile/personal', element: <PersonalInfoPage /> },
-      { path: '/profile/contact', element: <ContactPage /> },
-      { path: '/profile/employment', element: <EmploymentPage /> },
-      { path: '/profile/identity', element: <IdentityPage /> },
-      { path: '/profile/financial', element: <FinancialPage /> },
-      { path: '/profile/health', element: <HealthPage /> },
-      { path: '/profile/education', element: <EducationPage /> },
-      { path: '/profile/documents', element: <DocumentsPage /> },
-      { path: '/profile/danger', element: <DangerZonePage /> },
-    ],
-  },
-  {
-    element: (
-      <ExternalLayout
-        header={<ExternalHeader subtitle="Authentication & Authorization" showAvatar={false} />}
-        sidebar={<AuthSettingsSidebar />}
-      />
-    ),
-    children: [
-      { path: '/auth-settings', element: <Navigate to="/auth-settings/intro" replace /> },
-      { path: '/auth-settings/intro', element: <IntroPage /> },
-      { path: '/auth-settings/passwords', element: <PasswordsPage /> },
-      { path: '/auth-settings/mfa', element: <MfaPage /> },
-      { path: '/auth-settings/passwordless', element: <PasswordlessPage /> },
-      { path: '/auth-settings/advanced', element: <AdvancedPage /> },
-      { path: '/auth-settings/session', element: <SessionPage /> },
+          { path: '/contact/general', element: <ContactGeneralPage /> },
+          { path: '/contact/support', element: <ContactSupportPage /> },
+          { path: '/contact/sales', element: <ContactSalesPage /> },
+        ],
+      },
+      {
+        element: <ExternalLayout header={<ExternalHeader />} sidebar={<ExternalSidebar />} />,
+        children: [
+          { path: '/profile', element: <Navigate to="/profile/personal" replace /> },
+          { path: '/profile/personal', element: <PersonalInfoPage /> },
+          { path: '/profile/contact', element: <ContactPage /> },
+          { path: '/profile/employment', element: <EmploymentPage /> },
+          { path: '/profile/identity', element: <IdentityPage /> },
+          { path: '/profile/financial', element: <FinancialPage /> },
+          { path: '/profile/health', element: <HealthPage /> },
+          { path: '/profile/education', element: <EducationPage /> },
+          { path: '/profile/documents', element: <DocumentsPage /> },
+          { path: '/profile/danger', element: <DangerZonePage /> },
+        ],
+      },
+      {
+        element: (
+          <ExternalLayout
+            header={<ExternalHeader subtitle="Authentication & Authorization" showAvatar={false} />}
+            sidebar={<AuthSettingsSidebar />}
+          />
+        ),
+        children: [
+          { path: '/auth-settings', element: <Navigate to="/auth-settings/intro" replace /> },
+          { path: '/auth-settings/intro', element: <IntroPage /> },
+          { path: '/auth-settings/passwords', element: <PasswordsPage /> },
+          { path: '/auth-settings/mfa', element: <MfaPage /> },
+          { path: '/auth-settings/passwordless', element: <PasswordlessPage /> },
+          { path: '/auth-settings/advanced', element: <AdvancedPage /> },
+          { path: '/auth-settings/session', element: <SessionPage /> },
+        ],
+      },
     ],
   },
   { path: '*', element: <NotFoundPage /> },
