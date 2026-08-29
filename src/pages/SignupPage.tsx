@@ -1,22 +1,29 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AuthCard from '../components/AuthCard'
 import Button from '../components/Button'
 import Checkbox from '../components/Checkbox'
 import ConsentBanner from '../components/ConsentBanner'
 import Divider from '../components/Divider'
+import FormAlert from '../components/FormAlert'
 import InfoTip from '../components/InfoTip'
 import Input from '../components/Input'
 import PasswordField from '../components/PasswordField'
-import PasswordStrengthMeter from '../components/PasswordStrengthMeter'
+import PasswordStrengthMeter, { isPasswordValid } from '../components/PasswordStrengthMeter'
 import Tabs from '../components/Tabs'
+import { useAuth } from '../context/AuthContext'
 import styles from './SignupPage.module.css'
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 /**
- * Real signup page UI — static/placeholder per the UI-first build order: no
- * form state, no submit handler, no validation/strength wiring. Full
- * visual parity with login-portal_v2.html's Create Account tab, built
- * from primitives (Button, Input, PasswordField, Checkbox, Tabs, InfoTip,
- * PasswordStrengthMeter, Divider) plus the shared AuthCard shell.
+ * Real signup page — real client-side validation and submission, matching
+ * the source's handleSignup() exactly (required fields, email format, the
+ * password strength gate, the terms checkbox, the same consent gate and
+ * error copy). No real backend/account creation exists — a valid
+ * submission just logs you in locally via AuthContext and navigates to
+ * the dashboard, same as the source's fake "Account created" success path
+ * just actually proceeding now instead of only showing an alert.
  *
  * Tab switching IS wired to real navigation (via react-router-dom) — see
  * LoginPage.tsx's comment for why that's not considered "wiring-phase"
@@ -24,10 +31,69 @@ import styles from './SignupPage.module.css'
  */
 export default function SignupPage() {
   const navigate = useNavigate()
+  const { login } = useAuth()
+  const [consentAccepted, setConsentAccepted] = useState(false)
+
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [password, setPassword] = useState('')
+  const [termsAccepted, setTermsAccepted] = useState(false)
+
+  const [firstNameError, setFirstNameError] = useState('')
+  const [lastNameError, setLastNameError] = useState('')
+  const [emailError, setEmailError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
+  const [alert, setAlert] = useState<string | null>(null)
+
+  const handleCreateAccount = () => {
+    setAlert(null)
+    setFirstNameError('')
+    setLastNameError('')
+    setEmailError('')
+    setPasswordError('')
+
+    if (!consentAccepted) {
+      setAlert('Please acknowledge the consent notice first.')
+      return
+    }
+
+    let ok = true
+    if (!firstName.trim()) {
+      setFirstNameError('First name is required')
+      ok = false
+    }
+    if (!lastName.trim()) {
+      setLastNameError('Last name is required')
+      ok = false
+    }
+    if (!email.trim() || !EMAIL_RE.test(email)) {
+      setEmailError('A valid email address is required')
+      ok = false
+    }
+    if (!password || !isPasswordValid(password)) {
+      setPasswordError('Password does not meet all requirements')
+      ok = false
+    }
+    if (!ok) {
+      setAlert('Please correct the highlighted fields.')
+      return
+    }
+    if (!termsAccepted) {
+      setAlert('You must agree to the Terms of Service.')
+      return
+    }
+
+    login()
+    navigate('/home')
+  }
 
   return (
-    <AuthCard topBanner={<ConsentBanner />}>
+    <AuthCard topBanner={<ConsentBanner accepted={consentAccepted} onAccept={() => setConsentAccepted(true)} />}>
       <h1 className="sr-only">Create Account</h1>
+
+      {alert && <FormAlert type="error">{alert}</FormAlert>}
 
       <Tabs
         aria-label="Authentication method"
@@ -40,8 +106,24 @@ export default function SignupPage() {
       />
 
       <div className={styles.nameRow}>
-        <Input id="signupFirst" label="First Name" required placeholder="Jane" />
-        <Input id="signupLast" label="Last Name" required placeholder="Doe" />
+        <Input
+          id="signupFirst"
+          label="First Name"
+          required
+          placeholder="Jane"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          errorMessage={firstNameError}
+        />
+        <Input
+          id="signupLast"
+          label="Last Name"
+          required
+          placeholder="Doe"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          errorMessage={lastNameError}
+        />
       </div>
 
       <Input
@@ -51,6 +133,9 @@ export default function SignupPage() {
         type="email"
         placeholder="jane.doe@company.com"
         labelExtra={<InfoTip text="Use your company-issued email" />}
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        errorMessage={emailError}
       />
 
       <Input
@@ -59,16 +144,29 @@ export default function SignupPage() {
         type="tel"
         placeholder="(202) 555-0100"
         labelExtra={<InfoTip text="For multi-factor authentication" />}
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
       />
 
       <div>
-        <PasswordField id="signupPass" label="Create Password" required placeholder="Min 12 characters" autoComplete="new-password" />
-        <PasswordStrengthMeter />
+        <PasswordField
+          id="signupPass"
+          label="Create Password"
+          required
+          placeholder="Min 12 characters"
+          autoComplete="new-password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          errorMessage={passwordError}
+        />
+        <PasswordStrengthMeter value={password} />
       </div>
 
       <Checkbox
         align="start"
         className={styles.terms}
+        checked={termsAccepted}
+        onChange={(e) => setTermsAccepted(e.target.checked)}
         label={
           <>
             I agree to the <a href="#">Terms of Service</a>, <a href="#">Privacy Policy</a>, and the{' '}
@@ -77,7 +175,9 @@ export default function SignupPage() {
         }
       />
 
-      <Button variant="submit">Create Account</Button>
+      <Button variant="submit" onClick={handleCreateAccount}>
+        Create Account
+      </Button>
 
       <Divider>or sign up with</Divider>
 

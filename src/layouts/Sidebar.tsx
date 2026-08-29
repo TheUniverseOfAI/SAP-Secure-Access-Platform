@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import NavGroup from '../components/NavGroup'
 import NavItem from '../components/NavItem'
+import { useAuth } from '../context/AuthContext'
 import styles from './Sidebar.module.css'
 
 const ExternalArrow = (
@@ -33,6 +34,7 @@ interface SidebarProps {
 export default function Sidebar({ collapsed, mobileOpen }: SidebarProps) {
   const location = useLocation()
   const navigate = useNavigate()
+  const { logout } = useAuth()
   const isActive = (path: string) => location.pathname === path
   const inGroup = (prefix: string) => location.pathname.startsWith(prefix)
   const navClasses = [styles.sidebar, collapsed ? styles.collapsed : '', mobileOpen ? styles.mobileOpen : ''].filter(Boolean).join(' ')
@@ -238,6 +240,26 @@ export default function Sidebar({ collapsed, mobileOpen }: SidebarProps) {
             onClick={() => navigate('/security/incident-response')}
           />
         </NavGroup>
+      </div>
+
+      <div className={styles.section}>
+        <NavItem
+          collapsed={collapsed}
+          label="Log Out"
+          onClick={() => {
+            logout()
+            navigate('/login')
+          }}
+          icon={
+            <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+              />
+            </svg>
+          }
+        />
       </div>
 
       <div className={styles.footer}>

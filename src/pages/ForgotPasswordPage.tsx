@@ -6,7 +6,7 @@ import ButtonRow from '../components/ButtonRow'
 import Input from '../components/Input'
 import OtpInputGroup from '../components/OtpInputGroup'
 import PasswordField from '../components/PasswordField'
-import PasswordStrengthMeter from '../components/PasswordStrengthMeter'
+import PasswordStrengthMeter, { isPasswordValid } from '../components/PasswordStrengthMeter'
 import ResendRow from '../components/ResendRow'
 import SuccessVisual from '../components/SuccessVisual'
 import VerifyCard from '../components/VerifyCard'
@@ -15,6 +15,8 @@ import WizardProgress from '../components/WizardProgress'
 
 type VerifyMethod = 'emailOtp' | 'smsOtp' | 'totp' | 'questions'
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 /**
  * Real forgot-password page UI. Adapts login-portal_v2.html's "Reset Your
  * Password" MODAL wizard into a full page — the approved routing plan
@@ -22,18 +24,73 @@ type VerifyMethod = 'emailOtp' | 'smsOtp' | 'totp' | 'questions'
  * triggered from LoginPage, so this is a routing-architecture adaptation,
  * not a visual liberty.
  *
- * Step-to-step navigation uses local `useState` (which step is showing,
- * which verification method was picked) — this is the same category as
- * the react-router navigation wired into LoginPage/SignupPage's tabs:
- * just "show the next screen," not business logic. There is NO real
- * validation, no code is actually verified, no password is actually
- * reset, no email/SMS is actually sent — "Continue" always advances
- * regardless of input. That part is explicit wiring-phase work.
+ * Step-to-step navigation uses local `useState`, same as before — but
+ * each step now has real validation gating "Continue"/"Verify" (email
+ * format, a method selected, security-question answers required, the OTP
+ * code being complete, the new password meeting every rule and matching
+ * its confirmation). Still no real backend: no code is actually checked
+ * against anything sent, no password is actually persisted anywhere.
  */
 export default function ForgotPasswordPage() {
   const navigate = useNavigate()
   const [step, setStep] = useState(1)
   const [method, setMethod] = useState<VerifyMethod | null>(null)
+
+  const [email, setEmail] = useState('')
+  const [emailError, setEmailError] = useState('')
+
+  const [otpCode, setOtpCode] = useState('')
+
+  const [sq1, setSq1] = useState('')
+  const [sq2, setSq2] = useState('')
+  const [sq1Error, setSq1Error] = useState('')
+  const [sq2Error, setSq2Error] = useState('')
+
+  const [newPass, setNewPass] = useState('')
+  const [confirmPass, setConfirmPass] = useState('')
+  const [newPassError, setNewPassError] = useState('')
+  const [confirmPassError, setConfirmPassError] = useState('')
+
+  const handleStep1Continue = () => {
+    if (!email.trim() || !EMAIL_RE.test(email)) {
+      setEmailError('Please enter a valid email address')
+      return
+    }
+    setEmailError('')
+    setStep(2)
+  }
+
+  const handleQuestionsVerify = () => {
+    let ok = true
+    if (!sq1.trim()) {
+      setSq1Error('This field is required')
+      ok = false
+    }
+    if (!sq2.trim()) {
+      setSq2Error('This field is required')
+      ok = false
+    }
+    if (!ok) return
+    setSq1Error('')
+    setSq2Error('')
+    setStep(4)
+  }
+
+  const handleResetPassword = () => {
+    let ok = true
+    if (!isPasswordValid(newPass)) {
+      setNewPassError('Password does not meet all requirements')
+      ok = false
+    }
+    if (confirmPass !== newPass || !confirmPass) {
+      setConfirmPassError('Passwords do not match')
+      ok = false
+    }
+    if (!ok) return
+    setNewPassError('')
+    setConfirmPassError('')
+    setStep(5)
+  }
 
   return (
     <AuthCard
@@ -55,8 +112,17 @@ export default function ForgotPasswordPage() {
 
       {step === 1 && (
         <>
-          <Input id="fpEmail" label="Account Email" required type="email" placeholder="jane.doe@company.com" />
-          <Button variant="submit" onClick={() => setStep(2)}>
+          <Input
+            id="fpEmail"
+            label="Account Email"
+            required
+            type="email"
+            placeholder="jane.doe@company.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            errorMessage={emailError}
+          />
+          <Button variant="submit" onClick={handleStep1Continue}>
             Continue
           </Button>
         </>
@@ -136,7 +202,7 @@ export default function ForgotPasswordPage() {
             {method === 'smsOtp' && 'Enter the 6-digit code sent to your phone ending in •••0100'}
             {method === 'totp' && 'Enter the 6-digit code from your authenticator app'}
           </p>
-          <OtpInputGroup label="6-digit verification code" />
+          <OtpInputGroup label="6-digit verification code" onChange={setOtpCode} />
           {method !== 'totp' && (
             <ResendRow>
               Didn&apos;t get it? <a href="#">Resend</a>
@@ -146,7 +212,7 @@ export default function ForgotPasswordPage() {
             <Button variant="submitSecondary" onClick={() => setStep(2)}>
               Back
             </Button>
-            <Button variant="submit" onClick={() => setStep(4)}>
+            <Button variant="submit" disabled={otpCode.length !== 6} onClick={() => setStep(4)}>
               Verify
             </Button>
           </ButtonRow>
@@ -155,13 +221,27 @@ export default function ForgotPasswordPage() {
 
       {step === 3 && method === 'questions' && (
         <>
-          <Input id="sq1" label="What city were you born in?" placeholder="Your answer" />
-          <Input id="sq2" label="What was the name of your first pet?" placeholder="Your answer" />
+          <Input
+            id="sq1"
+            label="What city were you born in?"
+            placeholder="Your answer"
+            value={sq1}
+            onChange={(e) => setSq1(e.target.value)}
+            errorMessage={sq1Error}
+          />
+          <Input
+            id="sq2"
+            label="What was the name of your first pet?"
+            placeholder="Your answer"
+            value={sq2}
+            onChange={(e) => setSq2(e.target.value)}
+            errorMessage={sq2Error}
+          />
           <ButtonRow>
             <Button variant="submitSecondary" onClick={() => setStep(2)}>
               Back
             </Button>
-            <Button variant="submit" onClick={() => setStep(4)}>
+            <Button variant="submit" onClick={handleQuestionsVerify}>
               Verify
             </Button>
           </ButtonRow>
@@ -171,11 +251,27 @@ export default function ForgotPasswordPage() {
       {step === 4 && (
         <>
           <div>
-            <PasswordField id="fpNewPass" label="New Password" required placeholder="Min 12 characters" />
-            <PasswordStrengthMeter variant="forgot" />
+            <PasswordField
+              id="fpNewPass"
+              label="New Password"
+              required
+              placeholder="Min 12 characters"
+              value={newPass}
+              onChange={(e) => setNewPass(e.target.value)}
+              errorMessage={newPassError}
+            />
+            <PasswordStrengthMeter variant="forgot" value={newPass} />
           </div>
-          <PasswordField id="fpConfirmPass" label="Confirm Password" required placeholder="Re-enter new password" />
-          <Button variant="submit" onClick={() => setStep(5)}>
+          <PasswordField
+            id="fpConfirmPass"
+            label="Confirm Password"
+            required
+            placeholder="Re-enter new password"
+            value={confirmPass}
+            onChange={(e) => setConfirmPass(e.target.value)}
+            errorMessage={confirmPassError}
+          />
+          <Button variant="submit" onClick={handleResetPassword}>
             Reset Password
           </Button>
         </>

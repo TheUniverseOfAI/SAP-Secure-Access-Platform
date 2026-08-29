@@ -4,15 +4,19 @@ import styles from './OtpInputGroup.module.css'
 interface OtpInputGroupProps {
   label: string
   length?: number
+  /** Fires with the joined code (may be shorter than `length` while incomplete) on every digit change. */
+  onChange?: (code: string) => void
 }
 
 /**
  * 6-digit code entry. Auto-advances focus on digit entry and moves back on
  * backspace — this is local input UX, not the "no wiring" business logic
- * the UI-first rule defers (no actual code is verified against anything).
- * Source: .otp-inputs / .otp-input.
+ * the UI-first rule defers (no actual code is verified against anything —
+ * `onChange` just lets a caller check the code is complete before
+ * advancing a wizard step, not that it's correct). Source: .otp-inputs /
+ * .otp-input.
  */
-export default function OtpInputGroup({ label, length = 6 }: OtpInputGroupProps) {
+export default function OtpInputGroup({ label, length = 6, onChange }: OtpInputGroupProps) {
   const [values, setValues] = useState<string[]>(Array(length).fill(''))
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
 
@@ -21,6 +25,7 @@ export default function OtpInputGroup({ label, length = 6 }: OtpInputGroupProps)
     setValues((prev) => {
       const next = [...prev]
       next[index] = digit
+      onChange?.(next.join(''))
       return next
     })
     if (digit && index < length - 1) {
