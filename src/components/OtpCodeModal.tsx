@@ -3,6 +3,8 @@ import Button from './Button'
 import Input from './Input'
 import Modal from './Modal'
 import OtpInputGroup from './OtpInputGroup'
+import ResendRow from './ResendRow'
+import SuccessVisual from './SuccessVisual'
 
 /**
  * Source: #otpModal in login-portal_v2.html. Step 1 collects an email,
@@ -58,22 +60,24 @@ export default function OtpCodeModal({ onClose }: { onClose: () => void }) {
           <Button variant="submit" style={{ marginTop: 10 }} onClick={() => setStep(3)}>
             Verify &amp; Sign In
           </Button>
-          <div className="resend-row">
+          <ResendRow>
             Didn&apos;t receive it? <a href="#">Resend code</a>
-          </div>
+          </ResendRow>
         </>
       )}
 
       {step === 3 && (
-        <div className="success-visual">
-          <div className="icon-ring green">
+        <SuccessVisual
+          variant="green"
+          heading="Verified Successfully"
+          icon={
             <svg fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75" />
             </svg>
-          </div>
-          <h4>Verified Successfully</h4>
+          }
+        >
           <p>Redirecting you to the dashboard…</p>
-        </div>
+        </SuccessVisual>
       )}
     </Modal>
   )

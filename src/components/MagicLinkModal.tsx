@@ -2,6 +2,8 @@ import { useState } from 'react'
 import Button from './Button'
 import Input from './Input'
 import Modal from './Modal'
+import ResendRow from './ResendRow'
+import SuccessVisual, { EmailHighlight } from './SuccessVisual'
 
 /**
  * Source: #magicModal in login-portal_v2.html. Step 1 collects an email,
@@ -44,8 +46,10 @@ export default function MagicLinkModal({ onClose }: { onClose: () => void }) {
 
       {step === 2 && (
         <>
-          <div className="success-visual">
-            <div className="icon-ring blue">
+          <SuccessVisual
+            variant="blue"
+            heading="Check Your Inbox"
+            icon={
               <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
                 <path
                   strokeLinecap="round"
@@ -53,20 +57,20 @@ export default function MagicLinkModal({ onClose }: { onClose: () => void }) {
                   d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
                 />
               </svg>
-            </div>
-            <h4>Check Your Inbox</h4>
+            }
+          >
             <p>
               We&apos;ve sent a secure sign-in link to
               <br />
-              <span className="email-highlight">{email || '—'}</span>
+              <EmailHighlight>{email || '—'}</EmailHighlight>
             </p>
             <p style={{ marginTop: 10, fontSize: '0.76rem', color: 'var(--gray-400)' }}>
               The link expires in 15 minutes. Check spam if needed.
             </p>
-          </div>
-          <div className="resend-row">
+          </SuccessVisual>
+          <ResendRow>
             Didn&apos;t get it? <a href="#">Resend link</a>
-          </div>
+          </ResendRow>
         </>
       )}
     </Modal>

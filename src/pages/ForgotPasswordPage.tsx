@@ -2,10 +2,13 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import AuthCard from '../components/AuthCard'
 import Button from '../components/Button'
+import ButtonRow from '../components/ButtonRow'
 import Input from '../components/Input'
 import OtpInputGroup from '../components/OtpInputGroup'
 import PasswordField from '../components/PasswordField'
 import PasswordStrengthMeter from '../components/PasswordStrengthMeter'
+import ResendRow from '../components/ResendRow'
+import SuccessVisual from '../components/SuccessVisual'
 import VerifyCard from '../components/VerifyCard'
 import WizardHeader from '../components/WizardHeader'
 import WizardProgress from '../components/WizardProgress'
@@ -115,14 +118,14 @@ export default function ForgotPasswordPage() {
               onSelect={() => setMethod('questions')}
             />
           </div>
-          <div className="btn-row">
+          <ButtonRow>
             <Button variant="submitSecondary" onClick={() => setStep(1)}>
               Back
             </Button>
             <Button variant="submit" disabled={!method} onClick={() => setStep(3)}>
               Continue
             </Button>
-          </div>
+          </ButtonRow>
         </>
       )}
 
@@ -135,18 +138,18 @@ export default function ForgotPasswordPage() {
           </p>
           <OtpInputGroup label="6-digit verification code" />
           {method !== 'totp' && (
-            <p className="resend-row">
+            <ResendRow>
               Didn&apos;t get it? <a href="#">Resend</a>
-            </p>
+            </ResendRow>
           )}
-          <div className="btn-row">
+          <ButtonRow>
             <Button variant="submitSecondary" onClick={() => setStep(2)}>
               Back
             </Button>
             <Button variant="submit" onClick={() => setStep(4)}>
               Verify
             </Button>
-          </div>
+          </ButtonRow>
         </>
       )}
 
@@ -154,14 +157,14 @@ export default function ForgotPasswordPage() {
         <>
           <Input id="sq1" label="What city were you born in?" placeholder="Your answer" />
           <Input id="sq2" label="What was the name of your first pet?" placeholder="Your answer" />
-          <div className="btn-row">
+          <ButtonRow>
             <Button variant="submitSecondary" onClick={() => setStep(2)}>
               Back
             </Button>
             <Button variant="submit" onClick={() => setStep(4)}>
               Verify
             </Button>
-          </div>
+          </ButtonRow>
         </>
       )}
 
@@ -179,40 +182,26 @@ export default function ForgotPasswordPage() {
       )}
 
       {step === 5 && (
-        <div style={{ textAlign: 'center', padding: '16px 0 8px' }}>
-          <div
-            style={{
-              width: 72,
-              height: 72,
-              borderRadius: '50%',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginBottom: 16,
-              border: '3px solid #86efac',
-              background: 'var(--green-50)',
-            }}
-          >
-            <svg fill="none" stroke="var(--green-500)" strokeWidth="2.5" viewBox="0 0 24 24" width="30" height="30" aria-hidden="true">
+        <SuccessVisual
+          variant="green"
+          heading="Password Reset Successfully"
+          icon={
+            <svg fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75" />
             </svg>
-          </div>
-          <h2 style={{ fontSize: '1.05rem', color: 'var(--gray-800)', marginBottom: 6, fontWeight: 700 }}>
-            Password Reset Successfully
-          </h2>
-          <p style={{ fontSize: '0.82rem', color: 'var(--gray-500)', lineHeight: 1.5 }}>
-            Your password has been updated. You can now sign in with your new credentials.
-          </p>
+          }
+        >
+          <p>Your password has been updated. You can now sign in with your new credentials.</p>
           <Button variant="submit" style={{ marginTop: 16 }} onClick={() => navigate('/login')}>
             Back to Sign In
           </Button>
-        </div>
+        </SuccessVisual>
       )}
 
       {step < 5 && (
-        <p className="resend-row">
+        <ResendRow>
           <Link to="/login">Back to Sign In</Link>
-        </p>
+        </ResendRow>
       )}
     </AuthCard>
   )

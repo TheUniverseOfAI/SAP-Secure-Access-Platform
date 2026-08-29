@@ -1,3 +1,5 @@
+import styles from './AuthFooter.module.css'
+
 /**
  * Footer shell for pre-login pages (login, signup, forgot-password).
  * Ported from sap-package/app-files/login-portal_v2.html's <footer class="footer">.
@@ -8,15 +10,15 @@
  */
 export default function AuthFooter() {
   return (
-    <footer className="footer">
-      <div className="footer-top">
+    <footer className={styles.footer}>
+      <div className={styles.top}>
         <a href="#">Privacy Policy</a>
         <a href="#">Accessibility</a>
         <a href="#">Terms of Use</a>
         <a href="#">System Status</a>
         <a href="#">Security</a>
       </div>
-      <p className="footer-copy">
+      <p className={styles.copy}>
         &copy; 2026 <span>SAP — Secure Access Platform</span>. All rights reserved.
       </p>
     </footer>
