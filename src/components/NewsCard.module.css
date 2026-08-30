@@ -1,0 +1,63 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 10px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tag {
+  align-self: flex-start;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.tagTech {
+  background: var(--blue-50);
+  color: var(--blue-600);
+}
+.tagAi {
+  background: #faf5ff;
+  color: var(--purple-500);
+}
+.tagSports {
+  background: var(--green-50);
+  color: var(--green-500);
+}
+.tagCyber {
+  background: var(--red-50);
+  color: var(--red-500);
+}
+
+.headline {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--gray-800);
+  line-height: 1.35;
+}
+
+.summary {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--gray-400);
+  margin-top: 4px;
+}
