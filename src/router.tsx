@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import PortalLayout from './layouts/PortalLayout'
+import HomePage from './pages/HomePage'
 import PortalHomePage from './pages/PortalHomePage'
 import PortalsPage from './pages/PortalsPage'
 import LeadershipPage from './pages/LeadershipPage'
@@ -71,7 +72,8 @@ const routes = [
       {
         element: <PortalLayout />,
         children: [
-          { path: '/home', element: <PortalHomePage /> },
+          { path: '/home', element: <HomePage /> },
+          { path: '/dashboard', element: <PortalHomePage /> },
           { path: '/portals', element: <PortalsPage /> },
           { path: '/leadership', element: <LeadershipPage /> },
           { path: '/about', element: <AboutPage /> },
