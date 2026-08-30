@@ -4,17 +4,19 @@ import Card from '../components/Card'
 import PageHeader from '../components/PageHeader'
 import { QuickCard, QuickGrid } from '../components/QuickCard'
 import { StatCard, StatGrid } from '../components/StatCard'
+import { activity } from '../data/activity'
 import Breadcrumb from '../layouts/Breadcrumb'
 import styles from './PortalHomePage.module.css'
 
 /**
  * Real portal home page UI — static/placeholder per the UI-first build
- * order: the "Active Users" stat card and the Recent Activity items stay
- * inert (no real target in the source either, or no page for it). Every
- * other stat card and quick-nav card now navigates for real, since their
- * target pages all exist as of the detail-pages round — same "structural
- * navigation" reasoning used for Sidebar/tabs elsewhere. Full visual
- * parity with sap-portal_v2.html's #page-home block.
+ * order except where a real destination exists: the "Active Users" stat
+ * card stays inert (no page for it anywhere), but every other stat card,
+ * quick-nav card, and now every Recent Activity entry (backed by
+ * src/data/activity.ts) navigates for real, since their target pages all
+ * exist as of the detail-pages round — same "structural navigation"
+ * reasoning used for Sidebar/tabs elsewhere. Full visual parity with
+ * sap-portal_v2.html's #page-home block.
  */
 export default function PortalHomePage() {
   const navigate = useNavigate()
@@ -135,23 +137,16 @@ export default function PortalHomePage() {
 
         <Card title="Recent Activity">
           <ActivityList>
-            <ActivityItem color="green" time="2 hours ago" text={<><b>Security audit</b> completed — all 47 controls passed.</>} />
-            <ActivityItem
-              color="blue"
-              time="Yesterday at 3:14 PM"
-              text={<><b>Privacy Policy</b> updated to reflect GDPR Article 28 amendments.</>}
-            />
-            <ActivityItem
-              color="amber"
-              time="2 days ago"
-              text={<><b>Scheduled maintenance</b> window confirmed: April 19, 2:00–4:00 AM EST.</>}
-            />
-            <ActivityItem color="green" time="1 week ago" text={<><b>SOC 2 Type II</b> certification renewed through March 2027.</>} />
-            <ActivityItem
-              color="gray"
-              time="2 weeks ago"
-              text={<><b>Accessibility</b> — WCAG 2.2 AA conformance report published.</>}
-            />
+            {activity.map((entry) => (
+              <ActivityItem
+                key={entry.id}
+                color={entry.color}
+                label={entry.label}
+                detail={entry.detail}
+                time={entry.time}
+                onClick={() => navigate(entry.link)}
+              />
+            ))}
           </ActivityList>
         </Card>
       </div>

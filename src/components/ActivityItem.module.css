@@ -11,9 +11,30 @@
   gap: 14px;
   padding: 14px 0;
   border-bottom: 1px solid var(--gray-100);
+  width: 100%;
 }
 .item:last-child {
   border-bottom: none;
+}
+
+/*
+ * Applied only when an entry has a real `link` (see ActivityItem.tsx).
+ * The source renders these as plain non-interactive divs, but per the
+ * "everything should navigate to a real destination" rule, entries with
+ * a real target page are made clickable — reset the native button
+ * chrome so it still looks identical to the static row.
+ */
+.itemButton {
+  background: none;
+  border: none;
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background var(--transition);
+}
+.itemButton:hover {
+  background: var(--gray-50);
 }
 
 .dot {
