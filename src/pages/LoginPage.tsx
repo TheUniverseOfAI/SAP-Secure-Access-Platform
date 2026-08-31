@@ -28,6 +28,13 @@ import styles from './LoginPage.module.css'
  * Same reasoning for the OTP Code / Magic Link buttons: opening their
  * modal is structural (which UI is showing), the modals themselves do no
  * real sending/verification.
+ *
+ * PIV/SSO/Google/Microsoft/Apple/Passkey buttons match the source's own
+ * handlePIV()/socialLogin() exactly: gated by the same consent check,
+ * showing a "Redirecting to X for authentication…" / "Detecting PIV/CAC
+ * smart card…" success alert. The source never actually redirects
+ * anywhere either — this is genuinely as real as that behavior gets
+ * without a real identity provider to redirect to.
  */
 export default function LoginPage() {
   const navigate = useNavigate()
@@ -38,7 +45,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [usernameError, setUsernameError] = useState('')
   const [passwordError, setPasswordError] = useState('')
-  const [alert, setAlert] = useState<string | null>(null)
+  const [alert, setAlert] = useState<{ type: 'error' | 'success'; text: string } | null>(null)
 
   const handleSignIn = () => {
     setAlert(null)
@@ -46,7 +53,7 @@ export default function LoginPage() {
     setPasswordError('')
 
     if (!consentAccepted) {
-      setAlert('Please acknowledge the consent notice first.')
+      setAlert({ type: 'error', text: 'Please acknowledge the consent notice first.' })
       return
     }
 
@@ -60,7 +67,7 @@ export default function LoginPage() {
       ok = false
     }
     if (!ok) {
-      setAlert('Please fill in all required fields.')
+      setAlert({ type: 'error', text: 'Please fill in all required fields.' })
       return
     }
 
@@ -68,11 +75,28 @@ export default function LoginPage() {
     navigate('/home')
   }
 
+  const gate = () => {
+    if (!consentAccepted) {
+      setAlert({ type: 'error', text: 'Please acknowledge the consent notice first.' })
+      return false
+    }
+    setAlert(null)
+    return true
+  }
+
+  const handlePiv = () => {
+    if (gate()) setAlert({ type: 'success', text: 'Detecting PIV / CAC smart card — please insert your card…' })
+  }
+
+  const handleSocialLogin = (provider: string) => {
+    if (gate()) setAlert({ type: 'success', text: `Redirecting to ${provider} for authentication…` })
+  }
+
   return (
     <AuthCard topBanner={<ConsentBanner accepted={consentAccepted} onAccept={() => setConsentAccepted(true)} />}>
       <h1 className="sr-only">Sign In</h1>
 
-      {alert && <FormAlert type="error">{alert}</FormAlert>}
+      {alert && <FormAlert type={alert.type}>{alert.text}</FormAlert>}
 
       <Tabs
         aria-label="Authentication method"
@@ -118,7 +142,7 @@ export default function LoginPage() {
 
       <Divider>or</Divider>
 
-      <Button variant="altDark">
+      <Button variant="altDark" onClick={handlePiv}>
         <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
           <rect x="3" y="4" width="18" height="16" rx="2" />
           <circle cx="12" cy="11" r="2.5" />
@@ -130,7 +154,7 @@ export default function LoginPage() {
       </Button>
 
       <div className={styles.altGrid}>
-        <Button variant="alt">
+        <Button variant="alt" onClick={() => handleSocialLogin('SSO')}>
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-500)" strokeWidth="2" aria-hidden="true">
             <rect x="3" y="3" width="18" height="18" rx="3" />
             <path d="M8 12h8M12 8v8" />

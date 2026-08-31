@@ -26,6 +26,13 @@ const NETWORK_CLASS: Record<string, string> = {
  * source caught. Because the bank account list is populated, the "Add
  * Card" modal (previously skipped as "unreachable") is now wired to its
  * real trigger, the per-account "Add card" button.
+ *
+ * The "Remove account"/"Remove card"/row-delete buttons across all three
+ * lists (bank accounts, store credit, tax records) stay intentionally
+ * inert, same reasoning as EmploymentPage's Delete button: the Add
+ * Bank Account / Store Account / Tax Record forms above are all fully
+ * uncontrolled, so real deletion without real re-adding would be a
+ * worse half-wired state than leaving both inert together.
  */
 export default function FinancialPage() {
   const [addCardAccountId, setAddCardAccountId] = useState<number | null>(null)

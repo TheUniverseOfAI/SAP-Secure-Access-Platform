@@ -1,4 +1,7 @@
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import NotificationsPanel from '../components/NotificationsPanel'
+import { notifications } from '../data/notifications'
 import styles from './AppHeader.module.css'
 
 interface AppHeaderProps {
@@ -19,15 +22,42 @@ interface AppHeaderProps {
  *
  * The menu toggle now drives real sidebar state (owned by PortalLayout —
  * see its header comment), reflected here via aria-expanded. The search
- * input isn't controlled, and notification/settings icons don't open
- * anything — still deferred, unlike the toggle which is structural nav
- * state, not business logic. The avatar shows placeholder initials with
- * no real user data or account menu, but IS wired to navigate to
- * Leadership — source markup has no dropdown menu on it, just
- * onclick="navigateTo('leadership',...)".
+ * box really searches (Enter navigates to /portals?q=..., see
+ * PortalsPage.tsx). Notifications opens a real dropdown (mock content —
+ * src/data/notifications.ts, since no real notification system exists).
+ * Settings navigates to /profile/personal, the closest thing this app has
+ * to an account-settings destination. None of these are wired in the
+ * source (all three were fully dead there too), but each has a real,
+ * sensible destination now, per the same direction already applied to
+ * Recent Activity and the header search. The avatar shows placeholder
+ * initials with no real user data or account menu, but IS wired to
+ * navigate to Leadership — source markup has no dropdown menu on it,
+ * just onclick="navigateTo('leadership',...)".
  */
 export default function AppHeader({ navExpanded, onToggleSidebar }: AppHeaderProps) {
   const navigate = useNavigate()
+  const [query, setQuery] = useState('')
+  const [notificationsOpen, setNotificationsOpen] = useState(false)
+  const notificationsRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!notificationsOpen) return
+    const handleClickAway = (e: MouseEvent) => {
+      if (notificationsRef.current && !notificationsRef.current.contains(e.target as Node)) {
+        setNotificationsOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickAway)
+    return () => document.removeEventListener('mousedown', handleClickAway)
+  }, [notificationsOpen])
+
+  const handleSearch = () => {
+    const trimmed = query.trim()
+    navigate(trimmed ? `/portals?q=${encodeURIComponent(trimmed)}` : '/portals')
+  }
+
+  const unreadCount = notifications.filter((n) => !n.read).length
+
   return (
     <header className={styles.header} role="banner">
       <div className={styles.left}>
@@ -68,19 +98,36 @@ export default function AppHeader({ navExpanded, onToggleSidebar }: AppHeaderPro
             <circle cx="11" cy="11" r="8" />
             <path d="m21 21-4.35-4.35" />
           </svg>
-          <input type="text" placeholder="Search…" aria-label="Search SAP portal" />
+          <input
+            type="text"
+            placeholder="Search…"
+            aria-label="Search SAP portal"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleSearch()
+            }}
+          />
         </div>
-        <button className={styles.iconBtn} aria-label="Notifications">
-          <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
-            />
-          </svg>
-          <span className={styles.dot} aria-hidden="true" />
-        </button>
-        <button className={styles.iconBtn} aria-label="Settings">
+        <div className={styles.notificationsWrap} ref={notificationsRef}>
+          <button
+            className={styles.iconBtn}
+            aria-label="Notifications"
+            aria-expanded={notificationsOpen}
+            onClick={() => setNotificationsOpen((prev) => !prev)}
+          >
+            <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
+              />
+            </svg>
+            {unreadCount > 0 && <span className={styles.dot} aria-hidden="true" />}
+          </button>
+          {notificationsOpen && <NotificationsPanel notifications={notifications} />}
+        </div>
+        <button className={styles.iconBtn} aria-label="Settings" onClick={() => navigate('/profile/personal')}>
           <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
             <path
               strokeLinecap="round"
