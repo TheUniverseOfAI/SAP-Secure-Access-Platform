@@ -9,7 +9,8 @@
   background: var(--gray-50);
   margin-bottom: 16px;
 }
-.zone:hover {
+.zone:hover,
+.zone.dragover {
   border-color: var(--blue-400);
   background: var(--blue-50);
 }

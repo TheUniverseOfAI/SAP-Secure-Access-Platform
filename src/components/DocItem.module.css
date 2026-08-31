@@ -45,6 +45,18 @@
 .iconPng {
   background: #9333ea;
 }
+.iconJpg {
+  background: #ea580c;
+}
+.iconTxt {
+  background: #6b7280;
+}
+.iconCsv {
+  background: #0d9488;
+}
+.iconPptx {
+  background: #d97706;
+}
 
 .info {
   flex: 1;
