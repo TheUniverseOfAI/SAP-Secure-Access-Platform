@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './AppHeader.module.css'
 
@@ -19,15 +20,26 @@ interface AppHeaderProps {
  *
  * The menu toggle now drives real sidebar state (owned by PortalLayout —
  * see its header comment), reflected here via aria-expanded. The search
- * input isn't controlled, and notification/settings icons don't open
- * anything — still deferred, unlike the toggle which is structural nav
- * state, not business logic. The avatar shows placeholder initials with
- * no real user data or account menu, but IS wired to navigate to
- * Leadership — source markup has no dropdown menu on it, just
- * onclick="navigateTo('leadership',...)".
+ * box now really searches (Enter navigates to /portals?q=..., which
+ * filters the portals grid by name/description — see PortalsPage.tsx) —
+ * the source itself never wires this input to anything, but a working
+ * search is a real, sensible destination for it, per the "everything
+ * should navigate to a real destination" direction also applied to
+ * Recent Activity. Notification/settings icons still don't open
+ * anything — separate cleanup round. The avatar shows placeholder
+ * initials with no real user data or account menu, but IS wired to
+ * navigate to Leadership — source markup has no dropdown menu on it,
+ * just onclick="navigateTo('leadership',...)".
  */
 export default function AppHeader({ navExpanded, onToggleSidebar }: AppHeaderProps) {
   const navigate = useNavigate()
+  const [query, setQuery] = useState('')
+
+  const handleSearch = () => {
+    const trimmed = query.trim()
+    navigate(trimmed ? `/portals?q=${encodeURIComponent(trimmed)}` : '/portals')
+  }
+
   return (
     <header className={styles.header} role="banner">
       <div className={styles.left}>
@@ -68,7 +80,16 @@ export default function AppHeader({ navExpanded, onToggleSidebar }: AppHeaderPro
             <circle cx="11" cy="11" r="8" />
             <path d="m21 21-4.35-4.35" />
           </svg>
-          <input type="text" placeholder="Search…" aria-label="Search SAP portal" />
+          <input
+            type="text"
+            placeholder="Search…"
+            aria-label="Search SAP portal"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleSearch()
+            }}
+          />
         </div>
         <button className={styles.iconBtn} aria-label="Notifications">
           <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">

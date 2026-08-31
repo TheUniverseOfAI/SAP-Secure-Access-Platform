@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import PageHeader from '../components/PageHeader'
 import PortalCard from '../components/PortalCard'
 import PortalFilter, { type PortalFilterValue } from '../components/PortalFilter'
@@ -13,10 +14,21 @@ import styles from './PortalsPage.module.css'
  * routing/tabs/wizard steps elsewhere. Each card's "Launch" link goes
  * nowhere — portal apps are external systems, out of scope for this
  * project entirely, not just deferred to a later phase.
+ *
+ * Also reads an optional ?q= search param, set by AppHeader's search
+ * box (Enter navigates here) — the source itself never wires that input
+ * to anything, but this gives it a real destination.
  */
 export default function PortalsPage() {
   const [filter, setFilter] = useState<PortalFilterValue>('all')
-  const filtered = filter === 'all' ? portals : portals.filter((p) => p.cat === filter)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const query = searchParams.get('q') ?? ''
+
+  const filtered = portals.filter((p) => {
+    const inCategory = filter === 'all' || p.cat === filter
+    const matchesQuery = !query || p.name.toLowerCase().includes(query.toLowerCase()) || p.desc.toLowerCase().includes(query.toLowerCase())
+    return inCategory && matchesQuery
+  })
 
   return (
     <>
@@ -26,6 +38,15 @@ export default function PortalsPage() {
           title="Application Portals"
           description="Your single sign-on gateway to all SAP-authenticated applications. You've been identified and verified — choose a portal to launch."
         />
+
+        {query && (
+          <p className={styles.searchNote}>
+            {filtered.length} result{filtered.length !== 1 ? 's' : ''} for &ldquo;{query}&rdquo; ·{' '}
+            <button type="button" className={styles.clearSearch} onClick={() => setSearchParams({})}>
+              Clear search
+            </button>
+          </p>
+        )}
 
         <PortalFilter active={filter} onChange={setFilter} />
 

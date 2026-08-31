@@ -14,3 +14,22 @@
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 16px;
 }
+
+.searchNote {
+  font-size: 0.82rem;
+  color: var(--gray-500);
+  margin-bottom: 16px;
+}
+.clearSearch {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--blue-500);
+  font-size: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.clearSearch:hover {
+  color: var(--blue-700);
+}
