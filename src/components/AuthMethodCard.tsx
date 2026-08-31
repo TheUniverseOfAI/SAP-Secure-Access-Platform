@@ -13,6 +13,12 @@ const TAG_LABEL: Record<AuthMethod['tag'], string> = {
   optional: 'Optional',
 }
 
+interface AuthMethodCardProps {
+  method: AuthMethod
+  /** Persists the change through useAuthSettingsStore. Omit for a read-only card. */
+  onToggle?: (id: string, enabled: boolean) => void
+}
+
 /**
  * Primitive — one authentication method row (icon, name + tag badge,
  * description, toggle). `iconSvg` is rendered via dangerouslySetInnerHTML:
@@ -22,8 +28,12 @@ const TAG_LABEL: Record<AuthMethod['tag'], string> = {
  * converting ~23 multi-element icons' worth of svg attributes
  * (stroke-width -> strokeWidth etc.) to JSX by hand. Source: .auth-card
  * and its children in sap-auth-settings_v3.html.
+ *
+ * `method.enabled` now reflects live store state (see
+ * useAuthMethodsSection), not just the static seed default — toggling
+ * persists via `onToggle` -> useAuthSettingsStore.toggleMethod().
  */
-export default function AuthMethodCard({ method }: { method: AuthMethod }) {
+export default function AuthMethodCard({ method, onToggle }: AuthMethodCardProps) {
   return (
     <div className={[styles.card, method.enabled ? '' : styles.cardDisabled].filter(Boolean).join(' ')}>
       <div className={styles.icon} style={{ background: method.iconBg }} aria-hidden="true">
@@ -44,17 +54,28 @@ export default function AuthMethodCard({ method }: { method: AuthMethod }) {
         </div>
         <div className={styles.desc}>{method.desc}</div>
       </div>
-      <Toggle id={`toggle-${method.id}`} label={method.name} defaultChecked={method.enabled} disabled={method.locked} />
+      <Toggle
+        id={`toggle-${method.id}`}
+        label={method.name}
+        checked={method.enabled}
+        onChange={(checked) => onToggle?.(method.id, checked)}
+        disabled={method.locked}
+      />
     </div>
   )
 }
 
+interface AuthMethodListProps {
+  methods: AuthMethod[]
+  onToggle?: (id: string, enabled: boolean) => void
+}
+
 /** Layout wrapper for a list of AuthMethodCards. Source: .auth-list. */
-export function AuthMethodList({ methods }: { methods: AuthMethod[] }) {
+export function AuthMethodList({ methods, onToggle }: AuthMethodListProps) {
   return (
     <div className={styles.list}>
       {methods.map((method) => (
-        <AuthMethodCard key={method.id} method={method} />
+        <AuthMethodCard key={method.id} method={method} onToggle={onToggle} />
       ))}
     </div>
   )
