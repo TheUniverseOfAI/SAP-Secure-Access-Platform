@@ -15,7 +15,10 @@ import styles from './ProfileForm.module.css'
 export default function PersonalInfoPage() {
   return (
     <>
-      <PageHeader title="Personal Information" description="Legal name, demographics, and personal details. Fields marked with * are required." />
+      <PageHeader
+        title="Personal Information"
+        description="Legal name, demographics, and personal details. Fields marked with * are required."
+      />
       <Card
         title="Legal Identity"
         badge={{ label: 'Required', color: 'blue' }}

@@ -57,7 +57,14 @@ export default function DocumentsPage() {
         ) : (
           <DocList>
             {documents.map((doc) => (
-              <DocItem key={doc.id} type={doc.type} label={doc.label} name={doc.name} meta={doc.meta} onDelete={() => deleteDocument(doc.id)} />
+              <DocItem
+                key={doc.id}
+                type={doc.type}
+                label={doc.label}
+                name={doc.name}
+                meta={doc.meta}
+                onDelete={() => deleteDocument(doc.id)}
+              />
             ))}
           </DocList>
         )}

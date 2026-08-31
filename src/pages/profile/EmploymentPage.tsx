@@ -33,7 +33,10 @@ export default function EmploymentPage() {
 
   return (
     <>
-      <PageHeader title="Employment Details" description="Current position and employment history. Add past roles below and they'll appear in the history table." />
+      <PageHeader
+        title="Employment Details"
+        description="Current position and employment history. Add past roles below and they'll appear in the history table."
+      />
 
       <Card
         title="Current Position"
@@ -45,7 +48,14 @@ export default function EmploymentPage() {
         }
       >
         <div className={formStyles.grid}>
-          <Input id="employeeId" label="Employee ID" required defaultValue="EMP-2024-00847" readOnly style={{ background: 'var(--gray-50)', color: 'var(--gray-500)' }} />
+          <Input
+            id="employeeId"
+            label="Employee ID"
+            required
+            defaultValue="EMP-2024-00847"
+            readOnly
+            style={{ background: 'var(--gray-50)', color: 'var(--gray-500)' }}
+          />
           <Input id="badgeNumber" label="Badge / Card Number" placeholder="Badge ID" />
           <Input id="jobTitle" label="Job Title" required defaultValue="AI Engineer & ML Ops Specialist" />
           <Select
@@ -56,8 +66,16 @@ export default function EmploymentPage() {
           />
           <Input id="division" label="Division" defaultValue="AI/ML Platform" />
           <Input id="team" label="Team" placeholder="Team name" />
-          <Select id="employmentType" label="Employment Type" options={['Full-time', 'Part-time', 'Contract', 'Intern', 'Temporary', 'Freelance']} />
-          <Select id="employmentStatus" label="Employment Status" options={['Active', 'On Leave', 'Suspended', 'Terminated', 'Probation', 'Retired']} />
+          <Select
+            id="employmentType"
+            label="Employment Type"
+            options={['Full-time', 'Part-time', 'Contract', 'Intern', 'Temporary', 'Freelance']}
+          />
+          <Select
+            id="employmentStatus"
+            label="Employment Status"
+            options={['Active', 'On Leave', 'Suspended', 'Terminated', 'Probation', 'Retired']}
+          />
           <Input id="hireDate" label="Hire Date" required type="date" />
           <Input id="probationEnd" label="Probation End" type="date" />
           <Input id="manager" label="Manager / Supervisor" placeholder="Manager's full name" />
@@ -66,7 +84,11 @@ export default function EmploymentPage() {
             label="Work Location"
             options={['HQ — Building A', 'HQ — Building B', 'Remote — US', 'Remote — International', 'Hybrid']}
           />
-          <Select id="workSchedule" label="Work Schedule" options={['9–5 EST (Standard)', 'Flexible Hours', 'Night Shift', 'Compressed (4x10)']} />
+          <Select
+            id="workSchedule"
+            label="Work Schedule"
+            options={['9–5 EST (Standard)', 'Flexible Hours', 'Night Shift', 'Compressed (4x10)']}
+          />
           <Input id="costCenter" label="Cost Center" placeholder="e.g., CC-ENG-4200" />
           <Input id="payGrade" label="Pay Grade / Level" placeholder="e.g., L5, Grade 12" />
           <Select id="unionMembership" label="Union Membership" options={['Not Applicable', 'Yes', 'No']} />

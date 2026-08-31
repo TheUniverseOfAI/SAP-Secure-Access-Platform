@@ -9,9 +9,10 @@ import FormAlert from '../components/FormAlert'
 import InfoTip from '../components/InfoTip'
 import Input from '../components/Input'
 import PasswordField from '../components/PasswordField'
-import PasswordStrengthMeter, { isPasswordValid } from '../components/PasswordStrengthMeter'
+import PasswordStrengthMeter from '../components/PasswordStrengthMeter'
 import Tabs from '../components/Tabs'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/useAuth'
+import { isPasswordValid } from '../utils/passwordRules'
 import styles from './SignupPage.module.css'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -182,8 +183,7 @@ export default function SignupPage() {
         onChange={(e) => setTermsAccepted(e.target.checked)}
         label={
           <>
-            I agree to the <a href="#">Terms of Service</a>, <a href="#">Privacy Policy</a>, and the{' '}
-            <a href="#">Acceptable Use Policy</a>.
+            I agree to the <a href="#">Terms of Service</a>, <a href="#">Privacy Policy</a>, and the <a href="#">Acceptable Use Policy</a>.
           </>
         }
       />

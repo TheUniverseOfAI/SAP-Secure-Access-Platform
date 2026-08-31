@@ -99,8 +99,8 @@ export function ContactSalesPage() {
         Email <a href="#">sales@sap-platform.com</a> or call <b>+1 (800) 555-0199 ext. 2</b>
       </p>
       <p>
-        Include your organization name, estimated user count, and any specific compliance requirements. We typically
-        respond within 4 business hours.
+        Include your organization name, estimated user count, and any specific compliance requirements. We typically respond within 4
+        business hours.
       </p>
     </DetailLayout>
   )

@@ -24,7 +24,10 @@ export default function HomePage() {
     <>
       <Breadcrumb current="Home" />
       <div className={styles.page}>
-        <PageHeader title="Welcome back" description="Your daily briefing — weather, and the latest across tech, AI, sports, and cybersecurity." />
+        <PageHeader
+          title="Welcome back"
+          description="Your daily briefing — weather, and the latest across tech, AI, sports, and cybersecurity."
+        />
 
         <WeatherWidget data={weather} />
 

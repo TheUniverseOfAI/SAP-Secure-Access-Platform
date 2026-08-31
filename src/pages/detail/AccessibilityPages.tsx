@@ -12,13 +12,13 @@ export function AccessibilityStatementPage() {
     >
       <h2>Accessibility Statement</h2>
       <p>
-        SAP is committed to ensuring digital accessibility for people of all abilities. We continually improve the user
-        experience for everyone and apply relevant accessibility standards.
+        SAP is committed to ensuring digital accessibility for people of all abilities. We continually improve the user experience for
+        everyone and apply relevant accessibility standards.
       </p>
       <h3>Our Commitment</h3>
       <p>
-        We believe technology should be inclusive. Every feature in SAP is designed, developed, and tested with
-        accessibility as a core requirement — not an afterthought.
+        We believe technology should be inclusive. Every feature in SAP is designed, developed, and tested with accessibility as a core
+        requirement — not an afterthought.
       </p>
       <h3>Feedback</h3>
       <p>
@@ -42,13 +42,13 @@ export function AccessibilityStandardsPage() {
       <h2>Standards &amp; Compliance</h2>
       <h3>WCAG 2.2 Level AA</h3>
       <p>
-        SAP conforms to the Web Content Accessibility Guidelines (WCAG) 2.2 at Level AA. This includes all success
-        criteria for perceivable, operable, understandable, and robust content.
+        SAP conforms to the Web Content Accessibility Guidelines (WCAG) 2.2 at Level AA. This includes all success criteria for perceivable,
+        operable, understandable, and robust content.
       </p>
       <h3>Section 508</h3>
       <p>
-        As a platform serving corporate clients, SAP meets Section 508 requirements of the Rehabilitation Act, ensuring
-        compatibility with assistive technologies used in the workplace.
+        As a platform serving corporate clients, SAP meets Section 508 requirements of the Rehabilitation Act, ensuring compatibility with
+        assistive technologies used in the workplace.
       </p>
       <h3>ARIA Implementation</h3>
       <p>All interactive components use appropriate WAI-ARIA attributes to convey state, roles, and properties to screen readers.</p>
@@ -69,8 +69,7 @@ export function AccessibilityFeaturesPage() {
       <h2>Accessibility Features</h2>
       <ul>
         <li>
-          <b>Keyboard Navigation:</b> Every feature is fully operable using keyboard alone. Tab order follows logical
-          reading sequence.
+          <b>Keyboard Navigation:</b> Every feature is fully operable using keyboard alone. Tab order follows logical reading sequence.
         </li>
         <li>
           <b>Screen Reader Support:</b> Tested with NVDA, JAWS, and VoiceOver. All images have descriptive alt text.
@@ -88,8 +87,7 @@ export function AccessibilityFeaturesPage() {
           <b>Reduced Motion:</b> Animations respect the <code>prefers-reduced-motion</code> media query.
         </li>
         <li>
-          <b>Error Identification:</b> Form errors are announced to screen readers and highlighted visually with color
-          and icon.
+          <b>Error Identification:</b> Form errors are announced to screen readers and highlighted visually with color and icon.
         </li>
       </ul>
     </DetailLayout>

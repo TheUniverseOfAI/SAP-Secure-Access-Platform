@@ -18,16 +18,10 @@ export default function WizardProgress({ step, total }: WizardProgressProps) {
     <div className={styles.progress} aria-hidden="true">
       {dots.map((dot, i) => (
         <div key={dot} style={{ display: 'contents' }}>
-          <div
-            className={[styles.dot, dot < step ? styles.dotDone : dot === step ? styles.dotActive : '']
-              .filter(Boolean)
-              .join(' ')}
-          >
+          <div className={[styles.dot, dot < step ? styles.dotDone : dot === step ? styles.dotActive : ''].filter(Boolean).join(' ')}>
             {dot}
           </div>
-          {i < dots.length - 1 && (
-            <div className={[styles.line, dot < step ? styles.lineDone : ''].filter(Boolean).join(' ')} />
-          )}
+          {i < dots.length - 1 && <div className={[styles.line, dot < step ? styles.lineDone : ''].filter(Boolean).join(' ')} />}
         </div>
       ))}
     </div>

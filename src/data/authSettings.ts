@@ -274,7 +274,8 @@ export const authMethods: AuthMethod[] = [
     iconColor: '#9333ea',
     iconBg: 'var(--purple-50)',
     desc: 'Limits the number of simultaneous active sessions per user. Default: 3 sessions. New logins beyond the limit terminate the oldest session automatically.',
-    iconSvg: '<rect x="2" y="4" width="14" height="10" rx="1.5"/><rect x="8" y="8" width="14" height="10" rx="1.5"/><path d="M10 11h8m-8 3h5"/>',
+    iconSvg:
+      '<rect x="2" y="4" width="14" height="10" rx="1.5"/><rect x="8" y="8" width="14" height="10" rx="1.5"/><path d="M10 11h8m-8 3h5"/>',
   },
   {
     id: 'rbac',

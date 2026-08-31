@@ -11,7 +11,7 @@ import MagicLinkModal from '../components/MagicLinkModal'
 import OtpCodeModal from '../components/OtpCodeModal'
 import PasswordField from '../components/PasswordField'
 import Tabs from '../components/Tabs'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/useAuth'
 import styles from './LoginPage.module.css'
 
 /**

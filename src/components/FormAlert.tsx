@@ -17,11 +17,7 @@ export default function FormAlert({ type, children }: FormAlertProps) {
   return (
     <div className={[styles.alert, type === 'success' ? styles.success : styles.error].join(' ')} role="alert" aria-live="assertive">
       <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
-        />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
       </svg>
       <span>{children}</span>
     </div>

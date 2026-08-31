@@ -57,11 +57,20 @@ export default function ContactPage() {
         </h2>
         <div className={styles.grid}>
           <Input id="ec1Name" label="Contact 1 — Full Name" required placeholder="Full name" />
-          <Select id="ec1Relationship" label="Relationship" required options={['— Select —', 'Spouse', 'Parent', 'Sibling', 'Child', 'Friend', 'Other']} />
+          <Select
+            id="ec1Relationship"
+            label="Relationship"
+            required
+            options={['— Select —', 'Spouse', 'Parent', 'Sibling', 'Child', 'Friend', 'Other']}
+          />
           <Input id="ec1Phone" label="Phone" required type="tel" />
           <Input id="ec1Email" label="Email" type="email" />
           <Input id="ec2Name" label="Contact 2 — Full Name" placeholder="Optional backup" />
-          <Select id="ec2Relationship" label="Relationship" options={['— Select —', 'Spouse', 'Parent', 'Sibling', 'Child', 'Friend', 'Other']} />
+          <Select
+            id="ec2Relationship"
+            label="Relationship"
+            options={['— Select —', 'Spouse', 'Parent', 'Sibling', 'Child', 'Friend', 'Other']}
+          />
           <Input id="ec2Phone" label="Phone" type="tel" />
           <Input id="ec2Email" label="Email" type="email" />
         </div>

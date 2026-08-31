@@ -25,8 +25,8 @@ export default function DangerZonePage() {
         }
       >
         <p className={styles.text}>
-          Permanently delete your account and all associated data including uploaded documents, employment records,
-          and personal information. This action is irreversible and cannot be recovered.
+          Permanently delete your account and all associated data including uploaded documents, employment records, and personal
+          information. This action is irreversible and cannot be recovered.
         </p>
         <Button variant="danger">
           <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">

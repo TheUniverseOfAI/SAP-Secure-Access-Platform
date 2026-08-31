@@ -20,14 +20,7 @@ export default function Toggle({ id, label, checked, onChange, disabled }: Toggl
     <div className={styles.wrapper}>
       <label className={styles.toggle} htmlFor={id}>
         <span className="sr-only">{label}</span>
-        <input
-          id={id}
-          type="checkbox"
-          role="switch"
-          checked={checked}
-          onChange={(e) => onChange?.(e.target.checked)}
-          disabled={disabled}
-        />
+        <input id={id} type="checkbox" role="switch" checked={checked} onChange={(e) => onChange?.(e.target.checked)} disabled={disabled} />
         <div className={styles.track} />
         <div className={styles.thumb} />
       </label>

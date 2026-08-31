@@ -24,7 +24,11 @@ export default function HealthPage() {
           <Select id="bloodType" label="Blood Type" options={['— Unknown —', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']} />
           <Input id="allergies" label="Allergies" placeholder="e.g., Penicillin, Peanuts" />
           <div className={styles.span2}>
-            <Textarea id="medicalConditions" label="Medical Conditions (voluntary)" placeholder="Any conditions relevant to workplace safety" />
+            <Textarea
+              id="medicalConditions"
+              label="Medical Conditions (voluntary)"
+              placeholder="Any conditions relevant to workplace safety"
+            />
           </div>
           <Input id="insuranceProvider" label="Health Insurance Provider" placeholder="e.g., Blue Cross" />
           <Input id="policyNumber" label="Policy Number" placeholder="Policy / Group #" />

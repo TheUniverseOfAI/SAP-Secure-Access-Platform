@@ -27,7 +27,12 @@ export default function ExternalHeader({ subtitle = 'User Profile', showAvatar =
         </Link>
         <div className={styles.brand}>
           <svg viewBox="0 0 80 80" fill="none" width="34" height="34" aria-hidden="true">
-            <path d="M40 4L72 18V40C72 58 58 72 40 76C22 72 8 58 8 40V18Z" fill="#1a4080" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" />
+            <path
+              d="M40 4L72 18V40C72 58 58 72 40 76C22 72 8 58 8 40V18Z"
+              fill="#1a4080"
+              stroke="rgba(255,255,255,0.25)"
+              strokeWidth="1.5"
+            />
             <path d="M40 10L66 22V40C66 55 54 67 40 70C26 67 14 55 14 40V22Z" fill="rgba(59,130,246,0.15)" />
             <ellipse cx="24" cy="24" rx="5" ry="4" fill="#4b5563" opacity=".8" />
             <ellipse cx="56" cy="24" rx="5" ry="4" fill="#4b5563" opacity=".8" />
@@ -38,7 +43,16 @@ export default function ExternalHeader({ subtitle = 'User Profile', showAvatar =
             <circle cx="33" cy="33.5" r="1.8" fill="#3b82f6" opacity=".9" />
             <circle cx="47" cy="33.5" r="1.8" fill="#3b82f6" opacity=".9" />
             <ellipse cx="40" cy="42" rx="3.5" ry="2.5" fill="#1f2937" />
-            <text x="40" y="68" textAnchor="middle" fontFamily="DM Sans,sans-serif" fontSize="9" fontWeight="700" fill="#dbeafe" letterSpacing="2.5">
+            <text
+              x="40"
+              y="68"
+              textAnchor="middle"
+              fontFamily="DM Sans,sans-serif"
+              fontSize="9"
+              fontWeight="700"
+              fill="#dbeafe"
+              letterSpacing="2.5"
+            >
               SAP
             </text>
           </svg>

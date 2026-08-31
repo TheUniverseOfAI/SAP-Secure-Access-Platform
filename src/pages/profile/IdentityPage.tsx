@@ -9,7 +9,10 @@ import styles from './ProfileForm.module.css'
 export default function IdentityPage() {
   return (
     <>
-      <PageHeader title="Identity & Government IDs" description="SSN, passport, driver's license, visa, clearance. All data is AES-256 encrypted at rest." />
+      <PageHeader
+        title="Identity & Government IDs"
+        description="SSN, passport, driver's license, visa, clearance. All data is AES-256 encrypted at rest."
+      />
       <Card
         title="Government & Official IDs"
         badge={{ label: 'Sensitive', color: 'amber' }}
@@ -30,11 +33,23 @@ export default function IdentityPage() {
           <Input id="dlState" label="DL State / Country" placeholder="Issuing state" />
           <Input id="dlExpiry" label="DL Expiry Date" type="date" />
           <Input id="taxId" label="Tax ID (TIN)" placeholder="TIN / EIN" />
-          <Select id="visaType" label="Visa Type" options={['— N/A (citizen) —', 'H-1B', 'L-1', 'O-1', 'TN', 'E-2', 'F-1 OPT', 'Green Card', 'Other']} />
+          <Select
+            id="visaType"
+            label="Visa Type"
+            options={['— N/A (citizen) —', 'H-1B', 'L-1', 'O-1', 'TN', 'E-2', 'F-1 OPT', 'Green Card', 'Other']}
+          />
           <Input id="visaExpiry" label="Visa Expiry" type="date" />
-          <Select id="workAuth" label="Work Authorization" options={['US Citizen', 'Permanent Resident', 'Work Visa', 'Pending', 'EAD Card']} />
+          <Select
+            id="workAuth"
+            label="Work Authorization"
+            options={['US Citizen', 'Permanent Resident', 'Work Visa', 'Pending', 'EAD Card']}
+          />
           <Input id="pivCac" label="PIV / CAC Card" placeholder="Smart card ID" />
-          <Select id="clearance" label="Security Clearance" options={['None', 'Public Trust', 'Confidential', 'Secret', 'Top Secret', 'TS/SCI']} />
+          <Select
+            id="clearance"
+            label="Security Clearance"
+            options={['None', 'Public Trust', 'Confidential', 'Secret', 'Top Secret', 'TS/SCI']}
+          />
           <Input id="clearanceExpiry" label="Clearance Expiry" type="date" />
         </div>
         <div className={styles.btnRow}>

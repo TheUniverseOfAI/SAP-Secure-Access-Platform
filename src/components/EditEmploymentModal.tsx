@@ -43,7 +43,12 @@ export default function EditEmploymentModal({ record, onClose }: { record: Emplo
         <Input id="m-title" label="Job Title" required defaultValue={record.title} />
         <Input id="m-company" label="Company" required defaultValue={record.company} />
         <Input id="m-dept" label="Department" defaultValue={record.dept} />
-        <Select id="m-type" label="Type" defaultValue={record.type} options={['Full-time', 'Part-time', 'Contract', 'Intern', 'Freelance']} />
+        <Select
+          id="m-type"
+          label="Type"
+          defaultValue={record.type}
+          options={['Full-time', 'Part-time', 'Contract', 'Intern', 'Freelance']}
+        />
         <Input id="m-start" label="Start Date" required type="date" />
         <Input id="m-end" label="End Date" type="date" />
         <Input id="m-location" label="Location" defaultValue={record.location} />

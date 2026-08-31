@@ -20,18 +20,10 @@ const STANDALONE_VARIANTS = new Set<ButtonVariant>(['submit', 'submitSecondary',
  * added as later pages require them, per the "primitives pulled in
  * on-demand" build order).
  */
-export default function Button({
-  variant = 'primary',
-  size = 'md',
-  className,
-  type = 'button',
-  ...rest
-}: ButtonProps) {
+export default function Button({ variant = 'primary', size = 'md', className, type = 'button', ...rest }: ButtonProps) {
   const classes = STANDALONE_VARIANTS.has(variant)
     ? [styles[variant], className].filter(Boolean).join(' ')
-    : [styles.btn, styles[variant], size !== 'md' ? styles[size] : '', className]
-        .filter(Boolean)
-        .join(' ')
+    : [styles.btn, styles[variant], size !== 'md' ? styles[size] : '', className].filter(Boolean).join(' ')
 
   return <button type={type} className={classes} {...rest} />
 }

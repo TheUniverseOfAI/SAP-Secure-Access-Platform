@@ -18,9 +18,7 @@ const CATEGORY_CLASS: Record<NewsArticle['category'], string | undefined> = {
 export function NewsCard({ article }: { article: NewsArticle }) {
   return (
     <article className={styles.card}>
-      <span className={[styles.tag, CATEGORY_CLASS[article.category]].filter(Boolean).join(' ')}>
-        {CATEGORY_LABELS[article.category]}
-      </span>
+      <span className={[styles.tag, CATEGORY_CLASS[article.category]].filter(Boolean).join(' ')}>{CATEGORY_LABELS[article.category]}</span>
       <h4 className={styles.headline}>{article.headline}</h4>
       <p className={styles.summary}>{article.summary}</p>
       <div className={styles.meta}>
