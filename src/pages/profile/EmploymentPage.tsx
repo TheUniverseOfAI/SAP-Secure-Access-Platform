@@ -17,8 +17,15 @@ import styles from './EmploymentPage.module.css'
  * unconditionally-rendered `empHistory` array) — an earlier pass of this
  * page incorrectly rendered only the empty state, which an audit against
  * the source caught. "Edit in modal" opens EditEmploymentModal (structural
- * — just showing the record); "Edit in form" and "Delete" have no
- * corresponding wiring here since they'd require real data mutation.
+ * — just showing the record).
+ *
+ * "Edit in form" and "Delete" are intentionally still inert: both the
+ * "Current Position" and "Add Employment History" forms above are fully
+ * uncontrolled (no useState backing any field, per the UI-first rule),
+ * so wiring Delete alone would let a row disappear with no way to add it
+ * back through the form — a worse, half-wired state than leaving both
+ * inert together. Real CRUD here needs those forms made controlled
+ * first, which is a larger change than this row's action buttons.
  */
 export default function EmploymentPage() {
   const [editingId, setEditingId] = useState<number | null>(null)
