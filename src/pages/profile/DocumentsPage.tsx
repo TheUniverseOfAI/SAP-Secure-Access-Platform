@@ -1,15 +1,42 @@
+import { useEffect } from 'react'
 import Card from '../../components/Card'
 import DocDropzone from '../../components/DocDropzone'
 import { DocItem, DocList } from '../../components/DocItem'
 import PageHeader from '../../components/PageHeader'
+import { docLabelFromFilename, docTypeFromFilename, formatFileSize } from '../../data/documents'
+import { useDocumentsStore } from '../../stores/useDocumentsStore'
 
 /**
  * Real Documents tab — full visual parity with sap-user-profile_v2.html's
- * #tab-documents panel, including its 4 default seed documents (unlike
- * Employment History or the Financial lists, this one doesn't start
- * empty in the source). Upload/download/delete are all inert.
+ * #tab-documents panel, including its 4 default seed documents. Backed by
+ * useDocumentsStore/src/api/documentsApi.ts (same pattern as
+ * useAuthSettingsStore): the dropzone's click-to-browse and drag-and-drop
+ * both add a real mock entry (name/size/extension read from the actual
+ * File object, nothing uploaded anywhere), and Delete really removes it.
+ * Download stays inert — see DocItem.tsx for why.
  */
 export default function DocumentsPage() {
+  const documents = useDocumentsStore((s) => s.documents)
+  const loading = useDocumentsStore((s) => s.loading)
+  const fetchDocuments = useDocumentsStore((s) => s.fetchDocuments)
+  const addDocument = useDocumentsStore((s) => s.addDocument)
+  const deleteDocument = useDocumentsStore((s) => s.deleteDocument)
+
+  useEffect(() => {
+    if (documents.length === 0 && !loading) fetchDocuments()
+  }, [documents.length, loading, fetchDocuments])
+
+  const handleFilesSelected = (files: FileList) => {
+    Array.from(files).forEach((file) => {
+      addDocument({
+        type: docTypeFromFilename(file.name),
+        label: docLabelFromFilename(file.name),
+        name: file.name,
+        meta: `${formatFileSize(file.size)} · Uploaded just now`,
+      })
+    })
+  }
+
   return (
     <>
       <PageHeader
@@ -24,13 +51,16 @@ export default function DocumentsPage() {
           </svg>
         }
       >
-        <DocDropzone />
-        <DocList>
-          <DocItem type="pdf" name="Employment_Contract_2024.pdf" meta="1.2 MB · Uploaded Mar 15, 2024" />
-          <DocItem type="docx" name="NDA_Signed_Agreement.docx" meta="340 KB · Uploaded Mar 16, 2024" />
-          <DocItem type="xlsx" name="Tax_W4_2024.xlsx" meta="89 KB · Uploaded Apr 1, 2024" />
-          <DocItem type="png" name="Passport_Scan_Front.png" meta="2.4 MB · Uploaded Mar 20, 2024" />
-        </DocList>
+        <DocDropzone onFilesSelected={handleFilesSelected} />
+        {loading ? (
+          <p style={{ fontSize: '0.85rem', color: 'var(--gray-400)' }}>Loading documents…</p>
+        ) : (
+          <DocList>
+            {documents.map((doc) => (
+              <DocItem key={doc.id} type={doc.type} label={doc.label} name={doc.name} meta={doc.meta} onDelete={() => deleteDocument(doc.id)} />
+            ))}
+          </DocList>
+        )}
       </Card>
     </>
   )

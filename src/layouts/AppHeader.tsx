@@ -22,14 +22,15 @@ interface AppHeaderProps {
  *
  * The menu toggle now drives real sidebar state (owned by PortalLayout —
  * see its header comment), reflected here via aria-expanded. The search
- * box really searches (Enter navigates to /portals?q=..., see
- * PortalsPage.tsx). Notifications opens a real dropdown (mock content —
- * src/data/notifications.ts, since no real notification system exists).
- * Settings navigates to /profile/personal, the closest thing this app has
- * to an account-settings destination. None of these are wired in the
- * source (all three were fully dead there too), but each has a real,
- * sensible destination now, per the same direction already applied to
- * Recent Activity and the header search. The avatar shows placeholder
+ * box really searches (Enter navigates to /portals?q=..., which filters
+ * the portals grid by name/description — see PortalsPage.tsx). Notifications
+ * opens a real dropdown (mock content — src/data/notifications.ts, since
+ * no real notification system exists). Settings navigates to
+ * /profile/personal, the closest thing this app has to an account-settings
+ * destination. None of these three were wired in the source either (all
+ * fully dead there too), but each has a real, sensible destination now,
+ * per the "everything should navigate to a real destination" direction
+ * also applied to Recent Activity. The avatar shows placeholder
  * initials with no real user data or account menu, but IS wired to
  * navigate to Leadership — source markup has no dropdown menu on it,
  * just onclick="navigateTo('leadership',...)".
