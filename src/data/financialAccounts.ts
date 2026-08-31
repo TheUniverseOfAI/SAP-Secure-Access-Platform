@@ -73,7 +73,16 @@ export const bankAccounts: BankAccount[] = [
 ]
 
 export const storeAccounts: StoreAccount[] = [
-  { id: 1, name: "Macy's", type: 'Store Credit Card', last4: '7724', exp: '12/27', limit: '$3,500', status: 'Active', notes: 'Employee discount card' },
+  {
+    id: 1,
+    name: "Macy's",
+    type: 'Store Credit Card',
+    last4: '7724',
+    exp: '12/27',
+    limit: '$3,500',
+    status: 'Active',
+    notes: 'Employee discount card',
+  },
   { id: 2, name: 'PayPal', type: 'Digital Wallet', last4: '', exp: 'N/A', limit: '—', status: 'Active', notes: 'Linked to Chase checking' },
   {
     id: 3,
@@ -88,8 +97,28 @@ export const storeAccounts: StoreAccount[] = [
 ]
 
 export const taxRecords: TaxRecord[] = [
-  { id: 1, year: '2025', status: 'Single', gross: '$142,000', agi: '$128,500', paid: '$31,200', refund: '+$2,840', state: 'Virginia', notes: 'Standard deduction' },
-  { id: 2, year: '2024', status: 'Single', gross: '$128,000', agi: '$115,000', paid: '$27,600', refund: '+$1,950', state: 'Virginia', notes: '' },
+  {
+    id: 1,
+    year: '2025',
+    status: 'Single',
+    gross: '$142,000',
+    agi: '$128,500',
+    paid: '$31,200',
+    refund: '+$2,840',
+    state: 'Virginia',
+    notes: 'Standard deduction',
+  },
+  {
+    id: 2,
+    year: '2024',
+    status: 'Single',
+    gross: '$128,000',
+    agi: '$115,000',
+    paid: '$27,600',
+    refund: '+$1,950',
+    state: 'Virginia',
+    notes: '',
+  },
   {
     id: 3,
     year: '2023',

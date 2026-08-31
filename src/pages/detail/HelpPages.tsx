@@ -7,24 +7,23 @@ export function HelpFaqPage() {
       <h2>Frequently Asked Questions</h2>
       <h3>How do I reset my password?</h3>
       <p>
-        Click &quot;Forgot password?&quot; on the login page. You&apos;ll be guided through identity verification via
-        email OTP, SMS OTP, authenticator app, or security questions, then prompted to create a new password meeting
-        our complexity requirements.
+        Click &quot;Forgot password?&quot; on the login page. You&apos;ll be guided through identity verification via email OTP, SMS OTP,
+        authenticator app, or security questions, then prompted to create a new password meeting our complexity requirements.
       </p>
       <h3>What MFA methods are supported?</h3>
       <p>
-        SAP supports TOTP authenticator apps (Google Authenticator, Microsoft Authenticator), SMS one-time codes,
-        email OTP, FIDO2/WebAuthn passkeys, and PIV/CAC smart cards.
+        SAP supports TOTP authenticator apps (Google Authenticator, Microsoft Authenticator), SMS one-time codes, email OTP, FIDO2/WebAuthn
+        passkeys, and PIV/CAC smart cards.
       </p>
       <h3>How do I enable SSO for my organization?</h3>
       <p>
-        Contact your account administrator or email <a href="#">support@sap-platform.com</a> to configure SAML 2.0 or
-        OAuth 2.0 PKCE integration with your identity provider (Okta, Azure AD, Ping Identity, etc.).
+        Contact your account administrator or email <a href="#">support@sap-platform.com</a> to configure SAML 2.0 or OAuth 2.0 PKCE
+        integration with your identity provider (Okta, Azure AD, Ping Identity, etc.).
       </p>
       <h3>Can I export my data?</h3>
       <p>
-        Yes. Navigate to Privacy Policy → Your Rights, or submit a data portability request from Account Settings.
-        Data is exported in JSON format within 5 business days.
+        Yes. Navigate to Privacy Policy → Your Rights, or submit a data portability request from Account Settings. Data is exported in JSON
+        format within 5 business days.
       </p>
       <h3>What browsers are supported?</h3>
       <p>SAP supports the latest two versions of Chrome, Firefox, Safari, and Edge. Internet Explorer is not supported.</p>
@@ -103,23 +102,23 @@ export function HelpGuidesPage() {
       <h2>User Guides</h2>
       <h3>Authentication Guide</h3>
       <p>
-        A comprehensive walkthrough of all login methods: password, magic link, OTP, SSO, PIV/CAC, and passkey.
-        Includes troubleshooting steps for each method.
+        A comprehensive walkthrough of all login methods: password, magic link, OTP, SSO, PIV/CAC, and passkey. Includes troubleshooting
+        steps for each method.
       </p>
       <h3>Security Best Practices</h3>
       <p>
-        How to keep your account secure: choosing strong passwords, enabling MFA, recognizing phishing attempts,
-        managing trusted devices, and reviewing active sessions.
+        How to keep your account secure: choosing strong passwords, enabling MFA, recognizing phishing attempts, managing trusted devices,
+        and reviewing active sessions.
       </p>
       <h3>Admin Console Guide</h3>
       <p>
-        For system administrators — how to provision/deprovision users, configure policies, set up conditional access
-        rules, monitor audit logs, and generate compliance reports.
+        For system administrators — how to provision/deprovision users, configure policies, set up conditional access rules, monitor audit
+        logs, and generate compliance reports.
       </p>
       <h3>API Integration Guide</h3>
       <p>
-        RESTful API documentation for developers integrating with SAP&apos;s authentication and user management
-        services. Includes OAuth 2.0 flows, webhook configuration, and SDK references for Python, Node.js, and Java.
+        RESTful API documentation for developers integrating with SAP&apos;s authentication and user management services. Includes OAuth 2.0
+        flows, webhook configuration, and SDK references for Python, Node.js, and Java.
       </p>
     </DetailLayout>
   )
@@ -128,12 +127,7 @@ export function HelpGuidesPage() {
 /** Source: pageData['help-ticket']. */
 export function HelpTicketPage() {
   return (
-    <DetailLayout
-      parent="Help Center"
-      current="Submit Ticket"
-      title="Help Center — Submit Ticket"
-      description="Open a support request."
-    >
+    <DetailLayout parent="Help Center" current="Submit Ticket" title="Help Center — Submit Ticket" description="Open a support request.">
       <h2>Submit a Support Ticket</h2>
       <p>Our support team responds to all tickets within the following timeframes:</p>
       <ul>

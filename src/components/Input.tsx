@@ -20,17 +20,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
  * Source: .form-group / .form-label / .form-input / .error-message in
  * sap-design-system_v2.html's Form Input States section.
  */
-export default function Input({
-  id,
-  label,
-  required,
-  optional,
-  errorMessage,
-  labelExtra,
-  suffix,
-  className,
-  ...rest
-}: InputProps) {
+export default function Input({ id, label, required, optional, errorMessage, labelExtra, suffix, className, ...rest }: InputProps) {
   const input = (
     <input
       id={id}

@@ -128,7 +128,9 @@ export default function FinancialPage() {
                   <div className={styles.cardsRow}>
                     {a.cards.map((c) => (
                       <div className={styles.cardChip} key={c.id}>
-                        <span className={[styles.chipType, styles[c.kind === 'Debit' ? 'debit' : NETWORK_CLASS[c.network] || 'visa']].join(' ')}>
+                        <span
+                          className={[styles.chipType, styles[c.kind === 'Debit' ? 'debit' : NETWORK_CLASS[c.network] || 'visa']].join(' ')}
+                        >
                           {c.kind === 'Debit' ? 'Debit' : c.network}
                         </span>
                         <span className={styles.chipNum}>•••• {c.last4}</span>
@@ -153,7 +155,9 @@ export default function FinancialPage() {
           </svg>
         }
       >
-        <p className={styles.note}>Add store credit cards, digital wallets, and financing accounts (PayPal, Macy&apos;s, Apple Card, Affirm, etc.)</p>
+        <p className={styles.note}>
+          Add store credit cards, digital wallets, and financing accounts (PayPal, Macy&apos;s, Apple Card, Affirm, etc.)
+        </p>
         <div className={formStyles.grid}>
           <Input id="storeName" label="Provider Name" required placeholder="e.g., Macy's, PayPal, Apple, Affirm, Klarna" />
           <Select

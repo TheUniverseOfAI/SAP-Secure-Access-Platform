@@ -39,9 +39,7 @@ export default function PortalCard({ portal }: PortalCardProps) {
       </div>
       <div className={styles.desc}>{portal.desc}</div>
       <div className={styles.footer}>
-        <span className={[styles.status, STATUS_CLASS[portal.status]].filter(Boolean).join(' ')}>
-          {STATUS_LABEL[portal.status]}
-        </span>
+        <span className={[styles.status, STATUS_CLASS[portal.status]].filter(Boolean).join(' ')}>{STATUS_LABEL[portal.status]}</span>
         <a className={styles.launch} href="#">
           Launch
           <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">

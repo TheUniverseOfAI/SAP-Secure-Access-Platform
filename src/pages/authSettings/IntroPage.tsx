@@ -28,14 +28,14 @@ export default function IntroPage() {
 
       <Card icon={WarningIcon} title="Why Security Is Non-Negotiable">
         <p>
-          Authentication is the first and most critical defense line of any system. When authentication fails,
-          everything behind it is exposed — data, systems, users, and reputation. The cost of a breach is not just
-          financial; it&apos;s operational, legal, and reputational.
+          Authentication is the first and most critical defense line of any system. When authentication fails, everything behind it is
+          exposed — data, systems, users, and reputation. The cost of a breach is not just financial; it&apos;s operational, legal, and
+          reputational.
         </p>
         <p style={{ marginTop: 10 }}>
-          SAP enforces multi-layered authentication because a single method is never enough. Passwords get phished.
-          SMS gets intercepted. Devices get stolen. Only defense-in-depth — combining something you <b>know</b>,
-          something you <b>have</b>, and something you <b>are</b> — creates real security.
+          SAP enforces multi-layered authentication because a single method is never enough. Passwords get phished. SMS gets intercepted.
+          Devices get stolen. Only defense-in-depth — combining something you <b>know</b>, something you <b>have</b>, and something you{' '}
+          <b>are</b> — creates real security.
         </p>
       </Card>
 
@@ -48,36 +48,28 @@ export default function IntroPage() {
         </h2>
         <ThreatGrid>
           <ThreatCard color="red" title="Credential Stuffing">
-            Attackers use leaked password databases to try username/password combos across services. 65% of people
-            reuse passwords.
+            Attackers use leaked password databases to try username/password combos across services. 65% of people reuse passwords.
           </ThreatCard>
           <ThreatCard color="red" title="Phishing Attacks">
-            Fake login pages capture credentials in real time. Even OTPs can be intercepted by sophisticated phishing
-            kits (Evilginx).
+            Fake login pages capture credentials in real time. Even OTPs can be intercepted by sophisticated phishing kits (Evilginx).
           </ThreatCard>
           <ThreatCard color="amber" title="SIM Swapping">
-            Attackers convince carriers to transfer your phone number to their SIM, intercepting all SMS-based OTP
-            codes.
+            Attackers convince carriers to transfer your phone number to their SIM, intercepting all SMS-based OTP codes.
           </ThreatCard>
           <ThreatCard color="amber" title="Session Hijacking">
-            Stolen session tokens let attackers bypass authentication entirely. They don&apos;t need your password if
-            they have your cookie.
+            Stolen session tokens let attackers bypass authentication entirely. They don&apos;t need your password if they have your cookie.
           </ThreatCard>
           <ThreatCard color="orange" title="Man-in-the-Middle">
-            Attackers intercept communication between user and server, capturing tokens, passwords, and session data
-            in transit.
+            Attackers intercept communication between user and server, capturing tokens, passwords, and session data in transit.
           </ThreatCard>
           <ThreatCard color="orange" title="Brute Force / Spraying">
-            Automated tools try thousands of common passwords against many accounts. Even one weak password
-            compromises the org.
+            Automated tools try thousands of common passwords against many accounts. Even one weak password compromises the org.
           </ThreatCard>
           <ThreatCard color="purple" title="Insider Threats">
-            Employees with excessive privileges access data they shouldn&apos;t. Without proper authorization, roles
-            become attack vectors.
+            Employees with excessive privileges access data they shouldn&apos;t. Without proper authorization, roles become attack vectors.
           </ThreatCard>
           <ThreatCard color="purple" title="Stolen Device">
-            A lost laptop or phone with saved sessions grants immediate access to all authenticated services without
-            re-verification.
+            A lost laptop or phone with saved sessions grants immediate access to all authenticated services without re-verification.
           </ThreatCard>
         </ThreatGrid>
       </Card>
@@ -91,8 +83,8 @@ export default function IntroPage() {
           </svg>
         }
       >
-        On first login, SAP requires you to change your temporary password and enroll in at least one MFA method.
-        Admins can enforce additional methods via this settings page.
+        On first login, SAP requires you to change your temporary password and enroll in at least one MFA method. Admins can enforce
+        additional methods via this settings page.
       </AlertBanner>
     </div>
   )

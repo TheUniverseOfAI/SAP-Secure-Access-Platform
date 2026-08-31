@@ -37,7 +37,14 @@ export default function NavGroup({ icon, label, badge, children, defaultOpen = f
             strokeWidth="2"
             viewBox="0 0 24 24"
             aria-hidden="true"
-            style={{ width: 16, height: 16, flexShrink: 0, color: 'var(--gray-400)', transition: 'transform 0.2s ease', transform: open ? 'rotate(90deg)' : undefined }}
+            style={{
+              width: 16,
+              height: 16,
+              flexShrink: 0,
+              color: 'var(--gray-400)',
+              transition: 'transform 0.2s ease',
+              transform: open ? 'rotate(90deg)' : undefined,
+            }}
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
           </svg>

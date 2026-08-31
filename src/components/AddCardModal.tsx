@@ -40,7 +40,13 @@ export default function AddCardModal({ accountName, onClose }: { accountName: st
     >
       <div className={formStyles.grid}>
         <Select id="card-kind" label="Card Type" required defaultValue="Debit" options={['Debit', 'Credit']} />
-        <Select id="card-network" label="Network" required defaultValue="Visa" options={['Visa', 'Mastercard', 'American Express', 'Discover']} />
+        <Select
+          id="card-network"
+          label="Network"
+          required
+          defaultValue="Visa"
+          options={['Visa', 'Mastercard', 'American Express', 'Discover']}
+        />
         <Input id="card-last4" label="Last 4 Digits" required placeholder="e.g., 4829" maxLength={4} inputMode="numeric" />
         <Input id="card-exp" label="Expiry (MM/YY)" required placeholder="e.g., 09/28" maxLength={5} />
         <div className={formStyles.span2}>

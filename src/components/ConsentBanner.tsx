@@ -26,8 +26,8 @@ export default function ConsentBanner({ accepted, onAccept }: ConsentBannerProps
       </div>
       <div className={styles.title}>Company Policy &amp; Consent</div>
       <div className={styles.text}>
-        By continuing, you agree to our company&apos;s acceptable use policy. All activity is monitored and logged in
-        accordance with corporate security standards. Unauthorized access is strictly prohibited.
+        By continuing, you agree to our company&apos;s acceptable use policy. All activity is monitored and logged in accordance with
+        corporate security standards. Unauthorized access is strictly prohibited.
       </div>
       <button
         className={[styles.button, accepted ? styles.accepted : ''].filter(Boolean).join(' ')}

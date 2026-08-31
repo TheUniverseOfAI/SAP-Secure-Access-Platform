@@ -16,7 +16,12 @@ export default function AuthHeader() {
       <div className={styles.brand}>
         <div className={styles.logo}>
           <svg width="40" height="40" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M40 4L72 18V40C72 58 58 72 40 76C22 72 8 58 8 40V18Z" fill="url(#sg)" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" />
+            <path
+              d="M40 4L72 18V40C72 58 58 72 40 76C22 72 8 58 8 40V18Z"
+              fill="url(#sg)"
+              stroke="rgba(255,255,255,0.25)"
+              strokeWidth="1.5"
+            />
             <path d="M40 10L66 22V40C66 55 54 67 40 70C26 67 14 55 14 40V22Z" fill="url(#si)" opacity="0.3" />
             <ellipse cx="24" cy="24" rx="5" ry="4" fill="#4b5563" opacity="0.8" />
             <ellipse cx="56" cy="24" rx="5" ry="4" fill="#4b5563" opacity="0.8" />
@@ -30,7 +35,16 @@ export default function AuthHeader() {
             <circle cx="47" cy="33.5" r="1.8" fill="#3b82f6" opacity="0.9" />
             <ellipse cx="40" cy="42" rx="3.5" ry="2.5" fill="#1f2937" />
             <path d="M36 46Q40 49 44 46" stroke="#1f2937" strokeWidth="1.2" fill="none" strokeLinecap="round" opacity="0.6" />
-            <text x="40" y="68" textAnchor="middle" fontFamily="DM Sans,sans-serif" fontSize="9" fontWeight="700" fill="#dbeafe" letterSpacing="2.5">
+            <text
+              x="40"
+              y="68"
+              textAnchor="middle"
+              fontFamily="DM Sans,sans-serif"
+              fontSize="9"
+              fontWeight="700"
+              fill="#dbeafe"
+              letterSpacing="2.5"
+            >
               SAP
             </text>
             <defs>

@@ -23,14 +23,13 @@ export default function AboutPage() {
           <div className={styles.content}>
             <h2>Our Mission</h2>
             <p>
-              SAP was founded on a simple principle: access security should be invisible when it works and impenetrable
-              when tested. We build tools that protect organizations without slowing them down.
+              SAP was founded on a simple principle: access security should be invisible when it works and impenetrable when tested. We
+              build tools that protect organizations without slowing them down.
             </p>
             <h3>What We Do</h3>
             <p>
-              SAP provides a unified identity platform that authenticates you once and grants secure access to all your
-              organization&apos;s application portals — from AI/ML tools to productivity suites to health trackers. One
-              identity, many destinations.
+              SAP provides a unified identity platform that authenticates you once and grants secure access to all your organization&apos;s
+              application portals — from AI/ML tools to productivity suites to health trackers. One identity, many destinations.
             </p>
             <h3>Our Values</h3>
             <ul>

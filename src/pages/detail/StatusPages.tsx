@@ -36,18 +36,18 @@ export function StatusIncidentsPage() {
       <h2>Incident History</h2>
       <h3>April 12, 2026 — Audit Log Delay</h3>
       <p>
-        Audit log ingestion experienced a 45-minute delay due to a Kafka partition rebalance. No data was lost.
-        Resolved by scaling consumer group.
+        Audit log ingestion experienced a 45-minute delay due to a Kafka partition rebalance. No data was lost. Resolved by scaling consumer
+        group.
       </p>
       <h3>March 28, 2026 — SSO Intermittent Failures</h3>
       <p>
-        SAML assertion validation failed for ~2% of requests over a 20-minute window. Root cause: expired intermediate
-        certificate. Hot-fixed within 18 minutes of detection.
+        SAML assertion validation failed for ~2% of requests over a 20-minute window. Root cause: expired intermediate certificate.
+        Hot-fixed within 18 minutes of detection.
       </p>
       <h3>February 14, 2026 — Scheduled Maintenance</h3>
       <p>
-        Planned 2-hour maintenance window for database migration to PostgreSQL 16. Zero-downtime deployment achieved
-        using blue-green strategy.
+        Planned 2-hour maintenance window for database migration to PostgreSQL 16. Zero-downtime deployment achieved using blue-green
+        strategy.
       </p>
     </DetailLayout>
   )
@@ -67,8 +67,8 @@ export function StatusMaintenancePage() {
       <p>
         <b>April 19, 2026 — 2:00 AM to 4:00 AM EST</b>
         <br />
-        Infrastructure upgrade: Redis cluster migration to Redis 7.4. Expected impact: brief MFA token regeneration
-        (~30 seconds). Users will not need to re-authenticate.
+        Infrastructure upgrade: Redis cluster migration to Redis 7.4. Expected impact: brief MFA token regeneration (~30 seconds). Users
+        will not need to re-authenticate.
       </p>
       <h3>Maintenance Policy</h3>
       <ul>
@@ -112,8 +112,8 @@ export function StatusUptimePage() {
       </p>
       <h3>SLA Commitment</h3>
       <p>
-        SAP guarantees 99.9% monthly uptime for all Tier 1 services. If uptime falls below the SLA threshold, affected
-        customers are eligible for service credits as defined in the Enterprise Agreement.
+        SAP guarantees 99.9% monthly uptime for all Tier 1 services. If uptime falls below the SLA threshold, affected customers are
+        eligible for service credits as defined in the Enterprise Agreement.
       </p>
     </DetailLayout>
   )

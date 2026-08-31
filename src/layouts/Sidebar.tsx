@@ -1,12 +1,23 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import NavGroup from '../components/NavGroup'
 import NavItem from '../components/NavItem'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/useAuth'
 import styles from './Sidebar.module.css'
 
 const ExternalArrow = (
-  <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true" style={{ width: 16, height: 16, flexShrink: 0, color: 'var(--gray-400)', opacity: 0.4 }}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+  <svg
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    style={{ width: 16, height: 16, flexShrink: 0, color: 'var(--gray-400)', opacity: 0.4 }}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+    />
   </svg>
 )
 
@@ -133,7 +144,12 @@ export default function Sidebar({ collapsed, mobileOpen }: SidebarProps) {
           }
         >
           <NavItem nested label="FAQ" active={isActive('/help/faq')} onClick={() => navigate('/help/faq')} />
-          <NavItem nested label="Knowledge Base" active={isActive('/help/knowledge-base')} onClick={() => navigate('/help/knowledge-base')} />
+          <NavItem
+            nested
+            label="Knowledge Base"
+            active={isActive('/help/knowledge-base')}
+            onClick={() => navigate('/help/knowledge-base')}
+          />
           <NavItem nested label="User Guides" active={isActive('/help/guides')} onClick={() => navigate('/help/guides')} />
           <NavItem nested label="Submit Ticket" active={isActive('/help/ticket')} onClick={() => navigate('/help/ticket')} />
         </NavGroup>
@@ -168,8 +184,18 @@ export default function Sidebar({ collapsed, mobileOpen }: SidebarProps) {
           }
         >
           <NavItem nested label="Overview" active={isActive('/privacy/overview')} onClick={() => navigate('/privacy/overview')} />
-          <NavItem nested label="Data Collection" active={isActive('/privacy/data-collection')} onClick={() => navigate('/privacy/data-collection')} />
-          <NavItem nested label="Data Sharing" active={isActive('/privacy/data-sharing')} onClick={() => navigate('/privacy/data-sharing')} />
+          <NavItem
+            nested
+            label="Data Collection"
+            active={isActive('/privacy/data-collection')}
+            onClick={() => navigate('/privacy/data-collection')}
+          />
+          <NavItem
+            nested
+            label="Data Sharing"
+            active={isActive('/privacy/data-sharing')}
+            onClick={() => navigate('/privacy/data-sharing')}
+          />
           <NavItem nested label="Your Rights" active={isActive('/privacy/your-rights')} onClick={() => navigate('/privacy/your-rights')} />
         </NavGroup>
         <NavGroup
@@ -183,10 +209,30 @@ export default function Sidebar({ collapsed, mobileOpen }: SidebarProps) {
             </svg>
           }
         >
-          <NavItem nested label="Statement" active={isActive('/accessibility/statement')} onClick={() => navigate('/accessibility/statement')} />
-          <NavItem nested label="Standards (WCAG)" active={isActive('/accessibility/standards')} onClick={() => navigate('/accessibility/standards')} />
-          <NavItem nested label="Features" active={isActive('/accessibility/features')} onClick={() => navigate('/accessibility/features')} />
-          <NavItem nested label="Report Issues" active={isActive('/accessibility/report')} onClick={() => navigate('/accessibility/report')} />
+          <NavItem
+            nested
+            label="Statement"
+            active={isActive('/accessibility/statement')}
+            onClick={() => navigate('/accessibility/statement')}
+          />
+          <NavItem
+            nested
+            label="Standards (WCAG)"
+            active={isActive('/accessibility/standards')}
+            onClick={() => navigate('/accessibility/standards')}
+          />
+          <NavItem
+            nested
+            label="Features"
+            active={isActive('/accessibility/features')}
+            onClick={() => navigate('/accessibility/features')}
+          />
+          <NavItem
+            nested
+            label="Report Issues"
+            active={isActive('/accessibility/report')}
+            onClick={() => navigate('/accessibility/report')}
+          />
         </NavGroup>
         <NavGroup
           collapsed={collapsed}
@@ -200,7 +246,12 @@ export default function Sidebar({ collapsed, mobileOpen }: SidebarProps) {
           }
         >
           <NavItem nested label="Agreement" active={isActive('/terms/agreement')} onClick={() => navigate('/terms/agreement')} />
-          <NavItem nested label="Acceptable Use" active={isActive('/terms/acceptable-use')} onClick={() => navigate('/terms/acceptable-use')} />
+          <NavItem
+            nested
+            label="Acceptable Use"
+            active={isActive('/terms/acceptable-use')}
+            onClick={() => navigate('/terms/acceptable-use')}
+          />
           <NavItem nested label="Limitations" active={isActive('/terms/limitations')} onClick={() => navigate('/terms/limitations')} />
         </NavGroup>
       </div>
