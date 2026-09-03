@@ -1,10 +1,12 @@
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { getActivity } from '../api/activityApi'
 import { ActivityItem, ActivityList } from '../components/ActivityItem'
 import Card from '../components/Card'
 import PageHeader from '../components/PageHeader'
 import { QuickCard, QuickGrid } from '../components/QuickCard'
 import { StatCard, StatGrid } from '../components/StatCard'
-import { activity } from '../data/activity'
+import type { ActivityEntry } from '../data/activity'
 import Breadcrumb from '../layouts/Breadcrumb'
 import styles from './PortalHomePage.module.css'
 
@@ -12,14 +14,19 @@ import styles from './PortalHomePage.module.css'
  * Real portal home page UI — static/placeholder per the UI-first build
  * order except where a real destination exists: the "Active Users" stat
  * card stays inert (no page for it anywhere), but every other stat card,
- * quick-nav card, and now every Recent Activity entry (backed by
- * src/data/activity.ts) navigates for real, since their target pages all
- * exist as of the detail-pages round — same "structural navigation"
- * reasoning used for Sidebar/tabs elsewhere. Full visual parity with
- * sap-portal_v2.html's #page-home block.
+ * quick-nav card, and now every Recent Activity entry (fetched via
+ * src/api/activityApi.ts's mocked call) navigates for real, since their
+ * target pages all exist as of the detail-pages round — same "structural
+ * navigation" reasoning used for Sidebar/tabs elsewhere. Full visual
+ * parity with sap-portal_v2.html's #page-home block.
  */
 export default function PortalHomePage() {
   const navigate = useNavigate()
+  const [activity, setActivity] = useState<ActivityEntry[]>([])
+
+  useEffect(() => {
+    getActivity().then(setActivity)
+  }, [])
 
   return (
     <>
