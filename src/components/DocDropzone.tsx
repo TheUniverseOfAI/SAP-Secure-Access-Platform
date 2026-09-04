@@ -1,20 +1,21 @@
 import { useRef, useState } from 'react'
+import { ACCEPTED_EXTENSIONS, MAX_FILE_SIZE_BYTES, formatFileSize } from '../data/documents'
 import styles from './DocDropzone.module.css'
 
-const FILE_TYPES = ['PDF', 'DOC', 'DOCX', 'XLS', 'XLSX', 'PPT', 'PPTX', 'CSV', 'TXT', 'PNG', 'JPG', 'SVG', 'ZIP', 'JSON', 'XML']
-const ACCEPT = '.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.csv,.txt,.rtf,.png,.jpg,.jpeg,.gif,.svg,.zip,.json,.xml'
+const ACCEPT = ACCEPTED_EXTENSIONS.map((ext) => `.${ext}`).join(',')
 
 interface DocDropzoneProps {
   onFilesSelected: (files: FileList) => void
 }
 
 /**
- * File upload drop zone — click-to-browse and drag-and-drop both work for
- * real now, matching the source's own onclick/ondragover/ondrop/handleFiles
- * wiring exactly (sap-user-profile_v2.html lines 788-793, 837-846). Files
- * are read client-side only (name/size/extension) to build a mock
- * DocItem — nothing is actually uploaded anywhere, since there's no
- * backend yet.
+ * File upload drop zone — click-to-browse, drag-and-drop, and keyboard
+ * (Enter/Space, like any button) all open the same file picker, matching
+ * the source's own onclick/ondragover/ondrop/handleFiles wiring
+ * (sap-user-profile_v2.html lines 788-793, 837-846) plus the keyboard
+ * support the source never had. Validation (extension/size) and the
+ * actual upload simulation happen in useFileUpload, not here — this
+ * component's only job is turning a click/drop/keypress into a FileList.
  */
 export default function DocDropzone({ onFilesSelected }: DocDropzoneProps) {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -23,7 +24,16 @@ export default function DocDropzone({ onFilesSelected }: DocDropzoneProps) {
   return (
     <div
       className={[styles.zone, dragOver ? styles.dragover : ''].filter(Boolean).join(' ')}
+      role="button"
+      tabIndex={0}
+      aria-label={`Upload documents, ${formatFileSize(MAX_FILE_SIZE_BYTES)} max per file`}
       onClick={() => inputRef.current?.click()}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          inputRef.current?.click()
+        }
+      }}
       onDragOver={(e) => {
         e.preventDefault()
         setDragOver(true)
@@ -44,12 +54,12 @@ export default function DocDropzone({ onFilesSelected }: DocDropzoneProps) {
       </svg>
       <h4>Drag &amp; drop files here</h4>
       <p>
-        or <span className={styles.browseLink}>browse your computer</span> · Max 25 MB per file
+        or <span className={styles.browseLink}>browse your computer</span> · Max {formatFileSize(MAX_FILE_SIZE_BYTES)} per file
       </p>
-      <div className={styles.types}>
-        {FILE_TYPES.map((type) => (
-          <span className={styles.typeTag} key={type}>
-            {type}
+      <div className={styles.types} aria-hidden="true">
+        {ACCEPTED_EXTENSIONS.map((ext) => (
+          <span className={styles.typeTag} key={ext}>
+            {ext.toUpperCase()}
           </span>
         ))}
       </div>
@@ -58,6 +68,8 @@ export default function DocDropzone({ onFilesSelected }: DocDropzoneProps) {
         type="file"
         multiple
         accept={ACCEPT}
+        tabIndex={-1}
+        aria-hidden="true"
         onChange={(e) => {
           if (e.target.files && e.target.files.length > 0) onFilesSelected(e.target.files)
           e.target.value = ''

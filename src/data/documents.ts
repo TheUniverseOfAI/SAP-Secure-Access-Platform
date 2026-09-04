@@ -32,6 +32,12 @@ const EXTENSION_TYPE: Record<string, DocType> = {
   xml: 'csv',
 }
 
+/** Every extension the uploader accepts — derived from EXTENSION_TYPE so the dropzone's `accept` attribute and its drag-and-drop validation can never drift apart. */
+export const ACCEPTED_EXTENSIONS = Object.keys(EXTENSION_TYPE)
+
+/** Source: sap-user-profile_v2.html's own "Max 25 MB per file" copy. */
+export const MAX_FILE_SIZE_BYTES = 25 * 1024 * 1024
+
 export function docTypeFromFilename(filename: string): DocType {
   const ext = filename.split('.').pop()?.toLowerCase() ?? ''
   return EXTENSION_TYPE[ext] ?? 'txt'
