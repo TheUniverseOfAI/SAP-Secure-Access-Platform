@@ -1,4 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react'
+import { resetLoginAttempts } from '../api/authApi'
 import { useAuthSettingsStore } from '../stores/useAuthSettingsStore'
 import { AuthContext } from './authContextInstance'
 
@@ -31,8 +32,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = () => {
     setIsLoggedIn(false)
     // Reset any mock-backed state that shouldn't carry over between sessions —
-    // e.g. this session's auth-method toggle changes.
+    // e.g. this session's auth-method toggle changes and login-lockout counters.
     useAuthSettingsStore.getState().reset()
+    resetLoginAttempts()
   }
 
   return <AuthContext.Provider value={{ isLoggedIn, login, logout }}>{children}</AuthContext.Provider>
