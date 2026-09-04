@@ -22,10 +22,17 @@ import styles from './LoginPage.module.css'
  * every action (accepting consent, signing in, PIV/social login) now goes
  * through src/api/authApi.ts's mocked async calls rather than resolving
  * synchronously in this component, so the call shape already matches what
- * a real backend integration would need. Any non-empty username/password
- * combination "succeeds" and logs you in via AuthContext, same as the
- * source's fake success path just actually navigating now instead of only
- * showing an alert.
+ * a real backend integration would need.
+ *
+ * Unlike the source (where any non-empty input "succeeded"), authApi.login
+ * now has a real success/failure contract: only the fixed demo credentials
+ * (see authApi.ts) succeed, anything else is 'invalid', and 5 consecutive
+ * failures triggers 'locked' — copy for both matches the exact toast text
+ * defined in sap-design-system_v2.html's alert catalog (auth-invalid/
+ * auth-locked) but never wired to anything there. A successful login shows
+ * a success alert and holds on this page for authApi.completeLoginRedirect's
+ * simulated delay before navigating, so "redirecting…" is visible rather
+ * than the page instantly changing.
  *
  * Tab switching and the forgot-password link ARE wired to real navigation
  * (via react-router-dom) — that's just routing, not business logic, so it
@@ -53,8 +60,9 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [usernameError, setUsernameError] = useState('')
   const [passwordError, setPasswordError] = useState('')
-  const [alert, setAlert] = useState<{ type: 'error' | 'success'; text: string } | null>(null)
+  const [alert, setAlert] = useState<{ type: 'error' | 'warning' | 'success'; text: string } | null>(null)
   const [submitting, setSubmitting] = useState(false)
+  const [redirecting, setRedirecting] = useState(false)
 
   const handleAcceptConsent = async () => {
     await authApi.acceptConsent()
@@ -86,8 +94,21 @@ export default function LoginPage() {
     }
 
     setSubmitting(true)
-    await authApi.login(username, password)
+    const result = await authApi.login(username, password)
     setSubmitting(false)
+
+    if (result.status === 'locked') {
+      setAlert({ type: 'warning', text: 'Your account has been locked after 5 failed attempts. Try again in 15 minutes.' })
+      return
+    }
+    if (result.status === 'invalid') {
+      setAlert({ type: 'error', text: 'Invalid credentials. Please check your username and password.' })
+      return
+    }
+
+    setAlert({ type: 'success', text: 'Authentication successful — redirecting to dashboard…' })
+    setRedirecting(true)
+    await authApi.completeLoginRedirect()
     login()
     navigate('/home')
   }
@@ -138,7 +159,8 @@ export default function LoginPage() {
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         errorMessage={usernameError}
-        disabled={!consentAccepted}
+        hint={!usernameError ? 'Demo credentials: demo / Password123!' : undefined}
+        disabled={!consentAccepted || submitting || redirecting}
       />
       <PasswordField
         id="loginPass"
@@ -149,24 +171,24 @@ export default function LoginPage() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         errorMessage={passwordError}
-        disabled={!consentAccepted}
+        disabled={!consentAccepted || submitting || redirecting}
       />
 
       <div className={styles.formRow}>
-        <Checkbox label="Remember me" disabled={!consentAccepted} />
+        <Checkbox label="Remember me" disabled={!consentAccepted || submitting || redirecting} />
         <Link to="/forgot-password" className={styles.forgotLink}>
           Forgot password?
         </Link>
       </div>
 
-      <Button variant="submit" onClick={handleSignIn} disabled={!consentAccepted || submitting}>
-        {submitting ? 'Signing in…' : 'Sign In'}
+      <Button variant="submit" onClick={handleSignIn} disabled={!consentAccepted || submitting || redirecting}>
+        {redirecting ? 'Redirecting…' : submitting ? 'Signing in…' : 'Sign In'}
       </Button>
 
       <Divider>or</Divider>
 
       {SHOW_PIV && (
-        <Button variant="altDark" onClick={handlePiv} disabled={!consentAccepted}>
+        <Button variant="altDark" onClick={handlePiv} disabled={!consentAccepted || submitting || redirecting}>
           <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
             <rect x="3" y="4" width="18" height="16" rx="2" />
             <circle cx="12" cy="11" r="2.5" />
@@ -179,14 +201,14 @@ export default function LoginPage() {
       )}
 
       <div className={styles.altGrid}>
-        <Button variant="alt" onClick={() => handleSocialLogin('SSO')} disabled={!consentAccepted}>
+        <Button variant="alt" onClick={() => handleSocialLogin('SSO')} disabled={!consentAccepted || submitting || redirecting}>
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-500)" strokeWidth="2" aria-hidden="true">
             <rect x="3" y="3" width="18" height="18" rx="3" />
             <path d="M8 12h8M12 8v8" />
           </svg>
           SSO
         </Button>
-        <Button variant="alt" onClick={() => setActiveModal('otp')} disabled={!consentAccepted}>
+        <Button variant="alt" onClick={() => setActiveModal('otp')} disabled={!consentAccepted || submitting || redirecting}>
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--amber-500)" strokeWidth="2" aria-hidden="true">
             <rect x="5" y="3" width="14" height="18" rx="2" />
             <circle cx="12" cy="15" r="1.5" />
@@ -194,7 +216,7 @@ export default function LoginPage() {
           </svg>
           OTP Code
         </Button>
-        <Button variant="alt" onClick={() => setActiveModal('magicLink')} disabled={!consentAccepted}>
+        <Button variant="alt" onClick={() => setActiveModal('magicLink')} disabled={!consentAccepted || submitting || redirecting}>
           <svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" strokeWidth="2" aria-hidden="true">
             <path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101" />
             <path d="M10.172 13.828a4 4 0 005.656 0l4-4a4 4 0 10-5.656-5.656l-1.1 1.1" />
