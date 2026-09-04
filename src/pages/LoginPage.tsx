@@ -114,7 +114,7 @@ export default function LoginPage() {
   }
 
   return (
-    <AuthCard topBanner={<ConsentBanner accepted={consentAccepted} onAccept={handleAcceptConsent} />}>
+    <AuthCard lockHeight topBanner={<ConsentBanner accepted={consentAccepted} onAccept={handleAcceptConsent} />}>
       <h1 className="sr-only">Sign In</h1>
 
       {alert && <FormAlert type={alert.type}>{alert.text}</FormAlert>}

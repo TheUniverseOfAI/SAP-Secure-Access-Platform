@@ -30,6 +30,32 @@
   padding: 32px 32px 28px;
 }
 
+/*
+  Applied only when AuthCard is given lockHeight (Login/Signup, not the
+  multi-step ForgotPassword wizard, where height SHOULD change between
+  steps). AuthCard.tsx measures this element's own height on first
+  mount — i.e. its error-free state — and locks it there via an inline
+  style, so a validation error/FormAlert appearing later scrolls inside
+  that fixed height instead of growing the card and re-centering the
+  whole page. Scrollbar is thinned rather than hidden outright — fields
+  still need to be reachable, just unobtrusively so.
+*/
+.cardInnerLocked {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-300) transparent;
+}
+.cardInnerLocked::-webkit-scrollbar {
+  width: 6px;
+}
+.cardInnerLocked::-webkit-scrollbar-track {
+  background: transparent;
+}
+.cardInnerLocked::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: 3px;
+}
+
 @media (max-width: 520px) {
   .cardInner {
     padding: 24px 20px 22px;

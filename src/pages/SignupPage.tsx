@@ -118,7 +118,7 @@ export default function SignupPage() {
   }
 
   return (
-    <AuthCard topBanner={<ConsentBanner accepted={consentAccepted} onAccept={handleAcceptConsent} />}>
+    <AuthCard lockHeight topBanner={<ConsentBanner accepted={consentAccepted} onAccept={handleAcceptConsent} />}>
       <h1 className="sr-only">Create Account</h1>
 
       {alert && <FormAlert type={alert.type}>{alert.text}</FormAlert>}
