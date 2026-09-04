@@ -157,6 +157,12 @@
   transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
 }
+.alt:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
 
 /* Dark-gradient variant of .alt, used for PIV/CAC sign-in. Source: .alt-btn.piv-btn. */
 .altDark {

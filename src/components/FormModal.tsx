@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { useModalA11y } from '../hooks/useModalA11y'
 import styles from './FormModal.module.css'
 
 interface FormModalProps {
@@ -13,21 +14,23 @@ interface FormModalProps {
 /**
  * Form-style modal shell (Edit Employment Record, Add Card) — see
  * FormModal.module.css for why this is separate from the login page's
- * Modal.tsx. Backdrop-click/Escape-to-close and aria-modal dialog
- * semantics are structural a11y wiring, same as Modal.tsx.
+ * Modal.tsx. Full modal accessibility contract (focus-in on open, focus
+ * trap, Escape-to-close, focus restore on close, background scroll lock)
+ * comes from useModalA11y — see that hook's comment for why a plain
+ * onKeyDown-for-Escape on the overlay div (the previous approach) doesn't
+ * actually work. Backdrop click to close is simple enough to keep local.
  */
 export default function FormModal({ titleId, title, icon, onClose, footer, children }: FormModalProps) {
+  const dialogRef = useModalA11y(onClose)
+
   return (
     <div
       className={styles.overlay}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose()
       }}
-      onKeyDown={(e) => {
-        if (e.key === 'Escape') onClose()
-      }}
     >
-      <div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby={titleId}>
+      <div ref={dialogRef} className={styles.modal} role="dialog" aria-modal="true" aria-labelledby={titleId}>
         <div className={styles.head}>
           <h3 id={titleId}>
             {icon}

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { getNotifications } from '../api/notificationsApi'
 import NotificationsPanel from '../components/NotificationsPanel'
-import { notifications } from '../data/notifications'
+import type { Notification } from '../data/notifications'
 import styles from './AppHeader.module.css'
 
 interface AppHeaderProps {
@@ -38,8 +39,13 @@ interface AppHeaderProps {
 export default function AppHeader({ navExpanded, onToggleSidebar }: AppHeaderProps) {
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
+  const [notifications, setNotifications] = useState<Notification[]>([])
   const [notificationsOpen, setNotificationsOpen] = useState(false)
   const notificationsRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    getNotifications().then(setNotifications)
+  }, [])
 
   useEffect(() => {
     if (!notificationsOpen) return

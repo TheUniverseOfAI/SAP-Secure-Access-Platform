@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { useModalA11y } from '../hooks/useModalA11y'
 import styles from './Modal.module.css'
 
 interface ModalProps {
@@ -17,23 +18,23 @@ interface ModalProps {
  * .modal-overlay/.modal classes, since those diverge from this page's own
  * values in the merged legacy-sap.css.
  *
- * Closing on backdrop click and Escape, plus rendering as an
- * aria-modal dialog, is structural a11y wiring (matches the project's
- * established practice for OTP focus-advance, wizard step navigation,
- * etc.) — not the deferred "business logic" (no email is actually sent).
+ * Full modal accessibility contract (focus-in on open, focus trap,
+ * Escape-to-close, focus restore on close, background scroll lock) comes
+ * from useModalA11y — see that hook's comment for why a plain
+ * onKeyDown-for-Escape on the overlay div (the previous approach) doesn't
+ * actually work. Backdrop click to close is simple enough to keep local.
  */
 export default function Modal({ titleId, title, subtitle, icon, iconStyle, onClose, children }: ModalProps) {
+  const dialogRef = useModalA11y(onClose)
+
   return (
     <div
       className={styles.overlay}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose()
       }}
-      onKeyDown={(e) => {
-        if (e.key === 'Escape') onClose()
-      }}
     >
-      <div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby={titleId}>
+      <div ref={dialogRef} className={styles.modal} role="dialog" aria-modal="true" aria-labelledby={titleId}>
         <div className={styles.header}>
           <div className={styles.headerRow}>
             <div className={styles.headerIcon} style={iconStyle} aria-hidden="true">
