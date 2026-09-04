@@ -1,0 +1,87 @@
+.item {
+  composes: item from './DocItem.module.css';
+}
+.itemError {
+  border-color: var(--red-500);
+  background: var(--red-50);
+}
+
+.icon {
+  composes: icon from './DocItem.module.css';
+}
+.iconPdf {
+  composes: iconPdf from './DocItem.module.css';
+}
+.iconDocx {
+  composes: iconDocx from './DocItem.module.css';
+}
+.iconXlsx {
+  composes: iconXlsx from './DocItem.module.css';
+}
+.iconPng {
+  composes: iconPng from './DocItem.module.css';
+}
+.iconJpg {
+  composes: iconJpg from './DocItem.module.css';
+}
+.iconTxt {
+  composes: iconTxt from './DocItem.module.css';
+}
+.iconCsv {
+  composes: iconCsv from './DocItem.module.css';
+}
+.iconPptx {
+  composes: iconPptx from './DocItem.module.css';
+}
+.iconError {
+  background: var(--red-500);
+}
+.iconError svg {
+  width: 18px;
+  height: 18px;
+}
+
+.info {
+  composes: info from './DocItem.module.css';
+}
+.name {
+  composes: name from './DocItem.module.css';
+}
+.meta {
+  composes: meta from './DocItem.module.css';
+}
+
+.errorText {
+  color: var(--red-500);
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--gray-200);
+  margin-top: 6px;
+  overflow: hidden;
+}
+.fill {
+  height: 100%;
+  background: var(--blue-500);
+  border-radius: 2px;
+  transition: width 0.15s ease;
+}
+
+.cancel {
+  composes: action from './DocItem.module.css';
+  flex-shrink: 0;
+}
+.cancel:hover {
+  border-color: var(--red-500);
+  color: var(--red-500);
+  background: var(--red-50);
+}
+.cancel svg {
+  width: 14px;
+  height: 14px;
+}

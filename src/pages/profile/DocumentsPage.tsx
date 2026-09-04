@@ -3,17 +3,24 @@ import Card from '../../components/Card'
 import DocDropzone from '../../components/DocDropzone'
 import { DocItem, DocList } from '../../components/DocItem'
 import PageHeader from '../../components/PageHeader'
+import UploadQueueItem from '../../components/UploadQueueItem'
 import { docLabelFromFilename, docTypeFromFilename, formatFileSize } from '../../data/documents'
+import { useFileUpload } from '../../hooks/useFileUpload'
 import { useDocumentsStore } from '../../stores/useDocumentsStore'
 
 /**
  * Real Documents tab — full visual parity with sap-user-profile_v2.html's
  * #tab-documents panel, including its 4 default seed documents. Backed by
  * useDocumentsStore/src/api/documentsApi.ts (same pattern as
- * useAuthSettingsStore): the dropzone's click-to-browse and drag-and-drop
- * both add a real mock entry (name/size/extension read from the actual
- * File object, nothing uploaded anywhere), and Delete really removes it.
- * Download stays inert — see DocItem.tsx for why.
+ * useAuthSettingsStore): Delete really removes an entry, and Download
+ * stays inert — see DocItem.tsx for why.
+ *
+ * Uploads go through useFileUpload rather than adding straight to the
+ * store: each dropped/browsed file is validated (extension + 25 MB
+ * limit, both real checks now, not just advisory copy) and, if valid,
+ * shown with simulated transfer progress before it's committed as a real
+ * DocItem — a file rejected by validation shows a real error row instead
+ * of silently vanishing or silently succeeding.
  */
 export default function DocumentsPage() {
   const documents = useDocumentsStore((s) => s.documents)
@@ -22,20 +29,18 @@ export default function DocumentsPage() {
   const addDocument = useDocumentsStore((s) => s.addDocument)
   const deleteDocument = useDocumentsStore((s) => s.deleteDocument)
 
+  const { queue, addFiles, dismiss } = useFileUpload((file) =>
+    addDocument({
+      type: docTypeFromFilename(file.name),
+      label: docLabelFromFilename(file.name),
+      name: file.name,
+      meta: `${formatFileSize(file.size)} · Uploaded just now`,
+    }),
+  )
+
   useEffect(() => {
     if (documents.length === 0 && !loading) fetchDocuments()
   }, [documents.length, loading, fetchDocuments])
-
-  const handleFilesSelected = (files: FileList) => {
-    Array.from(files).forEach((file) => {
-      addDocument({
-        type: docTypeFromFilename(file.name),
-        label: docLabelFromFilename(file.name),
-        name: file.name,
-        meta: `${formatFileSize(file.size)} · Uploaded just now`,
-      })
-    })
-  }
 
   return (
     <>
@@ -51,7 +56,21 @@ export default function DocumentsPage() {
           </svg>
         }
       >
-        <DocDropzone onFilesSelected={handleFilesSelected} />
+        <DocDropzone onFilesSelected={addFiles} />
+        {queue.length > 0 && (
+          <DocList>
+            {queue.map((entry) => (
+              <UploadQueueItem
+                key={entry.id}
+                file={entry.file}
+                progress={entry.progress}
+                status={entry.status}
+                error={entry.error}
+                onCancel={() => dismiss(entry.id)}
+              />
+            ))}
+          </DocList>
+        )}
         {loading ? (
           <p style={{ fontSize: '0.85rem', color: 'var(--gray-400)' }}>Loading documents…</p>
         ) : (
