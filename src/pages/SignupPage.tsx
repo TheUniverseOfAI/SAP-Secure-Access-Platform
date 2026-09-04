@@ -25,10 +25,16 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
  * error copy). No real backend/account creation exists, but every action
  * (accepting consent, creating the account, social signup) now goes
  * through src/api/authApi.ts's mocked async calls rather than resolving
- * synchronously in this component. A valid submission just logs you in
- * locally via AuthContext and navigates to the dashboard, same as the
- * source's fake "Account created" success path just actually proceeding
- * now instead of only showing an alert.
+ * synchronously in this component.
+ *
+ * authApi.signup has a real success/failure contract, same idea as
+ * LoginPage's: submitting the fixed "already registered" email (see
+ * authApi.ts) returns a warning alert instead of succeeding — the only
+ * conflict this mock can simulate without a backend to check uniqueness
+ * against. Any other email succeeds, shows a success alert, and holds on
+ * this page for authApi.completeSignupRedirect's simulated delay before
+ * logging in via AuthContext and navigating to the dashboard, so
+ * "redirecting…" is visible instead of the page instantly changing.
  *
  * Tab switching IS wired to real navigation (via react-router-dom) — see
  * LoginPage.tsx's comment for why that's not considered "wiring-phase"
@@ -55,8 +61,9 @@ export default function SignupPage() {
   const [lastNameError, setLastNameError] = useState('')
   const [emailError, setEmailError] = useState('')
   const [passwordError, setPasswordError] = useState('')
-  const [alert, setAlert] = useState<{ type: 'error' | 'success'; text: string } | null>(null)
+  const [alert, setAlert] = useState<{ type: 'error' | 'warning' | 'success'; text: string } | null>(null)
   const [submitting, setSubmitting] = useState(false)
+  const [redirecting, setRedirecting] = useState(false)
 
   const handleAcceptConsent = async () => {
     await authApi.acceptConsent()
@@ -102,8 +109,17 @@ export default function SignupPage() {
     }
 
     setSubmitting(true)
-    await authApi.signup({ firstName, lastName, email, phone, password })
+    const result = await authApi.signup({ firstName, lastName, email, phone, password })
     setSubmitting(false)
+
+    if (result.status === 'exists') {
+      setAlert({ type: 'warning', text: 'This email is already registered. Please sign in or use a different email address.' })
+      return
+    }
+
+    setAlert({ type: 'success', text: 'Account created successfully — redirecting to dashboard…' })
+    setRedirecting(true)
+    await authApi.completeSignupRedirect()
     login()
     navigate('/home')
   }
@@ -142,7 +158,7 @@ export default function SignupPage() {
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
           errorMessage={firstNameError}
-          disabled={!consentAccepted}
+          disabled={!consentAccepted || submitting || redirecting}
         />
         <Input
           id="signupLast"
@@ -152,7 +168,7 @@ export default function SignupPage() {
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
           errorMessage={lastNameError}
-          disabled={!consentAccepted}
+          disabled={!consentAccepted || submitting || redirecting}
         />
       </div>
 
@@ -166,7 +182,8 @@ export default function SignupPage() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         errorMessage={emailError}
-        disabled={!consentAccepted}
+        hint={!emailError ? 'Try jane.doe@sap.gov to see the "already registered" state' : undefined}
+        disabled={!consentAccepted || submitting || redirecting}
       />
 
       <Input
@@ -177,7 +194,7 @@ export default function SignupPage() {
         labelExtra={<InfoTip text="For multi-factor authentication" />}
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
-        disabled={!consentAccepted}
+        disabled={!consentAccepted || submitting || redirecting}
       />
 
       <div>
@@ -190,7 +207,7 @@ export default function SignupPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           errorMessage={passwordError}
-          disabled={!consentAccepted}
+          disabled={!consentAccepted || submitting || redirecting}
         />
         <PasswordStrengthMeter value={password} />
       </div>
@@ -200,7 +217,7 @@ export default function SignupPage() {
         className={styles.terms}
         checked={termsAccepted}
         onChange={(e) => setTermsAccepted(e.target.checked)}
-        disabled={!consentAccepted}
+        disabled={!consentAccepted || submitting || redirecting}
         label={
           <>
             I agree to the <a href="#">Terms of Service</a>, <a href="#">Privacy Policy</a>, and the <a href="#">Acceptable Use Policy</a>.
@@ -208,14 +225,14 @@ export default function SignupPage() {
         }
       />
 
-      <Button variant="submit" onClick={handleCreateAccount} disabled={!consentAccepted || submitting}>
-        {submitting ? 'Creating account…' : 'Create Account'}
+      <Button variant="submit" onClick={handleCreateAccount} disabled={!consentAccepted || submitting || redirecting}>
+        {redirecting ? 'Redirecting…' : submitting ? 'Creating account…' : 'Create Account'}
       </Button>
 
       <Divider>or sign up with</Divider>
 
       <div className={styles.socialGrid}>
-        <Button variant="alt" onClick={() => handleSocialLogin('Google')} disabled={!consentAccepted}>
+        <Button variant="alt" onClick={() => handleSocialLogin('Google')} disabled={!consentAccepted || submitting || redirecting}>
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
             <path
               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
@@ -236,7 +253,7 @@ export default function SignupPage() {
           </svg>
           Google
         </Button>
-        <Button variant="alt" onClick={() => handleSocialLogin('Microsoft')} disabled={!consentAccepted}>
+        <Button variant="alt" onClick={() => handleSocialLogin('Microsoft')} disabled={!consentAccepted || submitting || redirecting}>
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
             <rect x="1" y="1" width="10" height="10" fill="#F25022" />
             <rect x="13" y="1" width="10" height="10" fill="#7FBA00" />
@@ -247,13 +264,13 @@ export default function SignupPage() {
         </Button>
       </div>
       <div className={styles.socialGrid}>
-        <Button variant="alt" onClick={() => handleSocialLogin('Apple')} disabled={!consentAccepted}>
+        <Button variant="alt" onClick={() => handleSocialLogin('Apple')} disabled={!consentAccepted || submitting || redirecting}>
           <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
             <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
           </svg>
           Apple
         </Button>
-        <Button variant="alt" onClick={() => handleSocialLogin('Passkey')} disabled={!consentAccepted}>
+        <Button variant="alt" onClick={() => handleSocialLogin('Passkey')} disabled={!consentAccepted || submitting || redirecting}>
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
             <path d="M15 7a4 4 0 11-8 0 4 4 0 018 0z" />
             <path d="M19 21v-2a4 4 0 00-3-3.87M15 14.5l3 3 3-3M18 17.5V22" />

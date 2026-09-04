@@ -72,8 +72,21 @@ export interface SignupPayload {
   password: string
 }
 
-export async function signup(_payload: SignupPayload): Promise<{ success: true }> {
-  return request({ success: true })
+export type SignupResult = { status: 'success' } | { status: 'exists' }
+
+/** Fixed "already registered" email — the only real conflict this mock can simulate, since there's no backend to check uniqueness against. */
+const REGISTERED_EMAIL = 'jane.doe@sap.gov'
+
+export async function signup(payload: SignupPayload): Promise<SignupResult> {
+  if (payload.email.trim().toLowerCase() === REGISTERED_EMAIL) {
+    return request({ status: 'exists' })
+  }
+  return request({ status: 'success' })
+}
+
+/** Simulated delay between "account created" and the actual redirect, so the success message is visible rather than instantly replaced by navigation. Mirrors completeLoginRedirect. */
+export async function completeSignupRedirect(): Promise<void> {
+  await request(undefined, 900)
 }
 
 export async function socialLogin(_provider: string): Promise<{ success: true }> {
