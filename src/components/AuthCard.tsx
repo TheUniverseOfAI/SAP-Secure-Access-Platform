@@ -40,18 +40,18 @@ export default function AuthCard({ topBanner, lockHeight, footer, children }: Au
   useLayoutEffect(() => {
     if (!lockHeight || !innerRef.current || lockedHeight !== null) return
 
+    // Don't try to reconstruct the overflow from the surrounding layout (header height,
+    // .content's padding, the page-level <footer>'s height, flex-grow vs. min-content
+    // interactions, etc.) — every attempt at that got a different piece wrong. Ask the
+    // browser directly how much the *whole document* is currently overflowing the viewport
+    // by (document.documentElement.scrollHeight vs. window.innerHeight) and shrink this
+    // element — the only compressible one in the chain — by exactly that much. Whatever is
+    // below it (a page footer or anything else) is irrelevant to this calculation, since
+    // shrinking this element by X reduces the document's total height by the same X.
     const naturalHeight = innerRef.current.getBoundingClientRect().height
-    // How much room is actually left below the fields, in *this* viewport: from where the
-    // scrollable area starts (already past the fixed header + topBanner, whatever their real
-    // heights are) down to the bottom of the window, minus whatever the footer (Divider +
-    // social/PIV buttons) itself needs — that footer always renders in full, so its height has
-    // to come out of the budget rather than being guessed at in CSS. 24px is just breathing room
-    // so the card doesn't sit flush against the viewport edge.
-    const top = innerRef.current.getBoundingClientRect().top
-    const footerHeight = footerRef.current?.getBoundingClientRect().height ?? 0
-    const availableHeight = window.innerHeight - top - footerHeight - 24
+    const overflow = document.documentElement.scrollHeight - window.innerHeight + 16 // 16px breathing room
 
-    setLockedHeight(Math.min(naturalHeight, Math.max(availableHeight, 120)))
+    setLockedHeight(overflow > 0 ? Math.max(naturalHeight - overflow, 120) : naturalHeight)
     // Only ever measure once, on this AuthCard instance's first paint — re-running on every
     // render would re-measure (and re-lock to) whatever height the error state has already grown to.
     // eslint-disable-next-line react-hooks/exhaustive-deps
