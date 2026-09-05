@@ -135,98 +135,106 @@ export default function LoginPage() {
   }
 
   return (
-    <AuthCard lockHeight topBanner={<ConsentBanner accepted={consentAccepted} onAccept={handleAcceptConsent} />}>
-      <h1 className="sr-only">Sign In</h1>
+    <>
+      <AuthCard
+        lockHeight
+        topBanner={<ConsentBanner accepted={consentAccepted} onAccept={handleAcceptConsent} />}
+        footer={
+          <>
+            <Divider>or</Divider>
 
-      {alert && <FormAlert type={alert.type}>{alert.text}</FormAlert>}
+            {SHOW_PIV && (
+              <Button variant="altDark" onClick={handlePiv} disabled={!consentAccepted || submitting || redirecting}>
+                <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="16" rx="2" />
+                  <circle cx="12" cy="11" r="2.5" />
+                  <path d="M8 17c0-2.21 1.79-3 4-3s4 .79 4 3" />
+                  <line x1="17" y1="7" x2="19" y2="7" />
+                  <line x1="17" y1="9.5" x2="19" y2="9.5" />
+                </svg>
+                Sign In with PIV / CAC Card
+              </Button>
+            )}
 
-      <Tabs
-        aria-label="Authentication method"
-        activeId="signin"
-        onSelect={(id) => navigate(id === 'signup' ? '/signup' : '/login')}
-        tabs={[
-          { id: 'signin', label: 'Sign In' },
-          { id: 'signup', label: 'Create Account' },
-        ]}
-      />
+            <div className={styles.altGrid}>
+              <Button variant="alt" onClick={() => handleSocialLogin('SSO')} disabled={!consentAccepted || submitting || redirecting}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-500)" strokeWidth="2" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="3" />
+                  <path d="M8 12h8M12 8v8" />
+                </svg>
+                SSO
+              </Button>
+              <Button variant="alt" onClick={() => setActiveModal('otp')} disabled={!consentAccepted || submitting || redirecting}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--amber-500)" strokeWidth="2" aria-hidden="true">
+                  <rect x="5" y="3" width="14" height="18" rx="2" />
+                  <circle cx="12" cy="15" r="1.5" />
+                  <path d="M9 7h6" />
+                </svg>
+                OTP Code
+              </Button>
+              <Button variant="alt" onClick={() => setActiveModal('magicLink')} disabled={!consentAccepted || submitting || redirecting}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" strokeWidth="2" aria-hidden="true">
+                  <path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101" />
+                  <path d="M10.172 13.828a4 4 0 005.656 0l4-4a4 4 0 10-5.656-5.656l-1.1 1.1" />
+                </svg>
+                Magic Link
+              </Button>
+            </div>
+          </>
+        }
+      >
+        <h1 className="sr-only">Sign In</h1>
 
-      <Input
-        id="loginUser"
-        label="Username or Email"
-        required
-        placeholder="Enter username or email"
-        autoComplete="username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        errorMessage={usernameError}
-        hint={!usernameError ? 'Demo credentials: demo / Password123!' : undefined}
-        disabled={!consentAccepted || submitting || redirecting}
-      />
-      <PasswordField
-        id="loginPass"
-        label="Password"
-        required
-        placeholder="Enter password"
-        autoComplete="current-password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        errorMessage={passwordError}
-        disabled={!consentAccepted || submitting || redirecting}
-      />
+        {alert && <FormAlert type={alert.type}>{alert.text}</FormAlert>}
 
-      <div className={styles.formRow}>
-        <Checkbox label="Remember me" disabled={!consentAccepted || submitting || redirecting} />
-        <Link to="/forgot-password" className={styles.forgotLink}>
-          Forgot password?
-        </Link>
-      </div>
+        <Tabs
+          aria-label="Authentication method"
+          activeId="signin"
+          onSelect={(id) => navigate(id === 'signup' ? '/signup' : '/login')}
+          tabs={[
+            { id: 'signin', label: 'Sign In' },
+            { id: 'signup', label: 'Create Account' },
+          ]}
+        />
 
-      <Button variant="submit" onClick={handleSignIn} disabled={!consentAccepted || submitting || redirecting}>
-        {redirecting ? 'Redirecting…' : submitting ? 'Signing in…' : 'Sign In'}
-      </Button>
+        <Input
+          id="loginUser"
+          label="Username or Email"
+          required
+          placeholder="Enter username or email"
+          autoComplete="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          errorMessage={usernameError}
+          hint={!usernameError ? 'Demo credentials: demo / Password123!' : undefined}
+          disabled={!consentAccepted || submitting || redirecting}
+        />
+        <PasswordField
+          id="loginPass"
+          label="Password"
+          required
+          placeholder="Enter password"
+          autoComplete="current-password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          errorMessage={passwordError}
+          disabled={!consentAccepted || submitting || redirecting}
+        />
 
-      <Divider>or</Divider>
+        <div className={styles.formRow}>
+          <Checkbox label="Remember me" disabled={!consentAccepted || submitting || redirecting} />
+          <Link to="/forgot-password" className={styles.forgotLink}>
+            Forgot password?
+          </Link>
+        </div>
 
-      {SHOW_PIV && (
-        <Button variant="altDark" onClick={handlePiv} disabled={!consentAccepted || submitting || redirecting}>
-          <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
-            <rect x="3" y="4" width="18" height="16" rx="2" />
-            <circle cx="12" cy="11" r="2.5" />
-            <path d="M8 17c0-2.21 1.79-3 4-3s4 .79 4 3" />
-            <line x1="17" y1="7" x2="19" y2="7" />
-            <line x1="17" y1="9.5" x2="19" y2="9.5" />
-          </svg>
-          Sign In with PIV / CAC Card
+        <Button variant="submit" onClick={handleSignIn} disabled={!consentAccepted || submitting || redirecting}>
+          {redirecting ? 'Redirecting…' : submitting ? 'Signing in…' : 'Sign In'}
         </Button>
-      )}
-
-      <div className={styles.altGrid}>
-        <Button variant="alt" onClick={() => handleSocialLogin('SSO')} disabled={!consentAccepted || submitting || redirecting}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-500)" strokeWidth="2" aria-hidden="true">
-            <rect x="3" y="3" width="18" height="18" rx="3" />
-            <path d="M8 12h8M12 8v8" />
-          </svg>
-          SSO
-        </Button>
-        <Button variant="alt" onClick={() => setActiveModal('otp')} disabled={!consentAccepted || submitting || redirecting}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--amber-500)" strokeWidth="2" aria-hidden="true">
-            <rect x="5" y="3" width="14" height="18" rx="2" />
-            <circle cx="12" cy="15" r="1.5" />
-            <path d="M9 7h6" />
-          </svg>
-          OTP Code
-        </Button>
-        <Button variant="alt" onClick={() => setActiveModal('magicLink')} disabled={!consentAccepted || submitting || redirecting}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" strokeWidth="2" aria-hidden="true">
-            <path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101" />
-            <path d="M10.172 13.828a4 4 0 005.656 0l4-4a4 4 0 10-5.656-5.656l-1.1 1.1" />
-          </svg>
-          Magic Link
-        </Button>
-      </div>
+      </AuthCard>
 
       {activeModal === 'magicLink' && <MagicLinkModal onClose={() => setActiveModal(null)} />}
       {activeModal === 'otp' && <OtpCodeModal onClose={() => setActiveModal(null)} />}
-    </AuthCard>
+    </>
   )
 }

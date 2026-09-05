@@ -37,8 +37,12 @@
   mount — i.e. its error-free state — and locks it there via an inline
   style, so a validation error/FormAlert appearing later scrolls inside
   that fixed height instead of growing the card and re-centering the
-  whole page. Scrollbar is thinned rather than hidden outright — fields
-  still need to be reachable, just unobtrusively so.
+  whole page. The locked value itself is also clamped in JS to whatever
+  vertical space is actually left in the viewport (accounting for the
+  footer's real measured height, when there is one) — so on a viewport
+  too short for the natural height, it's the *page* that never needs to
+  scroll, only this element. Scrollbar is thinned rather than hidden
+  outright — fields still need to be reachable, just unobtrusively so.
 */
 .cardInnerLocked {
   overflow-y: auto;
@@ -56,8 +60,21 @@
   border-radius: 3px;
 }
 
+/* Cuts the bottom padding when a footer follows — the footer supplies its own, so the two don't stack. */
+.cardInnerWithFooter {
+  padding-bottom: 0;
+}
+
+/* Sits outside the scrollable/locked .cardInner, sharing its horizontal padding so content lines up. */
+.cardFooter {
+  padding: 0 32px 28px;
+}
+
 @media (max-width: 520px) {
   .cardInner {
     padding: 24px 20px 22px;
+  }
+  .cardFooter {
+    padding: 0 20px 22px;
   }
 }
