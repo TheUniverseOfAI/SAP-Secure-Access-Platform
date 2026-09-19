@@ -102,9 +102,9 @@ Each is an in-memory mock "database" seeded from a matching `src/data/*.ts` file
 
 `tokens.css` · `reset.css` · `a11y.css` · `global.css` · `legacy-sap.css` (the original unsplit merged stylesheet — still backs a handful of components/pages via global class names, being incrementally replaced) · `ProfileForm.module.css` (the one CSS Module here rather than global CSS — shared grid/divider/button-row layout reused by all 7 profile tab pages plus `AddCardModal`/`EditEmploymentModal`; moved here during the Round 2 review since it isn't tied to any single component)
 
-## Tests (9 files, 56 tests)
+## Tests (10 files, 60 tests)
 
-`src/api/authApi.test.ts` (13) · `src/hooks/useFileUpload.test.ts` (6) · `src/hooks/useModalA11y.test.tsx` (6) · `src/components/Input.test.tsx` (7) · `src/components/FormAlert.test.tsx` (4) · `src/components/Toggle.test.tsx` · `src/stores/useAuthSettingsStore.test.ts` · `src/stores/useDocumentsStore.test.ts` · `src/utils/passwordRules.test.ts`
+`src/api/authApi.test.ts` (13) · `src/pages/LoginPage.test.tsx` (4 — every alternate sign-in path actually completes login+navigate, not just the password path) · `src/hooks/useFileUpload.test.ts` (6) · `src/hooks/useModalA11y.test.tsx` (6) · `src/components/Input.test.tsx` (7) · `src/components/FormAlert.test.tsx` (4) · `src/components/Toggle.test.tsx` · `src/stores/useAuthSettingsStore.test.ts` · `src/stores/useDocumentsStore.test.ts` · `src/utils/passwordRules.test.ts`
 
 ---
 
@@ -117,4 +117,6 @@ Everything above matches the router (52 entries) and every prior audit round. Co
 - `PortalCard`'s Launch link — portal apps are external systems, out of scope for this project entirely
 - The PIV/CAC sign-in button on Login — built and functional, hidden behind a `SHOW_PIV` flag pending a decision on when to surface it
 
-What changed since the last inventory (the wiring phase, PRs #27–#41): real mock auth with route gating, a full mock API layer, two Zustand stores, real document upload with validation/progress/error states, real login/signup success/failure/lockout handling, and a 56-test unit test suite. No real backend exists yet — every "wired" behavior above is backed by the mock API layer, by design.
+What changed since the last inventory (the wiring phase, PRs #27–#41): real mock auth with route gating, a full mock API layer, two Zustand stores, real document upload with validation/progress/error states, real login/signup success/failure/lockout handling, and a growing unit test suite. No real backend exists yet — every "wired" behavior above is backed by the mock API layer, by design.
+
+**Latest round**: every alternate sign-in path on Login now completes the real mocked job (calls `login()` and navigates to `/home`), not just the password path — OTP Code's step 3, every social/PIV button, and Magic Link's demo-only "simulate opening the link" button (a real magic link can't complete without an actual emailed link, so that one button is explicitly a testing convenience, not part of the real flow). Covered by `src/pages/LoginPage.test.tsx`.

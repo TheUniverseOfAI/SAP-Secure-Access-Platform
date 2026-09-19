@@ -37,16 +37,22 @@ import styles from './LoginPage.module.css'
  * Tab switching and the forgot-password link ARE wired to real navigation
  * (via react-router-dom) — that's just routing, not business logic, so it
  * doesn't fall under the "no wiring yet" rule the way form submission did.
- * Same reasoning for the OTP Code / Magic Link buttons: opening their
- * modal is structural (which UI is showing), the modals themselves do no
- * real sending/verification.
  *
- * PIV/SSO/Google/Microsoft/Apple/Passkey buttons match the source's own
- * handlePIV()/socialLogin() exactly: gated by the same consent check,
- * showing a "Redirecting to X for authentication…" / "Detecting PIV/CAC
- * smart card…" success alert. The source never actually redirects
- * anywhere either — this is genuinely as real as that behavior gets
- * without a real identity provider to redirect to.
+ * Every alternate sign-in path now completes the same real job the
+ * password path does — not just showing a success message and stopping.
+ * PIV/SSO/Google/Microsoft/Apple/Passkey all call completeAlternateLogin()
+ * after their existing consent-gated mock API call: it holds on this page
+ * for authApi.completeLoginRedirect's simulated delay (same as the
+ * password path), then calls login() and navigates to /home. The OTP Code
+ * modal's step 3 ("Verified Successfully") and the Magic Link modal's
+ * demo-only "simulate opening the link" button both call the same
+ * completeAlternateLogin via their onVerified prop, so every path a user
+ * can actually finish ends up logged in for real — previously each of
+ * these was a dead end that never called login()/navigate() at all.
+ * Magic Link's normal step 2 ("Check your inbox") still can't complete on
+ * its own — a real magic link needs an actual emailed link to click,
+ * which this mock has no way to send — so its extra button is explicitly
+ * a demo/testing convenience, not something the real flow would have.
  */
 /** PIV/CAC sign-in isn't ready to surface yet — kept in code, hidden from the UI until it is. */
 const SHOW_PIV = false
@@ -123,17 +129,31 @@ export default function LoginPage() {
     return true
   }
 
+  const completeAlternateLogin = async () => {
+    setRedirecting(true)
+    await authApi.completeLoginRedirect()
+    login()
+    navigate('/home')
+  }
+
   const handlePiv = async () => {
     if (!gate()) return
+    setSubmitting(true)
     await authApi.pivLogin()
-    setAlert({ type: 'success', text: 'Detecting PIV / CAC smart card — please insert your card…' })
+    setSubmitting(false)
+    setAlert({ type: 'success', text: 'PIV / CAC card verified — redirecting to dashboard…' })
+    await completeAlternateLogin()
   }
 
   const handleSocialLogin = async (provider: string) => {
     if (!gate()) return
+    setSubmitting(true)
     await authApi.socialLogin(provider)
+    setSubmitting(false)
     setAlert({ type: 'success', text: `Redirecting to ${provider} for authentication…` })
+    await completeAlternateLogin()
   }
+
 
   return (
     <>
@@ -234,8 +254,8 @@ export default function LoginPage() {
         </Button>
       </AuthCard>
 
-      {activeModal === 'magicLink' && <MagicLinkModal onClose={() => setActiveModal(null)} />}
-      {activeModal === 'otp' && <OtpCodeModal onClose={() => setActiveModal(null)} />}
+      {activeModal === 'magicLink' && <MagicLinkModal onClose={() => setActiveModal(null)} onVerified={completeAlternateLogin} />}
+      {activeModal === 'otp' && <OtpCodeModal onClose={() => setActiveModal(null)} onVerified={completeAlternateLogin} />}
     </>
   )
 }
