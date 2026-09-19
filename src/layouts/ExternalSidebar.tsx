@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import SbNavItem from '../components/SbNavItem'
+import { currentUser } from '../data/currentUser'
 import styles from './ExternalSidebar.module.css'
 
 /**
@@ -18,7 +19,7 @@ export default function ExternalSidebar() {
     <nav className={styles.sidebar} aria-label="Profile sections">
       <div className={styles.profile}>
         <div className={styles.avatarWrap}>
-          <div className={styles.avatarImg}>MA</div>
+          <div className={styles.avatarImg}>{currentUser.initials}</div>
           <label className={styles.avatarUpload} aria-label="Upload avatar photo">
             <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
               <path
@@ -31,7 +32,7 @@ export default function ExternalSidebar() {
             <input type="file" accept="image/*" />
           </label>
         </div>
-        <div className={styles.name}>Muhanned</div>
+        <div className={styles.name}>{currentUser.firstName}</div>
         <div className={styles.role}>AI Engineer &amp; ML Ops Specialist</div>
         <div className={styles.badges}>
           <span className={[styles.badge, styles.badgeBlue].join(' ')}>Admin</span>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { currentUser } from '../data/currentUser'
 import styles from './ExternalHeader.module.css'
 
 interface ExternalHeaderProps {
@@ -61,7 +62,7 @@ export default function ExternalHeader({ subtitle = 'User Profile', showAvatar =
           </div>
         </div>
       </div>
-      {showAvatar && <div className={styles.avatar}>MA</div>}
+      {showAvatar && <div className={styles.avatar}>{currentUser.initials}</div>}
     </header>
   )
 }

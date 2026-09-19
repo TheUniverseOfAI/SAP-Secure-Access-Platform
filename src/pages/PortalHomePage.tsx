@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getActivity } from '../api/activityApi'
 import { ActivityItem, ActivityList } from '../components/ActivityItem'
@@ -7,6 +7,7 @@ import PageHeader from '../components/PageHeader'
 import { QuickCard, QuickGrid } from '../components/QuickCard'
 import { StatCard, StatGrid } from '../components/StatCard'
 import type { ActivityEntry } from '../data/activity'
+import { dashboardStats } from '../data/dashboardStats'
 import Breadcrumb from '../components/Breadcrumb'
 import styles from './PortalHomePage.module.css'
 
@@ -20,6 +21,29 @@ import styles from './PortalHomePage.module.css'
  * navigation" reasoning used for Sidebar/tabs elsewhere. Full visual
  * parity with sap-portal_v2.html's #page-home block.
  */
+const STAT_ICON: Record<string, ReactNode> = {
+  uptime: (
+    <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  ),
+  security: (
+    <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751" />
+    </svg>
+  ),
+  compliance: (
+    <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9zm3.75 11.625a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+    </svg>
+  ),
+  activeUsers: (
+    <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+    </svg>
+  ),
+}
+
 export default function PortalHomePage() {
   const navigate = useNavigate()
   const [activity, setActivity] = useState<ActivityEntry[]>([])
@@ -38,49 +62,16 @@ export default function PortalHomePage() {
         />
 
         <StatGrid>
-          <StatCard
-            color="green"
-            value="99.98%"
-            label="Uptime (30 days)"
-            onClick={() => navigate('/status/current')}
-            icon={
-              <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            }
-          />
-          <StatCard
-            color="blue"
-            value="A+"
-            label="Security Score"
-            onClick={() => navigate('/security/overview')}
-            icon={
-              <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751" />
-              </svg>
-            }
-          />
-          <StatCard
-            color="purple"
-            value="SOC 2"
-            label="Compliance Level"
-            onClick={() => navigate('/security/compliance')}
-            icon={
-              <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9zm3.75 11.625a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
-              </svg>
-            }
-          />
-          <StatCard
-            color="amber"
-            value="2,847"
-            label="Active Users"
-            icon={
-              <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
-              </svg>
-            }
-          />
+          {dashboardStats.map((stat) => (
+            <StatCard
+              key={stat.id}
+              color={stat.color}
+              value={stat.value}
+              label={stat.label}
+              onClick={stat.to ? () => navigate(stat.to!) : undefined}
+              icon={STAT_ICON[stat.id]}
+            />
+          ))}
         </StatGrid>
 
         <Card title="Quick Navigation">

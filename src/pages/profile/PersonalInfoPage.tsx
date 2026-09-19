@@ -3,6 +3,7 @@ import Card from '../../components/Card'
 import Input from '../../components/Input'
 import PageHeader from '../../components/PageHeader'
 import Select from '../../components/Select'
+import { currentUser } from '../../data/currentUser'
 import styles from '../../styles/ProfileForm.module.css'
 
 /**
@@ -29,7 +30,7 @@ export default function PersonalInfoPage() {
         }
       >
         <div className={styles.grid}>
-          <Input id="legalFirstName" label="Legal First Name" required defaultValue="Muhanned" />
+          <Input id="legalFirstName" label="Legal First Name" required defaultValue={currentUser.firstName} />
           <Input id="legalLastName" label="Legal Last Name" required placeholder="Enter your last name" />
           <Input id="middleName" label="Middle Name" placeholder="—" />
           <Input id="preferredName" label="Preferred Name / Nickname" placeholder="How you'd like to be addressed" />
