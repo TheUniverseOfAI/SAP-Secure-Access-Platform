@@ -1,20 +1,11 @@
-import { AuthMethodList } from '../../components/AuthMethodCard'
-import PageHeader from '../../components/PageHeader'
-import { useAuthMethodsSection } from '../../hooks/useAuthMethodsSection'
+import AuthMethodsPageLayout from '../../components/AuthMethodsPageLayout'
 
 export default function PasswordlessPage() {
-  const { methods, loading, toggleMethod } = useAuthMethodsSection('passwordless')
   return (
-    <div style={{ padding: 32 }}>
-      <PageHeader
-        title="Passwordless & Single Sign-On"
-        description="Modern authentication that eliminates passwords entirely or federates identity."
-      />
-      {loading ? (
-        <p style={{ fontSize: '0.85rem', color: 'var(--gray-400)' }}>Loading authentication methods…</p>
-      ) : (
-        <AuthMethodList methods={methods} onToggle={toggleMethod} />
-      )}
-    </div>
+    <AuthMethodsPageLayout
+      section="passwordless"
+      title="Passwordless & Single Sign-On"
+      description="Modern authentication that eliminates passwords entirely or federates identity."
+    />
   )
 }

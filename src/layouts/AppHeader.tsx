@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getNotifications } from '../api/notificationsApi'
 import NotificationsPanel from '../components/NotificationsPanel'
+import { currentUser } from '../data/currentUser'
 import type { Notification } from '../data/notifications'
 import styles from './AppHeader.module.css'
 
@@ -158,8 +159,8 @@ export default function AppHeader({ navExpanded, onToggleSidebar }: AppHeaderPro
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
         </button>
-        <button className={styles.avatar} aria-label="Muhanned Alogaidi" onClick={() => navigate('/leadership')}>
-          MA
+        <button className={styles.avatar} aria-label={currentUser.fullName} onClick={() => navigate('/leadership')}>
+          {currentUser.initials}
         </button>
       </div>
     </header>
