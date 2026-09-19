@@ -63,6 +63,7 @@ export default function LoginPage() {
   const [alert, setAlert] = useState<{ type: 'error' | 'warning' | 'success'; text: string } | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [redirecting, setRedirecting] = useState(false)
+  const formDisabled = !consentAccepted || submitting || redirecting
 
   const handleAcceptConsent = async () => {
     await authApi.acceptConsent()
@@ -144,7 +145,7 @@ export default function LoginPage() {
             <Divider>or</Divider>
 
             {SHOW_PIV && (
-              <Button variant="altDark" onClick={handlePiv} disabled={!consentAccepted || submitting || redirecting}>
+              <Button variant="altDark" onClick={handlePiv} disabled={formDisabled}>
                 <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
                   <rect x="3" y="4" width="18" height="16" rx="2" />
                   <circle cx="12" cy="11" r="2.5" />
@@ -157,14 +158,14 @@ export default function LoginPage() {
             )}
 
             <div className={styles.altGrid}>
-              <Button variant="alt" onClick={() => handleSocialLogin('SSO')} disabled={!consentAccepted || submitting || redirecting}>
+              <Button variant="alt" onClick={() => handleSocialLogin('SSO')} disabled={formDisabled}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-500)" strokeWidth="2" aria-hidden="true">
                   <rect x="3" y="3" width="18" height="18" rx="3" />
                   <path d="M8 12h8M12 8v8" />
                 </svg>
                 SSO
               </Button>
-              <Button variant="alt" onClick={() => setActiveModal('otp')} disabled={!consentAccepted || submitting || redirecting}>
+              <Button variant="alt" onClick={() => setActiveModal('otp')} disabled={formDisabled}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="var(--amber-500)" strokeWidth="2" aria-hidden="true">
                   <rect x="5" y="3" width="14" height="18" rx="2" />
                   <circle cx="12" cy="15" r="1.5" />
@@ -172,7 +173,7 @@ export default function LoginPage() {
                 </svg>
                 OTP Code
               </Button>
-              <Button variant="alt" onClick={() => setActiveModal('magicLink')} disabled={!consentAccepted || submitting || redirecting}>
+              <Button variant="alt" onClick={() => setActiveModal('magicLink')} disabled={formDisabled}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" strokeWidth="2" aria-hidden="true">
                   <path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101" />
                   <path d="M10.172 13.828a4 4 0 005.656 0l4-4a4 4 0 10-5.656-5.656l-1.1 1.1" />
@@ -207,7 +208,7 @@ export default function LoginPage() {
           onChange={(e) => setUsername(e.target.value)}
           errorMessage={usernameError}
           hint={!usernameError ? 'Demo credentials: demo / Password123!' : undefined}
-          disabled={!consentAccepted || submitting || redirecting}
+          disabled={formDisabled}
         />
         <PasswordField
           id="loginPass"
@@ -218,17 +219,17 @@ export default function LoginPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           errorMessage={passwordError}
-          disabled={!consentAccepted || submitting || redirecting}
+          disabled={formDisabled}
         />
 
         <div className={styles.formRow}>
-          <Checkbox label="Remember me" disabled={!consentAccepted || submitting || redirecting} />
+          <Checkbox label="Remember me" disabled={formDisabled} />
           <Link to="/forgot-password" className={styles.forgotLink}>
             Forgot password?
           </Link>
         </div>
 
-        <Button variant="submit" onClick={handleSignIn} disabled={!consentAccepted || submitting || redirecting}>
+        <Button variant="submit" onClick={handleSignIn} disabled={formDisabled}>
           {redirecting ? 'Redirecting…' : submitting ? 'Signing in…' : 'Sign In'}
         </Button>
       </AuthCard>
