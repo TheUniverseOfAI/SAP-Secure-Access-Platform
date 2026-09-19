@@ -3,7 +3,7 @@ import Card from '../../components/Card'
 import Input from '../../components/Input'
 import PageHeader from '../../components/PageHeader'
 import Select from '../../components/Select'
-import styles from './ProfileForm.module.css'
+import styles from '../../styles/ProfileForm.module.css'
 
 /** Real Identity & IDs tab — full visual parity with sap-user-profile_v2.html's #tab-identity panel. Static/inert per the UI-first rule. */
 export default function IdentityPage() {

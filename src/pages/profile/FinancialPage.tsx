@@ -7,7 +7,7 @@ import PageHeader from '../../components/PageHeader'
 import Select from '../../components/Select'
 import Textarea from '../../components/Textarea'
 import { bankAccounts, storeAccounts, taxRecords } from '../../data/financialAccounts'
-import formStyles from './ProfileForm.module.css'
+import formStyles from '../../styles/ProfileForm.module.css'
 import styles from './FinancialPage.module.css'
 
 const NETWORK_CLASS: Record<string, string> = {

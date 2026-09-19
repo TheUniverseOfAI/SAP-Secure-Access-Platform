@@ -5,7 +5,7 @@ import PageHeader from '../components/PageHeader'
 import PortalCard from '../components/PortalCard'
 import PortalFilter, { type PortalFilterValue } from '../components/PortalFilter'
 import type { Portal } from '../data/portals'
-import Breadcrumb from '../layouts/Breadcrumb'
+import Breadcrumb from '../components/Breadcrumb'
 import styles from './PortalsPage.module.css'
 
 /**

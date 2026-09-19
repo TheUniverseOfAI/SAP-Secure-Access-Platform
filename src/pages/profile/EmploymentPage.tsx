@@ -7,7 +7,7 @@ import PageHeader from '../../components/PageHeader'
 import Select from '../../components/Select'
 import Textarea from '../../components/Textarea'
 import { employmentHistory } from '../../data/employmentHistory'
-import formStyles from './ProfileForm.module.css'
+import formStyles from '../../styles/ProfileForm.module.css'
 import styles from './EmploymentPage.module.css'
 
 /**

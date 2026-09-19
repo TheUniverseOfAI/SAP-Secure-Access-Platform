@@ -3,7 +3,7 @@ import PageHeader from '../components/PageHeader'
 import WeatherWidget from '../components/WeatherWidget'
 import { articlesByCategory } from '../data/news'
 import { weather } from '../data/weather'
-import Breadcrumb from '../layouts/Breadcrumb'
+import Breadcrumb from '../components/Breadcrumb'
 import styles from './HomePage.module.css'
 
 /**

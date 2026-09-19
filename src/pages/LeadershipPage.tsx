@@ -2,7 +2,7 @@ import Card from '../components/Card'
 import PageHeader from '../components/PageHeader'
 import { TeamCard, TeamGrid } from '../components/TeamCard'
 import { leadershipTeam } from '../data/leadership'
-import Breadcrumb from '../layouts/Breadcrumb'
+import Breadcrumb from '../components/Breadcrumb'
 import styles from './LeadershipPage.module.css'
 
 /** Real leadership page — full visual parity with sap-portal_v2.html's #page-leadership block. */

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import Breadcrumb from '../layouts/Breadcrumb'
+import Breadcrumb from './Breadcrumb'
 import Card from './Card'
 import PageHeader from './PageHeader'
 import pageStyles from './DetailLayout.module.css'

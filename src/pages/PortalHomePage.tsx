@@ -7,7 +7,7 @@ import PageHeader from '../components/PageHeader'
 import { QuickCard, QuickGrid } from '../components/QuickCard'
 import { StatCard, StatGrid } from '../components/StatCard'
 import type { ActivityEntry } from '../data/activity'
-import Breadcrumb from '../layouts/Breadcrumb'
+import Breadcrumb from '../components/Breadcrumb'
 import styles from './PortalHomePage.module.css'
 
 /**
