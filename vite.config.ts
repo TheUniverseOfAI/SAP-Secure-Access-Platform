@@ -8,6 +8,12 @@ export default defineConfig({
   // dev server still runs at /) so `npm run dev` is unaffected.
   base: process.env.GITHUB_PAGES ? '/SAP-Secure-Access-Platform/' : '/',
   plugins: [react()],
+  // react-pdf is only reached through a lazy import, so without this Vite
+  // discovers it mid-session, re-optimizes, and force-reloads the page the
+  // first time someone opens the PDF viewer (wiping unsaved state).
+  optimizeDeps: {
+    include: ['react-pdf'],
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

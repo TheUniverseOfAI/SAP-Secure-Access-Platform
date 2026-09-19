@@ -8,6 +8,8 @@ interface FormModalProps {
   icon: ReactNode
   onClose: () => void
   footer: ReactNode
+  /** Wider shell for content that needs room, like the PDF viewer. */
+  wide?: boolean
   children: ReactNode
 }
 
@@ -20,7 +22,7 @@ interface FormModalProps {
  * onKeyDown-for-Escape on the overlay div (the previous approach) doesn't
  * actually work. Backdrop click to close is simple enough to keep local.
  */
-export default function FormModal({ titleId, title, icon, onClose, footer, children }: FormModalProps) {
+export default function FormModal({ titleId, title, icon, onClose, footer, wide, children }: FormModalProps) {
   const dialogRef = useModalA11y(onClose)
 
   return (
@@ -30,7 +32,13 @@ export default function FormModal({ titleId, title, icon, onClose, footer, child
         if (e.target === e.currentTarget) onClose()
       }}
     >
-      <div ref={dialogRef} className={styles.modal} role="dialog" aria-modal="true" aria-labelledby={titleId}>
+      <div
+        ref={dialogRef}
+        className={[styles.modal, wide ? styles.modalWide : ''].filter(Boolean).join(' ')}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+      >
         <div className={styles.head}>
           <h3 id={titleId}>
             {icon}

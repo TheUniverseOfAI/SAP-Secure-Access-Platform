@@ -8,6 +8,14 @@ export interface Document {
   label: string
   name: string
   meta: string
+  /**
+   * An object URL (URL.createObjectURL) for a real, in-browser-memory file —
+   * only ever set for a document the user actually uploaded through
+   * DocDropzone, never for the seed documents below, which have no real
+   * bytes behind them. Lets DocItem offer a real "View"/"Download" action
+   * instead of the honest inert one the seed docs still show.
+   */
+  fileUrl?: string
 }
 
 /** Source: handleFiles()'s extColors map exactly (sap-user-profile_v2.html) — note gif/svg reuse the png icon, zip reuses txt, json/xml reuse csv, matching the source's own (slightly loose) grouping. */

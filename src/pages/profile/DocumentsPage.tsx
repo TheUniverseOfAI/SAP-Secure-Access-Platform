@@ -1,10 +1,14 @@
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import Card from '../../components/Card'
 import DocDropzone from '../../components/DocDropzone'
 import { DocItem, DocList } from '../../components/DocItem'
 import PageHeader from '../../components/PageHeader'
 import UploadQueueItem from '../../components/UploadQueueItem'
-import { docLabelFromFilename, docTypeFromFilename, formatFileSize } from '../../data/documents'
+
+// react-pdf/pdfjs-dist adds ~700KB to whatever chunk imports it — lazy-loaded so
+// only someone who actually opens a PDF pays that cost, not every page load.
+const PdfViewerModal = lazy(() => import('../../components/PdfViewerModal'))
+import { docLabelFromFilename, docTypeFromFilename, formatFileSize, type Document } from '../../data/documents'
 import { useFileUpload } from '../../hooks/useFileUpload'
 import { useDocumentsStore } from '../../stores/useDocumentsStore'
 
@@ -12,8 +16,7 @@ import { useDocumentsStore } from '../../stores/useDocumentsStore'
  * Real Documents tab — full visual parity with sap-user-profile_v2.html's
  * #tab-documents panel, including its 4 default seed documents. Backed by
  * useDocumentsStore/src/api/documentsApi.ts (same pattern as
- * useAuthSettingsStore): Delete really removes an entry, and Download
- * stays inert — see DocItem.tsx for why.
+ * useAuthSettingsStore): Delete really removes an entry.
  *
  * Uploads go through useFileUpload rather than adding straight to the
  * store: each dropped/browsed file is validated (extension + 25 MB
@@ -21,6 +24,12 @@ import { useDocumentsStore } from '../../stores/useDocumentsStore'
  * shown with simulated transfer progress before it's committed as a real
  * DocItem — a file rejected by validation shows a real error row instead
  * of silently vanishing or silently succeeding.
+ *
+ * A freshly-uploaded file keeps a real object URL (URL.createObjectURL) —
+ * the browser genuinely has those bytes in memory, so DocItem can offer a
+ * real View (PDFs, via PdfViewerModal) or Download action for it. The 4
+ * seed documents have no such URL and no real content behind them at all,
+ * so their Download stays honestly inert — see DocItem.tsx.
  */
 export default function DocumentsPage() {
   const documents = useDocumentsStore((s) => s.documents)
@@ -28,6 +37,7 @@ export default function DocumentsPage() {
   const fetchDocuments = useDocumentsStore((s) => s.fetchDocuments)
   const addDocument = useDocumentsStore((s) => s.addDocument)
   const deleteDocument = useDocumentsStore((s) => s.deleteDocument)
+  const [viewingDoc, setViewingDoc] = useState<Document | null>(null)
 
   const { queue, addFiles, dismiss } = useFileUpload((file) =>
     addDocument({
@@ -35,12 +45,18 @@ export default function DocumentsPage() {
       label: docLabelFromFilename(file.name),
       name: file.name,
       meta: `${formatFileSize(file.size)} · Uploaded just now`,
+      fileUrl: URL.createObjectURL(file),
     }),
   )
 
   useEffect(() => {
     if (documents.length === 0 && !loading) fetchDocuments()
   }, [documents.length, loading, fetchDocuments])
+
+  const handleDelete = (doc: Document) => {
+    if (doc.fileUrl) URL.revokeObjectURL(doc.fileUrl)
+    deleteDocument(doc.id)
+  }
 
   return (
     <>
@@ -82,12 +98,20 @@ export default function DocumentsPage() {
                 label={doc.label}
                 name={doc.name}
                 meta={doc.meta}
-                onDelete={() => deleteDocument(doc.id)}
+                fileUrl={doc.fileUrl}
+                onView={doc.fileUrl && doc.type === 'pdf' ? () => setViewingDoc(doc) : undefined}
+                onDelete={() => handleDelete(doc)}
               />
             ))}
           </DocList>
         )}
       </Card>
+
+      {viewingDoc?.fileUrl && (
+        <Suspense fallback={<p style={{ fontSize: '0.85rem', color: 'var(--gray-400)' }}>Loading viewer…</p>}>
+          <PdfViewerModal fileUrl={viewingDoc.fileUrl} fileName={viewingDoc.name} onClose={() => setViewingDoc(null)} />
+        </Suspense>
+      )}
     </>
   )
 }
