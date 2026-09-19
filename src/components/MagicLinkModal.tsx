@@ -5,12 +5,23 @@ import Modal from './Modal'
 import ResendRow from './ResendRow'
 import SuccessVisual, { EmailHighlight } from './SuccessVisual'
 
+interface MagicLinkModalProps {
+  onClose: () => void
+  /** Called once the (simulated) link is "clicked" — completes the real login job (see LoginPage's completeAlternateLogin), same as every other sign-in path. */
+  onVerified: () => void
+}
+
 /**
  * Source: #magicModal in login-portal_v2.html. Step 1 collects an email,
- * step 2 shows the "check your inbox" confirmation. Local step state only
- * (structural) — no email is actually sent, no code is verified.
+ * step 2 shows the "check your inbox" confirmation — unlike every other
+ * alternate sign-in path, this one genuinely can't complete on its own:
+ * a real magic link requires an actual emailed link to click, which this
+ * mock has no way to send. The extra "simulate opening the link" button
+ * below is a deliberate demo/testing convenience, not something the real
+ * flow would ever show — without it there'd be no way to reach the
+ * logged-in state via this path at all in a mock with no real email.
  */
-export default function MagicLinkModal({ onClose }: { onClose: () => void }) {
+export default function MagicLinkModal({ onClose, onVerified }: MagicLinkModalProps) {
   const [step, setStep] = useState<1 | 2>(1)
   const [email, setEmail] = useState('')
 
@@ -71,6 +82,12 @@ export default function MagicLinkModal({ onClose }: { onClose: () => void }) {
           <ResendRow>
             Didn&apos;t get it? <a href="#">Resend link</a>
           </ResendRow>
+          <p style={{ marginTop: 14, fontSize: '0.72rem', color: 'var(--gray-400)', textAlign: 'center' }}>
+            No real email was sent — for demo purposes, simulate clicking the link below.
+          </p>
+          <Button variant="outline" style={{ width: '100%', marginTop: 8 }} onClick={onVerified}>
+            Simulate opening the link
+          </Button>
         </>
       )}
     </Modal>

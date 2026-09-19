@@ -6,13 +6,21 @@ import OtpInputGroup from './OtpInputGroup'
 import ResendRow from './ResendRow'
 import SuccessVisual from './SuccessVisual'
 
+interface OtpCodeModalProps {
+  onClose: () => void
+  /** Called once the code is "verified" (step 3) — completes the real login job (see LoginPage's completeAlternateLogin), same as every other sign-in path. */
+  onVerified: () => void
+}
+
 /**
  * Source: #otpModal in login-portal_v2.html. Step 1 collects an email,
- * step 2 collects the 6-digit code, step 3 shows a verified/redirecting
- * confirmation. Local step state only (structural) — no code is actually
- * sent or verified.
+ * step 2 collects the 6-digit code (never actually checked against
+ * anything sent, since no real email/SMS backend exists), step 3 shows a
+ * verified/redirecting confirmation and calls onVerified — this modal
+ * used to dead-end here with no real effect; now it completes the same
+ * login job the password path does.
  */
-export default function OtpCodeModal({ onClose }: { onClose: () => void }) {
+export default function OtpCodeModal({ onClose, onVerified }: OtpCodeModalProps) {
   const [step, setStep] = useState<1 | 2 | 3>(1)
   const [email, setEmail] = useState('')
 
@@ -57,7 +65,14 @@ export default function OtpCodeModal({ onClose }: { onClose: () => void }) {
             {email || '—'}
           </p>
           <OtpInputGroup label="6-digit verification code" />
-          <Button variant="submit" style={{ marginTop: 10 }} onClick={() => setStep(3)}>
+          <Button
+            variant="submit"
+            style={{ marginTop: 10 }}
+            onClick={() => {
+              setStep(3)
+              onVerified()
+            }}
+          >
             Verify &amp; Sign In
           </Button>
           <ResendRow>
