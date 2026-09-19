@@ -1,6 +1,6 @@
 import Card from '../components/Card'
 import PageHeader from '../components/PageHeader'
-import Breadcrumb from '../layouts/Breadcrumb'
+import Breadcrumb from '../components/Breadcrumb'
 import styles from './AboutPage.module.css'
 
 /**

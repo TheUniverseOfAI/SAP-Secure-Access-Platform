@@ -4,7 +4,7 @@ import FormModal from './FormModal'
 import Input from './Input'
 import Select from './Select'
 import Textarea from './Textarea'
-import formStyles from '../pages/profile/ProfileForm.module.css'
+import formStyles from '../styles/ProfileForm.module.css'
 
 /**
  * Source: #editModal in sap-user-profile_v2.html, opened by the

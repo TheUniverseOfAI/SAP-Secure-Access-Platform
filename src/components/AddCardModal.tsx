@@ -2,7 +2,7 @@ import Button from './Button'
 import FormModal from './FormModal'
 import Input from './Input'
 import Select from './Select'
-import formStyles from '../pages/profile/ProfileForm.module.css'
+import formStyles from '../styles/ProfileForm.module.css'
 
 /**
  * Source: #cardModal in sap-user-profile_v2.html, opened by the "Add
