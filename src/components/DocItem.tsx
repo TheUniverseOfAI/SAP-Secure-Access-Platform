@@ -9,7 +9,7 @@ interface DocItemProps {
   meta: string
   /** An object URL for a real, in-memory file (see DocumentsPage.tsx) — enables a real Download link instead of the inert placeholder button. */
   fileUrl?: string
-  /** Provided only for a real PDF (fileUrl + type === 'pdf') — opens PdfViewerModal. */
+  /** Provided only for a real PDF (fileUrl + type === 'pdf') — opens the PDF viewer page. */
   onView?: () => void
   onDelete?: () => void
 }
@@ -34,7 +34,7 @@ const ICON_CLASS: Record<DocType, string | undefined> = {
  * the honest inert placeholder it always was — same "no fabricated
  * destination" reasoning already used for PortalCard's Launch link and
  * NewsCard. A real PDF additionally gets a View button opening
- * PdfViewerModal. Source: .doc-item.
+ * the PDF viewer page. Source: .doc-item.
  */
 export function DocItem({ type, label, name, meta, fileUrl, onView, onDelete }: DocItemProps) {
   return (

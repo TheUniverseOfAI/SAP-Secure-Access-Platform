@@ -1,13 +1,11 @@
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Card from '../../components/Card'
 import DocDropzone from '../../components/DocDropzone'
 import { DocItem, DocList } from '../../components/DocItem'
 import PageHeader from '../../components/PageHeader'
 import UploadQueueItem from '../../components/UploadQueueItem'
 
-// react-pdf/pdfjs-dist adds ~700KB to whatever chunk imports it — lazy-loaded so
-// only someone who actually opens a PDF pays that cost, not every page load.
-const PdfViewerModal = lazy(() => import('../../components/PdfViewerModal'))
 import { docLabelFromFilename, docTypeFromFilename, formatFileSize, type Document } from '../../data/documents'
 import { useFileUpload } from '../../hooks/useFileUpload'
 import { useDocumentsStore } from '../../stores/useDocumentsStore'
@@ -27,7 +25,7 @@ import { useDocumentsStore } from '../../stores/useDocumentsStore'
  *
  * A freshly-uploaded file keeps a real object URL (URL.createObjectURL) —
  * the browser genuinely has those bytes in memory, so DocItem can offer a
- * real View (PDFs, via PdfViewerModal) or Download action for it. The 4
+ * real View (PDFs, opening the /documents/:id/view page) or Download action for it. The 4
  * seed documents have no such URL and no real content behind them at all,
  * so their Download stays honestly inert — see DocItem.tsx.
  */
@@ -37,7 +35,7 @@ export default function DocumentsPage() {
   const fetchDocuments = useDocumentsStore((s) => s.fetchDocuments)
   const addDocument = useDocumentsStore((s) => s.addDocument)
   const deleteDocument = useDocumentsStore((s) => s.deleteDocument)
-  const [viewingDoc, setViewingDoc] = useState<Document | null>(null)
+  const navigate = useNavigate()
 
   const { queue, addFiles, dismiss } = useFileUpload((file) =>
     addDocument({
@@ -99,19 +97,13 @@ export default function DocumentsPage() {
                 name={doc.name}
                 meta={doc.meta}
                 fileUrl={doc.fileUrl}
-                onView={doc.fileUrl && doc.type === 'pdf' ? () => setViewingDoc(doc) : undefined}
+                onView={doc.fileUrl && doc.type === 'pdf' ? () => navigate(`/documents/${doc.id}/view`) : undefined}
                 onDelete={() => handleDelete(doc)}
               />
             ))}
           </DocList>
         )}
       </Card>
-
-      {viewingDoc?.fileUrl && (
-        <Suspense fallback={<p style={{ fontSize: '0.85rem', color: 'var(--gray-400)' }}>Loading viewer…</p>}>
-          <PdfViewerModal fileUrl={viewingDoc.fileUrl} fileName={viewingDoc.name} onClose={() => setViewingDoc(null)} />
-        </Suspense>
-      )}
     </>
   )
 }
