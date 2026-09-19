@@ -15,8 +15,8 @@ export async function acceptConsent(): Promise<{ accepted: true }> {
 }
 
 /** Only real credential mock in this app — everything else (signup, social/PIV) still auto-succeeds. */
-const DEMO_USERNAME = 'demo'
-const DEMO_PASSWORD = 'Password123!'
+export const DEMO_USERNAME = 'demo'
+export const DEMO_PASSWORD = 'Password123!'
 const MAX_FAILED_ATTEMPTS = 5
 const LOCKOUT_DURATION_MS = 15 * 60 * 1000
 

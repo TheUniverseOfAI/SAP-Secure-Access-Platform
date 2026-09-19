@@ -62,8 +62,8 @@ export default function LoginPage() {
   const { login } = useAuth()
   const [activeModal, setActiveModal] = useState<'magicLink' | 'otp' | null>(null)
   const [consentAccepted, setConsentAccepted] = useState(false)
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState(authApi.DEMO_USERNAME)
+  const [password, setPassword] = useState(authApi.DEMO_PASSWORD)
   const [usernameError, setUsernameError] = useState('')
   const [passwordError, setPasswordError] = useState('')
   const [alert, setAlert] = useState<{ type: 'error' | 'warning' | 'success'; text: string } | null>(null)
@@ -153,7 +153,6 @@ export default function LoginPage() {
     setAlert({ type: 'success', text: `Redirecting to ${provider} for authentication…` })
     await completeAlternateLogin()
   }
-
 
   return (
     <>
