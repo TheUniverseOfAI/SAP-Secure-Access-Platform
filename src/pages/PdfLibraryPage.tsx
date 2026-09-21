@@ -43,7 +43,7 @@ export default function PdfLibraryPage() {
   const viewerRef = useRef<HTMLDivElement>(null)
   // Bring the panel into view when a book opens, so it isn't hidden above a scrolled-down grid.
   useEffect(() => {
-    if (openId) viewerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    if (openId) viewerRef.current?.scrollIntoView({ behavior: 'auto', block: 'start' })
   }, [openId])
   const closeInline = useCallback(() => {
     setOpenId(null)

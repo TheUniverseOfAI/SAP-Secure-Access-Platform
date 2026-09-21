@@ -222,6 +222,7 @@
 }
 
 .inlineViewer {
-  scroll-margin-top: 16px;
+  min-height: calc(100vh - 240px);
+  scroll-margin-top: 64px;
   margin-top: 24px;
 }

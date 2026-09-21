@@ -12,10 +12,10 @@
   position: relative;
   inset: auto;
   z-index: auto;
-  height: 80vh;
+  height: calc(100vh - 240px);
   min-height: 480px;
   border-radius: 10px;
-  overflow: hidden;
+  overflow: clip;
 }
 
 .toolbar {
@@ -385,4 +385,28 @@
 }
 .modeDark .pageSlot canvas {
   filter: invert(0.9) hue-rotate(180deg);
+}
+
+/* The app hides scrollbars globally; a document viewer needs to show where you are, so bring them back here. */
+.viewer * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-400) transparent;
+}
+.viewer *::-webkit-scrollbar {
+  display: block;
+  width: 12px;
+  height: 12px;
+}
+.viewer *::-webkit-scrollbar-thumb {
+  background: var(--gray-400);
+  border-radius: 6px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+.viewer *::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-300);
+  background-clip: content-box;
+}
+.viewer *::-webkit-scrollbar-track {
+  background: transparent;
 }
