@@ -40,6 +40,11 @@ export default function PdfLibraryPage() {
   const [query, setQuery] = useState('')
   const [sort, setSort] = useState<Sort>('recent')
   const [openId, setOpenId] = useState<string | null>(null)
+  const viewerRef = useRef<HTMLDivElement>(null)
+  // Bring the panel into view when a book opens, so it isn't hidden above a scrolled-down grid.
+  useEffect(() => {
+    if (openId) viewerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [openId])
   const closeInline = useCallback(() => {
     setOpenId(null)
     void fetchBooks()
@@ -119,12 +124,6 @@ export default function PdfLibraryPage() {
             }}
           />
         </div>
-
-        {openId && (
-          <div className={styles.inlineViewer}>
-            <LibraryViewerPage key={openId} bookId={openId} onClose={closeInline} />
-          </div>
-        )}
 
         {errors.length > 0 && (
           <div className={styles.errors} role="alert">
@@ -225,6 +224,12 @@ export default function PdfLibraryPage() {
                 </article>
               )
             })}
+          </div>
+        )}
+
+        {openId && (
+          <div ref={viewerRef} className={styles.inlineViewer}>
+            <LibraryViewerPage key={openId} bookId={openId} onClose={closeInline} />
           </div>
         )}
       </div>
