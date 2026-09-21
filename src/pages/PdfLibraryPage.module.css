@@ -224,5 +224,5 @@
 .inlineViewer {
   min-height: calc(100vh - 240px);
   scroll-margin-top: 64px;
-  margin-top: 24px;
+  margin-top: 0;
 }

@@ -81,6 +81,20 @@ export default function PdfLibraryPage() {
     return list
   }, [books, query, sort])
 
+  // Reading inline: the layout (sidebar, header) stays, the list steps aside for the viewer; its back arrow returns to the list.
+  if (openId) {
+    return (
+      <>
+        <Breadcrumb current="Reading" parent="PDF Library" />
+        <div className={styles.page}>
+          <div ref={viewerRef} className={styles.inlineViewer}>
+            <LibraryViewerPage key={openId} bookId={openId} onClose={closeInline} />
+          </div>
+        </div>
+      </>
+    )
+  }
+
   return (
     <>
       <Breadcrumb current="PDF Library" parent="Library" />
@@ -227,11 +241,6 @@ export default function PdfLibraryPage() {
           </div>
         )}
 
-        {openId && (
-          <div ref={viewerRef} className={styles.inlineViewer}>
-            <LibraryViewerPage key={openId} bookId={openId} onClose={closeInline} />
-          </div>
-        )}
       </div>
     </>
   )
