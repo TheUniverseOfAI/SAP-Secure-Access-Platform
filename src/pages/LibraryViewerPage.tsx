@@ -11,8 +11,10 @@ type State = { status: 'loading' } | { status: 'missing' } | { status: 'ready'; 
  * The file comes from the browser's database, so unlike the Documents tab's
  * viewer it works after a refresh, in any tab, at any time.
  */
-export default function LibraryViewerPage() {
-  const { id } = useParams()
+export default function LibraryViewerPage({ bookId, onClose }: { bookId?: string; onClose?: () => void } = {}) {
+  const params = useParams()
+  const id = bookId ?? params.id
+  const embedded = Boolean(onClose)
   const [state, setState] = useState<State>({ status: 'loading' })
 
   useEffect(() => {
@@ -27,7 +29,7 @@ export default function LibraryViewerPage() {
         return
       }
       objectUrl = URL.createObjectURL(blob)
-      document.title = book.title
+      if (!onClose) document.title = book.title
       void updateBook(id, { lastOpenedAt: Date.now() })
       setState({ status: 'ready', book, url: objectUrl })
     })()
@@ -35,9 +37,9 @@ export default function LibraryViewerPage() {
       cancelled = true
       if (objectUrl) URL.revokeObjectURL(objectUrl)
     }
-  }, [id])
+  }, [id, onClose])
 
-  if (state.status === 'loading') return null
+  if (state.status === 'loading') return embedded ? <p>Loading…</p> : null
   if (state.status === 'missing') return <PdfViewerMissing fallbackPath="/library/pdf" message="This book is no longer in your library." />
-  return <PdfViewer fileUrl={state.url} name={state.book.name} book={state.book} fallbackPath="/library/pdf" />
+  return <PdfViewer fileUrl={state.url} name={state.book.name} book={state.book} fallbackPath="/library/pdf" embedded={embedded} onClose={onClose} />
 }

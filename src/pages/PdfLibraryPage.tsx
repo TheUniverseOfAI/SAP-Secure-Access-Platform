@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getBookFile } from '../api/libraryApi'
 import Breadcrumb from '../components/Breadcrumb'
 import PageHeader from '../components/PageHeader'
+import LibraryViewerPage from './LibraryViewerPage'
 import PdfIcon from '../components/PdfIcon'
 import { formatFileSize } from '../data/documents'
 import type { LibraryBook } from '../data/library'
@@ -13,9 +14,7 @@ type Sort = 'recent' | 'title' | 'progress'
 
 const progressOf = (b: LibraryBook) => (b.pageCount > 1 ? (b.lastPage - 1) / (b.pageCount - 1) : b.lastOpenedAt ? 1 : 0)
 
-function openBook(id: string) {
-  window.open(`${import.meta.env.BASE_URL}library/pdf/${id}/view`, '_blank')
-}
+const NEW_TAB_KEY = 'sap.library.openInNewTab'
 
 async function downloadBook(book: LibraryBook) {
   const blob = await getBookFile(book.id)
@@ -40,6 +39,16 @@ export default function PdfLibraryPage() {
 
   const [query, setQuery] = useState('')
   const [sort, setSort] = useState<Sort>('recent')
+  const [openId, setOpenId] = useState<string | null>(null)
+  const closeInline = useCallback(() => {
+    setOpenId(null)
+    void fetchBooks()
+  }, [fetchBooks])
+  const [newTab, setNewTab] = useState(() => localStorage.getItem(NEW_TAB_KEY) !== 'false')
+  const openBook = (id: string) => {
+    if (newTab) window.open(`${import.meta.env.BASE_URL}library/pdf/${id}/view`, '_blank')
+    else setOpenId(id)
+  }
   const [dragOver, setDragOver] = useState(false)
   const [adding, setAdding] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -111,6 +120,12 @@ export default function PdfLibraryPage() {
           />
         </div>
 
+        {openId && (
+          <div className={styles.inlineViewer}>
+            <LibraryViewerPage key={openId} bookId={openId} onClose={closeInline} />
+          </div>
+        )}
+
         {errors.length > 0 && (
           <div className={styles.errors} role="alert">
             <ul>
@@ -134,6 +149,17 @@ export default function PdfLibraryPage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
+            <label className={styles.sort}>
+              <input
+                type="checkbox"
+                checked={newTab}
+                onChange={(e) => {
+                  setNewTab(e.target.checked)
+                  localStorage.setItem(NEW_TAB_KEY, String(e.target.checked))
+                }}
+              />
+              Open in new tab (unticked: read here on this page)
+            </label>
             <label className={styles.sort}>
               Sort by
               <select value={sort} onChange={(e) => setSort(e.target.value as Sort)}>

@@ -226,6 +226,9 @@ interface PdfViewerProps {
   book?: LibraryBook
   /** Where Close goes if the browser won't let the tab close itself. */
   fallbackPath?: string
+  /** Shown inside the page instead of full screen; Close calls onClose rather than closing the tab. */
+  embedded?: boolean
+  onClose?: () => void
 }
 
 /** Shown when there is no file to open (e.g. the tab that uploaded it was closed). */
@@ -253,9 +256,10 @@ export function PdfViewerMissing({ fallbackPath, message }: { fallbackPath: stri
  * tab) it is a plain viewer. Chapters are read from the PDF's built-in outline
  * when it has one.
  */
-export default function PdfViewer({ fileUrl, name, book, fallbackPath = '/profile/documents' }: PdfViewerProps) {
+export default function PdfViewer({ fileUrl, name, book, fallbackPath = '/profile/documents', embedded = false, onClose }: PdfViewerProps) {
   const navigate = useNavigate()
   const doc = { fileUrl, name }
+  const rootRef = useRef<HTMLDivElement>(null)
 
   const [numPages, setNumPages] = useState(0)
   const [zoom, setZoom] = useState(book?.zoom ?? 1)
@@ -294,9 +298,13 @@ export default function PdfViewer({ fileUrl, name, book, fallbackPath = '/profil
 
   // Opened in its own tab: close that tab (works for a tab a script opened); if the browser refuses, go back to Documents.
   const close = useCallback(() => {
+    if (onClose) {
+      onClose()
+      return
+    }
     window.close()
     window.setTimeout(() => navigate(fallbackPath), 150)
-  }, [navigate, fallbackPath])
+  }, [navigate, fallbackPath, onClose])
 
   const closeSearch = useCallback(() => {
     setSearchOpen(false)
@@ -328,7 +336,7 @@ export default function PdfViewer({ fileUrl, name, book, fallbackPath = '/profil
 
   const toggleFullscreen = () => {
     if (document.fullscreenElement) void document.exitFullscreen()
-    else void document.documentElement.requestFullscreen()
+    else void (embedded ? rootRef.current : document.documentElement)?.requestFullscreen()
   }
 
   // The scroller only exists once the PDF has loaded, so measure it via a callback ref rather than on mount.
@@ -550,7 +558,7 @@ export default function PdfViewer({ fileUrl, name, book, fallbackPath = '/profil
   )
 
   return (
-    <div className={styles.viewer}>
+    <div ref={rootRef} className={[styles.viewer, embedded ? styles.embedded : ''].filter(Boolean).join(' ')}>
       <header className={styles.toolbar} role="toolbar" aria-label="PDF viewer controls">
         {btn('Close viewer', ICON.back, close)}
         {btn('Toggle page thumbnails', ICON.menu, () => setThumbsOpen((o) => !o), { on: thumbsOpen })}
