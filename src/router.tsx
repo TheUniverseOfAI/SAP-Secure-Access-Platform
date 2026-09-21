@@ -75,11 +75,17 @@ const routes = [
         lazy: async () => ({ Component: (await import('./pages/PdfViewerPage')).default }),
       },
       {
+        path: '/library/pdf/:id/view',
+        lazy: async () => ({ Component: (await import('./pages/LibraryViewerPage')).default }),
+      },
+      {
         element: <PortalLayout />,
         children: [
           { path: '/home', element: <HomePage /> },
           { path: '/dashboard', element: <PortalHomePage /> },
           { path: '/portals', element: <PortalsPage /> },
+          { path: '/library', lazy: async () => ({ Component: (await import('./pages/LibraryPage')).default }) },
+          { path: '/library/pdf', lazy: async () => ({ Component: (await import('./pages/PdfLibraryPage')).default }) },
           { path: '/leadership', element: <LeadershipPage /> },
           { path: '/about', element: <AboutPage /> },
 
