@@ -184,3 +184,40 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+.searchBar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: var(--gray-800);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.searchInput {
+  width: 280px;
+  max-width: 100%;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+  font-size: 0.85rem;
+}
+.searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+.searchCount {
+  min-width: 80px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.75);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Search matches sit on the transparent text layer over the page canvas. */
+.pageSlot :global(.react-pdf__Page__textContent mark) {
+  background: rgba(255, 200, 0, 0.45);
+  color: transparent;
+  border-radius: 2px;
+}
