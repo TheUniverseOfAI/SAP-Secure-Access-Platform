@@ -4,7 +4,8 @@ import DocDropzone from '../../components/DocDropzone'
 import { DocItem, DocList } from '../../components/DocItem'
 import PageHeader from '../../components/PageHeader'
 import UploadQueueItem from '../../components/UploadQueueItem'
-import { docLabelFromFilename, docTypeFromFilename, formatFileSize } from '../../data/documents'
+
+import { docLabelFromFilename, docTypeFromFilename, formatFileSize, type Document } from '../../data/documents'
 import { useFileUpload } from '../../hooks/useFileUpload'
 import { useDocumentsStore } from '../../stores/useDocumentsStore'
 
@@ -12,8 +13,7 @@ import { useDocumentsStore } from '../../stores/useDocumentsStore'
  * Real Documents tab — full visual parity with sap-user-profile_v2.html's
  * #tab-documents panel, including its 4 default seed documents. Backed by
  * useDocumentsStore/src/api/documentsApi.ts (same pattern as
- * useAuthSettingsStore): Delete really removes an entry, and Download
- * stays inert — see DocItem.tsx for why.
+ * useAuthSettingsStore): Delete really removes an entry.
  *
  * Uploads go through useFileUpload rather than adding straight to the
  * store: each dropped/browsed file is validated (extension + 25 MB
@@ -21,6 +21,12 @@ import { useDocumentsStore } from '../../stores/useDocumentsStore'
  * shown with simulated transfer progress before it's committed as a real
  * DocItem — a file rejected by validation shows a real error row instead
  * of silently vanishing or silently succeeding.
+ *
+ * A freshly-uploaded file keeps a real object URL (URL.createObjectURL) —
+ * the browser genuinely has those bytes in memory, so DocItem can offer a
+ * real View (PDFs, opening /documents/view in a new tab) or Download action for it. The 4
+ * seed documents have no such URL and no real content behind them at all,
+ * so their Download stays honestly inert — see DocItem.tsx.
  */
 export default function DocumentsPage() {
   const documents = useDocumentsStore((s) => s.documents)
@@ -35,12 +41,25 @@ export default function DocumentsPage() {
       label: docLabelFromFilename(file.name),
       name: file.name,
       meta: `${formatFileSize(file.size)} · Uploaded just now`,
+      fileUrl: URL.createObjectURL(file),
     }),
   )
 
   useEffect(() => {
     if (documents.length === 0 && !loading) fetchDocuments()
   }, [documents.length, loading, fetchDocuments])
+
+  // Opens in a NEW tab, so the Documents page stays exactly as it was. The file is a blob: URL, which other
+  // tabs of this same site can read; its name travels in the address since a new tab has no store state.
+  const openViewer = (doc: Document) => {
+    const params = new URLSearchParams({ src: doc.fileUrl!, name: doc.name })
+    window.open(`${import.meta.env.BASE_URL}documents/view?${params}`, '_blank')
+  }
+
+  const handleDelete = (doc: Document) => {
+    if (doc.fileUrl) URL.revokeObjectURL(doc.fileUrl)
+    deleteDocument(doc.id)
+  }
 
   return (
     <>
@@ -82,7 +101,9 @@ export default function DocumentsPage() {
                 label={doc.label}
                 name={doc.name}
                 meta={doc.meta}
-                onDelete={() => deleteDocument(doc.id)}
+                fileUrl={doc.fileUrl}
+                onView={doc.fileUrl && doc.type === 'pdf' ? () => openViewer(doc) : undefined}
+                onDelete={() => handleDelete(doc)}
               />
             ))}
           </DocList>

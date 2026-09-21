@@ -70,6 +70,11 @@ const routes = [
     element: <RequireAuth />,
     children: [
       {
+        // Full-screen viewer, deliberately outside PortalLayout. Lazy so react-pdf stays out of the main bundle.
+        path: '/documents/view',
+        lazy: async () => ({ Component: (await import('./pages/PdfViewerPage')).default }),
+      },
+      {
         element: <PortalLayout />,
         children: [
           { path: '/home', element: <HomePage /> },
