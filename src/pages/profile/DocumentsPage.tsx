@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Card from '../../components/Card'
 import DocDropzone from '../../components/DocDropzone'
 import { DocItem, DocList } from '../../components/DocItem'
@@ -25,7 +24,7 @@ import { useDocumentsStore } from '../../stores/useDocumentsStore'
  *
  * A freshly-uploaded file keeps a real object URL (URL.createObjectURL) —
  * the browser genuinely has those bytes in memory, so DocItem can offer a
- * real View (PDFs, opening the /documents/:id/view page) or Download action for it. The 4
+ * real View (PDFs, opening /documents/view in a new tab) or Download action for it. The 4
  * seed documents have no such URL and no real content behind them at all,
  * so their Download stays honestly inert — see DocItem.tsx.
  */
@@ -35,7 +34,6 @@ export default function DocumentsPage() {
   const fetchDocuments = useDocumentsStore((s) => s.fetchDocuments)
   const addDocument = useDocumentsStore((s) => s.addDocument)
   const deleteDocument = useDocumentsStore((s) => s.deleteDocument)
-  const navigate = useNavigate()
 
   const { queue, addFiles, dismiss } = useFileUpload((file) =>
     addDocument({
@@ -50,6 +48,13 @@ export default function DocumentsPage() {
   useEffect(() => {
     if (documents.length === 0 && !loading) fetchDocuments()
   }, [documents.length, loading, fetchDocuments])
+
+  // Opens in a NEW tab, so the Documents page stays exactly as it was. The file is a blob: URL, which other
+  // tabs of this same site can read; its name travels in the address since a new tab has no store state.
+  const openViewer = (doc: Document) => {
+    const params = new URLSearchParams({ src: doc.fileUrl!, name: doc.name })
+    window.open(`${import.meta.env.BASE_URL}documents/view?${params}`, '_blank')
+  }
 
   const handleDelete = (doc: Document) => {
     if (doc.fileUrl) URL.revokeObjectURL(doc.fileUrl)
@@ -97,7 +102,7 @@ export default function DocumentsPage() {
                 name={doc.name}
                 meta={doc.meta}
                 fileUrl={doc.fileUrl}
-                onView={doc.fileUrl && doc.type === 'pdf' ? () => navigate(`/documents/${doc.id}/view`) : undefined}
+                onView={doc.fileUrl && doc.type === 'pdf' ? () => openViewer(doc) : undefined}
                 onDelete={() => handleDelete(doc)}
               />
             ))}

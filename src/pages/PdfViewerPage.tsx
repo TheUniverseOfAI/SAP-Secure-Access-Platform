@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from 'react'
 import { Document, Page, Thumbnail, pdfjs, type DocumentProps } from 'react-pdf'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import 'react-pdf/dist/Page/AnnotationLayer.css'
 import 'react-pdf/dist/Page/TextLayer.css'
-import { useDocumentsStore } from '../stores/useDocumentsStore'
 import styles from './PdfViewerPage.module.css'
 
 // Vite-native way to get a correct, bundled URL for pdf.js's worker file —
@@ -145,20 +144,22 @@ function ThumbSlot({
 }
 
 /**
- * Full-screen PDF viewer for a document the user uploaded (route
- * /documents/:id/view). All pages are stacked in one scrolling column, with a
+ * Full-screen PDF viewer for a document the user uploaded, opened in its own
+ * browser tab (route /documents/view?src=<blob URL>&name=<file name>). All pages are stacked in one scrolling column, with a
  * toolbar (page box, zoom, fit width, rotate, search, fullscreen, download,
  * print, close) and a thumbnail sidebar. Only pages near the viewport are
  * actually rendered. Text can be selected and copied (pdf.js text layer), and
  * search highlights every match and steps through them.
  *
- * The file is an in-memory object URL from the upload, so a page refresh or
- * a direct link has nothing to show — that case says so instead of failing.
+ * The file is an in-memory blob URL from the upload, so it only works while the
+ * tab that uploaded it is still open — after that there is nothing to show — that case says so instead of failing.
  */
 export default function PdfViewerPage() {
-  const { id } = useParams()
+  const [params] = useSearchParams()
   const navigate = useNavigate()
-  const doc = useDocumentsStore((s) => s.documents.find((d) => d.id === id))
+  // Only a blob: URL from this same site is ever loaded — never an arbitrary address from the query string.
+  const src = params.get('src') ?? ''
+  const doc = src.startsWith(`blob:${window.location.origin}/`) ? { fileUrl: src, name: params.get('name') || 'document.pdf' } : null
 
   const [numPages, setNumPages] = useState(0)
   const [zoom, setZoom] = useState(1)
@@ -185,7 +186,11 @@ export default function PdfViewerPage() {
   const searchInputRef = useRef<HTMLInputElement>(null)
   const inputFocused = useRef(false)
 
-  const close = useCallback(() => navigate('/profile/documents'), [navigate])
+  // Opened in its own tab: close that tab (works for a tab a script opened); if the browser refuses, go back to Documents.
+  const close = useCallback(() => {
+    window.close()
+    window.setTimeout(() => navigate('/profile/documents'), 150)
+  }, [navigate])
 
   const closeSearch = useCallback(() => {
     setSearchOpen(false)
