@@ -1,0 +1,106 @@
+.page {
+  padding: 32px;
+}
+
+.pdfTile {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  width: 100%;
+  max-width: 560px;
+  padding: 28px 32px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 16px;
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    border-color var(--transition);
+}
+.pdfTile:hover {
+  transform: translateY(-2px);
+  border-color: #f4a09b;
+  box-shadow: 0 12px 32px rgba(196, 33, 28, 0.14);
+}
+.pdfIcon {
+  flex-shrink: 0;
+  display: flex;
+  filter: drop-shadow(0 6px 10px rgba(196, 33, 28, 0.3));
+}
+.pdfText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pdfTitle {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--gray-800);
+}
+.pdfMeta {
+  font-size: 0.9rem;
+  color: var(--gray-500);
+}
+.pdfHint {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--blue-600);
+}
+
+.soonHeading {
+  margin: 36px 0 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+}
+.soonGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 14px;
+  max-width: 720px;
+}
+.soonTile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 16px;
+  border: 1px dashed var(--gray-300);
+  border-radius: 12px;
+  background: var(--gray-50);
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+.soonBadge {
+  padding: 3px 8px;
+  border-radius: 5px;
+  color: var(--white);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+.soonLabel {
+  font-weight: 600;
+  color: var(--gray-700);
+}
+.soonNote {
+  font-size: 0.75rem;
+  color: var(--gray-400);
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 20px;
+  }
+  .pdfTile {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
